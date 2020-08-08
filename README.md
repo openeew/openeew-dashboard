@@ -1,7 +1,7 @@
 # OpenEEW Dashboard
 
 ## Grafana
-Grafana provides a low-latency visualization of time-series data. Perfect for real-time accelerations from OpenEEW sensors!
+[Grafana](https://github.com/grafana/grafana) provides a low-latency visualization of time-series data. Perfect for real-time accelerations from OpenEEW sensors!
 
 ### Install
 (note: see [issue](https://github.com/openeew/openeew-detection/issues/46) for adding Grafana to OpenEEW docker)
