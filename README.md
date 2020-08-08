@@ -14,6 +14,7 @@ You can see examples of dashboards [here](https://github.com/openeew/openeew-das
 
 For example, the `sensor location.json` creates a dashboard which shows sensor positions and status:
 ![](images/sensor location.png)
+![OpenEEW sensor locations dashboard](images/sensor-location.png?raw=true "sensor locations dashboard")
 
 
 ## Custom Dashboard
