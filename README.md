@@ -13,7 +13,7 @@ Once Grafana is [installed](https://grafana.com/docs/grafana/latest/installation
 You can see examples of dashboards [here](https://github.com/openeew/openeew-dashboard/tree/master/grafana/dashboard). These can be imported directly into Grafana.
 
 For example, the `sensor location.json` creates a dashboard which shows sensor positions and status:
-![](/images/sensor location.png)
+![](images/sensor location.png)
 
 
 ## Custom Dashboard
