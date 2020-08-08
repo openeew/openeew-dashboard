@@ -14,9 +14,11 @@ You should add the two postgres tables as unique data sources for Grafana; add t
 You can see examples of dashboards [here](https://github.com/openeew/openeew-dashboard/tree/master/grafana/dashboard). These can be imported directly into Grafana.
 
 For example, the `sensor location.json` creates a dashboard which shows sensor positions and status:
+
 ![OpenEEW sensor locations dashboard](images/sensor-location.png?raw=true "sensor locations dashboard")
 
 In another example, `sensor traces.json` you can view live streaming accelerations from your sensors:
+
 ![OpenEEW sensor locations dashboard](images/traces-stream3.gif?raw=true "sensor traces dashboard")
 
 
