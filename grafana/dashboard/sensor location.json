@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 31,
-  "iteration": 1596921566278,
+  "id": 48,
   "links": [],
   "panels": [
     {
@@ -27,11 +26,11 @@
         "#FADE2A",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "$openeew_alert_db",
+      "datasource": "openeew_customer_db",
       "decimals": 0,
       "esMetric": "Count",
       "gridPos": {
-        "h": 22,
+        "h": 21,
         "w": 21,
         "x": 0,
         "y": 0
@@ -63,12 +62,14 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  d.device_id,\n  CONCAT('Device ID: ', d.device_id, '; Firmware: ', f.firmware_name, '.', f.latest_version, '; First Activated: ', first_activated, '; Last Connectivity Event: ', TT.max_event_dt, '; Connected') AS device_desc,\n  d.latitude + (random()/1000) AS latitude,\n  d.longitude + (random()/1000) AS longitude,\n  CASE WHEN TT.event_type IS NULL THEN 0.5 WHEN TT.event_type = 'connected' THEN 1 ELSE 0 END AS device_state\nFROM\n  public.device d\n  \n  INNER JOIN (\n  \n    SELECT\n      DEV.device_id,\n      MIN(DEV.row_effective_from) AS first_activated\n    FROM\n      public.device DEV\n      INNER JOIN public.firmware F\n        ON DEV.firmware_pk_id = F.pk_id\n    WHERE\n      F.firmware_name <> 'no firmware'\n    GROUP BY\n      device_id\n  \n  ) d_first_row\n  \n  ON d_first_row.device_id = d.device_id\n  \n  INNER JOIN public.firmware f\n    ON f.pk_id = d.firmware_pk_id\n  \n  LEFT OUTER JOIN (\n    SELECT\n  \t\tLE.device_id,\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tpublic.device_presence_event LE\n  \tWHERE\n  \t  LE.device_id LIKE '%$device_id%'\n    \t) TT\n\n  ON TT.device_id = d.device_id\n  AND TT.event_dt = TT.max_event_dt\nWHERE\n  d.is_current_row = CAST(1 AS BIT)\n  AND d.device_id LIKE '%$device_id%'\n  AND f.pk_id IN ($firmware_pk_id)\n  --AND EXISTS (SELECT 1 FROM public.device WHERE device_id = d.device_id AND (latitude <> 0.0 OR longitude <> 0.0));",
+          "rawSql": "SELECT\n  d.device_id,\n  CONCAT('Device ID: ', d.device_id, '; Firmware: ', d.firmware_name, '.', d.firmware_version, '; First Activated: ', d_first_row.first_activated, '; Last Connectivity Event: ', TT.max_event_dt, '; Connected') AS device_desc,\n  d.latitude + (random()/1000) AS latitude,\n  d.longitude + (random()/1000) AS longitude,\n  CASE WHEN TT.event_type IS NULL THEN 0.5 WHEN TT.event_type = 'connected' THEN 1 ELSE 0 END AS device_state\nFROM\n  customer.device d\n  \n  INNER JOIN (\n  \n    SELECT\n      DEV.device_id,\n      MIN(DEV.row_effective_from) AS first_activated\n    FROM\n      customer.device DEV\n    WHERE\n      DEV.firmware_name <> 'no firmware'\n    GROUP BY\n      DEV.device_id\n  \n  ) d_first_row\n  \n  ON d_first_row.device_id = d.device_id\n  \n  LEFT OUTER JOIN (\n    SELECT\n  \t\tLE.device_id,\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tcustomer.device_presence_event LE\n\n    \t) TT\n\n  ON TT.device_id = d.device_id\n  AND TT.event_dt = TT.max_event_dt\nWHERE\n  d.is_current_row = CAST(1 AS BIT);",
           "refId": "A",
           "select": [
             [
               {
-                "params": ["value"],
+                "params": [
+                  "value"
+                ],
                 "type": "column"
               }
             ]
@@ -87,7 +88,6 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Device Locations",
-      "transparent": true,
       "type": "grafana-worldmap-panel",
       "unitPlural": "",
       "unitSingle": "",
@@ -95,7 +95,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$openeew_alert_db",
+      "datasource": "openeew_customer_db",
       "gridPos": {
         "h": 11,
         "w": 3,
@@ -107,7 +107,9 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": ["mean"],
+          "calcs": [
+            "mean"
+          ],
           "defaults": {
             "mappings": [
               {
@@ -145,12 +147,14 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COUNT(TT.*) AS total_count\nFROM\n  (\n  SELECT\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tpublic.device_presence_event LE\n  \t  \n  \t  INNER JOIN public.device d ON d.device_id = LE.device_id AND d.is_current_row = CAST(1 AS BIT)\n  \t  INNER JOIN public.firmware f ON f.pk_id = d.firmware_pk_id\n\n    WHERE\n      f.pk_id IN ($firmware_pk_id)\n      --AND EXISTS (SELECT 1 FROM public.device WHERE device_id = d.device_id AND (latitude <> 0.0 OR longitude <> 0.0))\n      AND f.firmware_name <> 'no firmware'\n    \n  ) TT\n\nWHERE\n  TT.event_dt = TT.max_event_dt\n  AND TT.event_type = 'connected'",
+          "rawSql": "SELECT\n  COUNT(1) AS total_count\nFROM\n  (\n  SELECT\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tcustomer.device_presence_event LE\n  \t  \n  \t  INNER JOIN customer.device d ON d.device_id = LE.device_id AND d.is_current_row = CAST(1 AS BIT)\n\n    WHERE\n      d.firmware_name <> 'no firmware'\n    \n  ) TT\n\nWHERE\n  TT.event_dt = TT.max_event_dt\n  AND TT.event_type = 'connected'",
           "refId": "A",
           "select": [
             [
               {
-                "params": ["value"],
+                "params": [
+                  "value"
+                ],
                 "type": "column"
               }
             ]
@@ -168,12 +172,12 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "",
-      "transparent": true,
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "$openeew_alert_db",
+      "datasource": "openeew_customer_db",
+      "description": "",
       "gridPos": {
         "h": 11,
         "w": 3,
@@ -185,7 +189,9 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": ["mean"],
+          "calcs": [
+            "mean"
+          ],
           "defaults": {
             "mappings": [
               {
@@ -223,12 +229,14 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COUNT(TT.*) AS total_count\nFROM\n  (\n  SELECT\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tpublic.device_presence_event LE\n  \t  \n  \t  INNER JOIN public.device d ON d.device_id = LE.device_id AND d.is_current_row = CAST(1 AS BIT)\n  \t  INNER JOIN public.firmware f ON f.pk_id = d.firmware_pk_id\n    \n    WHERE\n      f.pk_id IN ($firmware_pk_id)\n      AND f.firmware_name <> 'no firmware'\n  ) TT\n\nWHERE\n  TT.event_dt = TT.max_event_dt\n  AND TT.event_type = 'disconnected'",
+          "rawSql": "SELECT\n  COUNT(1) AS total_count\nFROM\n  (\n  SELECT\n  \t\tLE.event_dt,\n      MAX(LE.event_dt) OVER (PARTITION BY LE.device_id) AS max_event_dt,\n  \t\tLE.event_type\n  \tFROM\n  \t\tcustomer.device_presence_event LE\n  \t  \n  \t  INNER JOIN customer.device d ON d.device_id = LE.device_id AND d.is_current_row = CAST(1 AS BIT)\n\n    WHERE\n      d.firmware_name <> 'no firmware'\n    \n  ) TT\n\nWHERE\n  TT.event_dt = TT.max_event_dt\n  AND TT.event_type = 'disconnected'",
           "refId": "A",
           "select": [
             [
               {
-                "params": ["value"],
+                "params": [
+                  "value"
+                ],
                 "type": "column"
               }
             ]
@@ -255,96 +263,7 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "selected": true,
-          "text": "openeew_alert_db",
-          "value": "openeew_alert_db"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "label": "Data Source",
-        "multi": false,
-        "name": "openeew_alert_db",
-        "options": [],
-        "query": "postgres",
-        "refresh": 1,
-        "regex": ".*openeew_alert_db",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "",
-          "value": ""
-        },
-        "hide": 0,
-        "label": "Device ID",
-        "name": "device_id",
-        "options": [
-          {
-            "selected": true,
-            "text": "",
-            "value": ""
-          }
-        ],
-        "query": "",
-        "skipUrlSync": false,
-        "type": "textbox"
-      },
-      {
-        "allValue": null,
-        "current": {
-          "text": "All",
-          "value": ["$__all"]
-        },
-        "datasource": "$openeew_alert_db",
-        "definition": "SELECT pk_id AS __value, group_name AS __text FROM public.firmware_group ORDER BY group_name",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Firmware Group",
-        "multi": true,
-        "name": "firmware_group_pk_id",
-        "options": [],
-        "query": "SELECT pk_id AS __value, group_name AS __text FROM public.firmware_group ORDER BY group_name",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "text": "All",
-          "value": ["$__all"]
-        },
-        "datasource": "$openeew_db",
-        "definition": "SELECT CONCAT(firmware_name, '.', latest_version) AS __text, pk_id AS __value FROM public.firmware F WHERE firmware_group_pk_id IN ($firmware_group_pk_id) AND EXISTS (SELECT 1 FROM public.device WHERE is_current_row = CAST(1 AS BIT) AND firmware_pk_id = F.pk_id AND (latitude <> 0.0 OR longitude <> 0.0)) ORDER BY firmware_name, latest_version",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Firmware",
-        "multi": true,
-        "name": "firmware_pk_id",
-        "options": [],
-        "query": "SELECT CONCAT(firmware_name, '.', latest_version) AS __text, pk_id AS __value FROM public.firmware F WHERE firmware_group_pk_id IN ($firmware_group_pk_id) AND EXISTS (SELECT 1 FROM public.device WHERE is_current_row = CAST(1 AS BIT) AND firmware_pk_id = F.pk_id AND (latitude <> 0.0 OR longitude <> 0.0)) ORDER BY firmware_name, latest_version",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-6h",
@@ -365,7 +284,7 @@
     ]
   },
   "timezone": "",
-  "title": "Device Locations",
-  "uid": "ia4yr8cZk",
-  "version": 49
+  "title": "My Device Locations",
+  "uid": "ia4dr8cZk",
+  "version": 6
 }
