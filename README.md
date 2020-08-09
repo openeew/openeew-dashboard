@@ -30,3 +30,13 @@ It is planned to create a custom dashboard that allows for the following:
 - Ability to see historic data from your device and run simulations with detection system
 - Ability to visualize sensor accelerations for each axis
 - Ability to see sensor on map (for example OpenStreetMap).
+
+### Authors
+- [Grillo](https://grillo.io)
+___
+
+Enjoy!  Give us [feedback](https://github.com/openeew/openeew-dashboard/issues) if you have suggestions on how to improve this information.
+
+## License
+
+This information is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
