@@ -1,0 +1,20 @@
+scalar DateTime
+
+type Query {
+  allSensors: [Sensor!]!
+}
+
+type Sensor {
+  id: ID!
+}
+
+type AccelerationPacket {
+  x: [Float]
+  y: [Float]
+  z: [Float]
+  device_t: DateTime
+}
+
+type Subscription {
+  newAccData: AccelerationPacket
+}
