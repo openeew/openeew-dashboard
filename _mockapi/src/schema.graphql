@@ -2,6 +2,7 @@ scalar DateTime
 
 type Query {
   allSensors: [Sensor!]!
+  accStream: [AccelerationPacket]
 }
 
 type Sensor {
@@ -13,8 +14,4 @@ type AccelerationPacket {
   y: [Float]
   z: [Float]
   device_t: DateTime
-}
-
-type Subscription {
-  newAccData: AccelerationPacket
 }
