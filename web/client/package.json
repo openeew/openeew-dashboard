@@ -1,0 +1,57 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@carbon/grid": "^10.14.0",
+    "@carbon/icons-react": "^10.16.0",
+    "@carbon/layout": "^10.12.0",
+    "@carbon/themes": "^10.17.0",
+    "@testing-library/dom": "^7.23.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/react": "^16.8.0",
+    "apollo-boost": "^0.4.9",
+    "axios": "^0.20.0",
+    "carbon-components": "^10.18.0",
+    "carbon-components-react": "^7.18.0",
+    "carbon-icons": "^7.0.7",
+    "d3-array": "^2.7.1",
+    "d3-scale": "^3.2.2",
+    "d3-shape": "^2.0.0",
+    "graphql": "^14.3.1",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-apollo": "^3.1.5",
+    "react-app-polyfill": "^1.0.6",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3",
+    "typescript": "^4.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "format": "prettier --write \"**/*.{js,md,scss}\"",
+    "format:diff": "prettier --list-different \"**/*.{js,md,scss}\"",
+    "format:staged": "prettier --write",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "prettier": "^2.1.1"
+  }
+}

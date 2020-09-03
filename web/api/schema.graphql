@@ -1,12 +1,7 @@
 scalar DateTime
 
 type Query {
-  allSensors: [Sensor!]!
   accStream: [AccelerationPacket]
-}
-
-type Sensor {
-  id: ID!
 }
 
 type AccelerationPacket {

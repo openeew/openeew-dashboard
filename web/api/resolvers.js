@@ -4,6 +4,8 @@ let pool = [..._mockData];
 let stream = [];
 
 function resetStream() {
+  console.log('Stream reset');
+
   pool = [..._mockData];
   stream.length = 0;
 }
@@ -20,15 +22,9 @@ function addToStream() {
   if (stream.length > 50) {
     stream.shift();
   }
-
-  console.log('pool', pool.length);
 }
 
 setInterval(addToStream, 1000);
-
-function allSensors(parent, args, context) {
-  return context.prisma.sensors.findMany();
-}
 
 function accStream() {
   return stream;
@@ -44,7 +40,6 @@ function initRESTEndpoints(server) {
 
 const Query = {
   accStream,
-  allSensors,
 };
 
 module.exports = {
