@@ -1,38 +1,51 @@
 # OpenEEW Dashboard
 
-## Grafana
-[Grafana](https://github.com/grafana/grafana) provides a low-latency visualization of time-series data. Perfect for real-time accelerations from OpenEEW sensors!
+The OpenEEW Dashboard is a web application currently being developed by the OpenEEW community for the purpose of managing network sensors and visualizing real time sensor data. 
 
-### Install
-(note: see [issue](https://github.com/openeew/openeew-detection/issues/46) for adding Grafana to OpenEEW docker)
-Once Grafana is [installed](https://grafana.com/docs/grafana/latest/installation/), either through Docker or manually, you can connect the time-series database and create a new dashboard.
+Currently, the project consists of:
+- A React application that displays a dashboard and renders raw acceleration data in near real time using [IBM's Carbon Design System](https://www.carbondesignsystem.com) and [D3](https://github.com/d3/d3)
+- A simple GraphQL server that mocks the delivery of the acceleration data
+- Design documents that catalogue future plans for the project
+- Grafana dashboards that provide sensor visualizations, used in lieu of the web application until this project is further along in development [(see more)](https://github.com/openeew/openeew-dashboard/tree/master/grafana)
 
-### Add data source
-You should add the two postgres tables as unique data sources for Grafana; add the `devices` table, and add the `eew` table. You can view the schema [here](https://github.com/openeew/openeew-detection/blob/master/init_db.sql).
+## Quick start
 
-### Create dashboard
-You can see examples of dashboards [here](https://github.com/openeew/openeew-dashboard/tree/master/grafana/dashboard). These can be imported directly into Grafana.
+**Install dependencies for both the mock API and application**
 
-For example, the `sensor location.json` creates a dashboard which shows sensor positions and status:
+```bash
+# setup scripts are located in /web
+cd web
 
-![OpenEEW sensor locations dashboard](images/sensor-location.png?raw=true "sensor locations dashboard")
+# this might take a few minutes
+npm run setup
+```
 
-In another example, `sensor traces.json` you can view live streaming accelerations from your sensors:
-
-![OpenEEW sensor locations dashboard](images/traces-stream3.gif?raw=true "sensor traces dashboard")
+**Start the mock API and application concurrently**
 
 
-## Custom Dashboard
-It is planned to create a custom dashboard that allows for the following:
+```bash
+# From the /web directory
+npm start
+```
+
+**Start developing!**
+
+The application should be running on http://localhost:3000.
+
+The mock API should be running on http://localhost:4000.
+
+## Future Plans
+It is planned to expand this application so that in future, it will allow for the following:
 - Automated user authentication through OAuth2 or similar
 - Ability to connect to your sensor device, or the global OpenEEW network of devices
 - Ability to configure your device (sample rate, device ID) and also query statistics (connectivity, signal quality)
 - Ability to see historic data from your device and run simulations with detection system
 - Ability to visualize sensor accelerations for each axis
-- Ability to see sensor on map (for example OpenStreetMap).
+- Ability to see sensor(s) on map
 
-### Authors
+## Authors
 - [Grillo](https://grillo.io)
+- [Ryan Kelley](https://github.com/rdkelley)
 ___
 
 Enjoy!  Give us [feedback](https://github.com/openeew/openeew-dashboard/issues) if you have suggestions on how to improve this information.

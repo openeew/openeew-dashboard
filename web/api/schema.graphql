@@ -1,0 +1,13 @@
+scalar DateTime
+
+type Query {
+  accStream: [AccelerationPacket]
+  maxAcc: Float
+}
+
+type AccelerationPacket {
+  x: [Float]
+  y: [Float]
+  z: [Float]
+  device_t: DateTime
+}

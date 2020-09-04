@@ -1,0 +1,9 @@
+{
+  "extends": "react-app",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  }
+}

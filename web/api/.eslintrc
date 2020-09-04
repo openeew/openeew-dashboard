@@ -1,0 +1,13 @@
+{
+  "extends": "ibm",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": { "node": true },
+  "rules": {
+    "linebreak-style": ["error", "windows"],
+    "object-curly-spacing": ["error", "always"],
+    "space-before-function-paren": "off"
+  }
+}
