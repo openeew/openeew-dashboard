@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
-import SensorsContainer from '../../containers/Sensors';
+import Sensors from './sensors';
 import SideMenu from '../../components/SideMenu';
 
 function Dashboard() {
@@ -8,7 +8,7 @@ function Dashboard() {
     <div>
       <Header />
       <SideMenu />
-      <SensorsContainer />
+      <Sensors />
     </div>
   );
 }
