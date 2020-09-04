@@ -21,16 +21,6 @@ In another example, `sensor traces.json` you can view live streaming acceleratio
 
 ![OpenEEW sensor locations dashboard](images/traces-stream3.gif?raw=true "sensor traces dashboard")
 
-
-## Custom Dashboard
-It is planned to create a custom dashboard that allows for the following:
-- Automated user authentication through OAuth2 or similar
-- Ability to connect to your sensor device, or the global OpenEEW network of devices
-- Ability to configure your device (sample rate, device ID) and also query statistics (connectivity, signal quality)
-- Ability to see historic data from your device and run simulations with detection system
-- Ability to visualize sensor accelerations for each axis
-- Ability to see sensor on map (for example OpenStreetMap).
-
 ### Authors
 - [Grillo](https://grillo.io)
 ___
