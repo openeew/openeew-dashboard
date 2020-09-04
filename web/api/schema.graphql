@@ -2,6 +2,7 @@ scalar DateTime
 
 type Query {
   accStream: [AccelerationPacket]
+  maxAcc: Float
 }
 
 type AccelerationPacket {

@@ -10,3 +10,9 @@ export const ACC_STREAM = gql`
     }
   }
 `;
+
+export const MAX_ACC = gql`
+  query {
+    maxAcc
+  }
+`;

@@ -3,6 +3,10 @@ import Tile from '../../components/Tile';
 import AccelerationsChart from '../../components/AccelerationsChart';
 import { Button } from 'carbon-components-react';
 import API from '../../rest/api';
+import { Query } from 'react-apollo';
+import { MAX_ACC } from '../../graphql/queries';
+
+const POLL_INTERVAL = 1000;
 
 function Sensors() {
   return (
@@ -12,12 +16,22 @@ function Sensors() {
         <div className="bx--col-lg-4 bx--col-md-4 sensors-page__tile">
           <Tile title="Status" main={'1'} small={'Online'}></Tile>
         </div>
+
         <div className="bx--col-lg-4 bx--col-md-4 sensors-page__tile">
-          <Tile
-            title="Peak Acceleration"
-            main={0}
-            small={'Gals (cm/s)' + String.fromCharCode(178)}
-          ></Tile>
+          <Query query={MAX_ACC} pollInterval={POLL_INTERVAL}>
+            {({ loading, error, data }) => {
+              if (loading) return <div>Fetching</div>;
+              if (error || !data) return <div>Error</div>;
+
+              return (
+                <Tile
+                  title="Peak Acceleration"
+                  main={data.maxAcc}
+                  small={'Gals (cm/s)' + String.fromCharCode(178)}
+                ></Tile>
+              );
+            }}
+          </Query>
         </div>
       </div>
 
