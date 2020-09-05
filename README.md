@@ -34,6 +34,9 @@ The application should be running on http://localhost:3000.
 
 The mock API should be running on http://localhost:4000.
 
+## Screenshot
+![traces-stream3.gif](/images/traces-stream3.gif)
+
 ## Future Plans
 It is planned to expand this application so that in future, it will allow for the following:
 - Automated user authentication through OAuth2 or similar
