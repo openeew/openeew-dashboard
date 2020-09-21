@@ -1,5 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { Query, initRESTEndpoints } = require('./resolvers');
+const path = require('path');
+const express = require('express');
 
 const PORT = process.env.PORT || 4000;
 
@@ -24,6 +26,12 @@ server.express.use(function (req, res, next) {
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
+});
+
+server.express.use(express.static(path.join(__dirname, '../client/build')));
+
+server.express.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 initRESTEndpoints(server);

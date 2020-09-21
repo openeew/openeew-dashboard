@@ -46,6 +46,26 @@ It is planned to expand this application so that in future, it will allow for th
 - Ability to visualize sensor accelerations for each axis
 - Ability to see sensor(s) on map
 
+## Docker
+
+Install [Docker](https://www.docker.com/get-started) and build your own image.
+
+```shell-script
+cd web
+docker build --tag openeew/dashboard:dev .
+```
+
+Then run a development container:
+
+```shell-script
+docker run \
+  --interactive \
+  --detach \
+  --publish 4000:4000 \
+  --name openeew-dashboard-dev \
+  openeew/dashboard:dev
+```
+
 ## Authors
 - [Grillo](https://grillo.io)
 - [Ryan Kelley](https://github.com/rdkelley)
