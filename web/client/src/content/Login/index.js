@@ -5,6 +5,7 @@ import AppContext from '../../context/app';
 function Login() {
   const { currentUser, setCurrentUser } = useContext(AppContext)
   const [model, setModel] = useState(currentUser)
+  const [isNewUser, setIsNewUser] = useState(true)
 
   const handleChange = (field, { value }) =>
     setModel(model => ({ ...model, [field]: value }))
@@ -13,25 +14,39 @@ function Login() {
     <div className="login">
       <Modal
         open={!currentUser.authenticated}
-        primaryButtonText="Login"
+        primaryButtonText={isNewUser ? 'Sign Up' : 'Log In'}
+        secondaryButtonText={isNewUser ? 'Use existing account' : 'Create an account'}
         modalLabel="Welcome to OpenEEW Network Monitoring!"
-        modalHeading="Please sign in to continue"
+        modalHeading={isNewUser ? 'Create an account' : 'Please sign in to continue'}
         shouldSubmitOnEnter={true}
-        size="xs"
+        size="sm"
+        onSecondarySubmit={() => setIsNewUser(!isNewUser)}
         // TODO: actually authenticate the user against something on submit
         onRequestSubmit={() => setCurrentUser({ ...model, password: null, authenticated: true })}
       >
+        {isNewUser && <TextInput
+          invalidText="Invalid error message."
+          id="name"
+          labelText="Name"
+          onChange={event => handleChange('name', event.target)}
+        />}
         <TextInput
           invalidText="Invalid error message."
-          id="username"
-          labelText="Username"
-          onChange={event => handleChange('username', event.target)}
+          id="email"
+          type="email"
+          labelText="Email"
+          onChange={event => handleChange('email', event.target)}
         />
         <TextInput.PasswordInput
           id="password"
           labelText="Password"
           onChange={event => handleChange('password', event.target)}
         />
+        {isNewUser && <TextInput.PasswordInput
+          id="confirmPassword"
+          labelText="Confirm Password"
+          onChange={event => handleChange('password', event.target)}
+        />}
       </Modal>
     </div>
   );
