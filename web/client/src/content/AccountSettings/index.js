@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Context from '../../context/app';
 
 function AccountSettings() {
+  const { currentUser } = useContext(Context);
+
   return (
-    <div>WARK</div>
+    <div>Welcome {currentUser.name}!</div>
   );
 }
 
