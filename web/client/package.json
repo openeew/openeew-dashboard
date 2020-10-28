@@ -23,11 +23,13 @@
     "d3-shape": "^2.0.0",
     "express": "^4.17.1",
     "graphql": "^14.3.1",
+    "i18next": "^19.8.3",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "typescript": "^4.0.2"

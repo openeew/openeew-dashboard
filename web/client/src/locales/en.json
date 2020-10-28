@@ -1,0 +1,45 @@
+{
+  "components": {
+    "header": {
+      "title": "OpenEEW Monitoring",
+      "notifications": "Notifications",
+      "avatar": "User avatar"
+    },
+    "sidemenu": {
+      "title": "Side navigation",
+      "settings": "Settings"
+    }
+  },
+  "content": {
+    "accountSettings": {
+      "welcome": "Welcome {{name}}!"
+    },
+    "login": {
+      "title": "Welcome to OpenEEW Network Monitoring!",
+      "signupTitle": "Create an account",
+      "signupPrimary": "Sign up",
+      "signupSecondary": "Use existing account",
+      "loginTitle": "Please sign in to continue",
+      "loginPrimary": "Log in",
+      "loginSecondary": "Create an account",
+      "form": {
+        "name": {
+          "label": "Name",
+          "error": "Name must be present"
+        },
+        "email": {
+          "label": "Email",
+          "error": "Email must be present"
+        },
+        "password": {
+          "label": "Password",
+          "error": "Password must be present"
+        },
+        "confirmPassword": {
+          "label": "Confirm password",
+          "error": "Passwords must match"
+        }
+      }
+    }
+  }
+}

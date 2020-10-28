@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Context from '../../context/app';
 
 function AccountSettings() {
-  const { currentUser } = useContext(Context);
+  const { currentUser, t } = useContext(Context);
 
   return (
-    <div>Welcome {currentUser.name}!</div>
+    <div>{t("content.accountSettings.welcome", currentUser)}</div>
   );
 }
 
