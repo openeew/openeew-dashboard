@@ -9,3 +9,8 @@ $feature-flags: (
 );
 
 @import 'carbon-components/scss/globals/scss/styles.scss';
+
+.app-content {
+  padding: $layout-05;
+  max-width: 1600px;
+}
