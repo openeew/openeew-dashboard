@@ -1,10 +1,15 @@
-import React from 'react';
-import Header from '../../components/Header';
+import React, { useState } from 'react';
+import Shell from '../../components/Shell';
 
 function Dashboard() {
+  const [isSideNavExpanded, sideNavToggle] = useState(false);
+
   return (
     <div>
-      <Header />
+      <Shell
+        isSideNavExpanded={isSideNavExpanded}
+        sideNavToggle={sideNavToggle}
+      />
     </div>
   );
 }
