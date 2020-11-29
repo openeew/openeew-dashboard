@@ -18,7 +18,7 @@ function Dashboard() {
         }`}
       >
         <Switch>
-          <Route exact path="/" component={Events} />
+          <Route exact path="/events" component={Events} />
         </Switch>
       </main>
     </>
