@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './content/Dashboard';
 import AccountSettings from './content/AccountSettings';
 
 function Router() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* Login and side menu temp removed for refactor */}
       {/* <Login /> */}
       <div className="app-content">
@@ -18,7 +18,7 @@ function Router() {
           </Route>
         </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
