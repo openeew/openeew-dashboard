@@ -3,9 +3,10 @@ import 'react-app-polyfill/stable';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
