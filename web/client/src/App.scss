@@ -7,5 +7,11 @@ $small: 672px;
 
 @import './content/Dashboard/Dashboard.scss';
 @import './content/Login/Login.scss';
+@import './content/Events/Events.scss';
+
 @import './components/Tile/Tile.scss';
 @import './components/Shell/Shell.scss';
+
+body {
+  background-color: #262626;
+}

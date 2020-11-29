@@ -8,6 +8,7 @@
     "@carbon/icons-react": "^10.21.0",
     "@carbon/layout": "^10.14.0",
     "@carbon/themes": "^10.23.0",
+    "@carbon/type": "^10.17.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

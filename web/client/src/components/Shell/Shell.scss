@@ -1,5 +1,5 @@
-.bx--side-nav {
-  background-color: #161616;
+.bx--side-nav, .bx--header {
+  background-color: #262626;
 }
 
 .bx--side-nav__icon > svg {
@@ -12,4 +12,13 @@
 
 a.bx--side-nav__link > .bx--side-nav__link-text {
   color: #ffffff;
+}
+
+.bx--side-nav--collapsed {
+  width: 3rem;
+  transform: translateX(0rem);
+}
+
+.bx--side-nav--expanded {
+  border-right: 1px solid #393939;
 }

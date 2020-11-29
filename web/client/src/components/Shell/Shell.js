@@ -38,7 +38,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
         <UserAvatar32 />
       </HeaderGlobalAction>
     </HeaderGlobalBar>
-    <SideNav aria-label="Side navigation" isRail expanded={isSideNavExpanded}>
+    <SideNav aria-label="Side navigation" isFixedNav expanded={isSideNavExpanded}>
       <SideNavItems>
         <SideNavLink renderIcon={Activity32} href="/events">
           Events
