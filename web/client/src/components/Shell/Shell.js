@@ -40,7 +40,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
     </HeaderGlobalBar>
     <SideNav aria-label="Side navigation" isFixedNav expanded={isSideNavExpanded}>
       <SideNavItems>
-        <SideNavLink renderIcon={Activity32} href="/events">
+        <SideNavLink renderIcon={Activity32} href="/#/events">
           Events
         </SideNavLink>
         <SideNavLink renderIcon={Checkbox32} href="#">

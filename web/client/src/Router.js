@@ -13,9 +13,7 @@ function Router() {
           <Route path="/settings">
             <AccountSettings />
           </Route>
-          <Route path="/">
-            <Dashboard />
-          </Route>
+          <Route path="/" component={Dashboard}></Route>
         </Switch>
       </div>
     </HashRouter>
