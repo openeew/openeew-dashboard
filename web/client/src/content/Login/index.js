@@ -3,7 +3,7 @@ import { Modal, TextInput } from 'carbon-components-react';
 import AppContext from '../../context/app';
 
 function Login() {
-  const { currentUser, setCurrentUser } = useContext(AppContext)
+  const { t, currentUser, setCurrentUser } = useContext(AppContext)
   const [model, setModel] = useState(currentUser)
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
@@ -31,10 +31,10 @@ function Login() {
     <div className="login">
       <Modal
         open={!currentUser.authenticated}
-        primaryButtonText={isNewUser ? 'Sign Up' : 'Log In'}
-        secondaryButtonText={isNewUser ? 'Use existing account' : 'Create an account'}
-        modalLabel="Welcome to OpenEEW Network Monitoring!"
-        modalHeading={isNewUser ? 'Create an account' : 'Please sign in to continue'}
+        primaryButtonText={t(`content.login.${isNewUser ? 'signupPrimary' : 'loginPrimary'}`)}
+        secondaryButtonText={t(`content.login.${isNewUser ? 'signupSecondary' : 'loginSecondary'}`)}
+        modalLabel={t("content.login.title")}
+        modalHeading={t(`content.login.${isNewUser ? 'signupTitle' : 'loginTitle'}`)}
         shouldSubmitOnEnter={true}
         size="sm"
         onSecondarySubmit={() => {
@@ -53,31 +53,31 @@ function Login() {
       >
         {isNewUser && <TextInput
           id="name"
-          labelText="Name"
+          labelText={t("content.login.form.name.label")}
           invalid={errors.name}
-          invalidText="Name must be present"
+          invalidText={t("content.login.form.name.error")}
           onChange={event => handleChange('name', event.target)}
         />}
         <TextInput
           id="email"
           type="email"
-          labelText="Email"
+          labelText={t("content.login.form.email.label")}
           invalid={errors.email}
-          invalidText="Email must be present"
+          invalidText={t("content.login.form.email.error")}
           onChange={event => handleChange('email', event.target)}
         />
         <TextInput.PasswordInput
           id="password"
-          labelText="Password"
+          labelText={t("content.login.form.password.label")}
           invalid={errors.password}
-          invalidText="Password must be present"
+          invalidText={t("content.login.form.password.error")}
           onChange={event => handleChange('password', event.target)}
         />
         {isNewUser && <TextInput.PasswordInput
           id="confirmPassword"
-          labelText="Confirm Password"
+          labelText={t("content.login.form.confirmPassword.label")}
           invalid={errors.confirmPassword}
-          invalidText="Passwords must match"
+          invalidText={t("content.login.form.confirmPassword.error")}
           onChange={event => handleChange('confirmPassword', event.target)}
         />}
       </Modal>
