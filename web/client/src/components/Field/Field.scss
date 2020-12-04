@@ -1,0 +1,16 @@
+.field {
+  &:not(:first-child)
+  {
+    margin-top: 20px;
+  }
+  &:not(:last-child)
+  {
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 0.875rem;
+  }
+  .field_title {
+    font-weight: 600;
+  }
+}
