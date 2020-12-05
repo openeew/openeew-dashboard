@@ -18,7 +18,7 @@ import {
   UserAvatarFilledAlt32,
 } from '@carbon/icons-react';
 
-const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
+const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
   <Header aria-label="OpenEEW Dashboard">
     <SkipToContent />
     <HeaderMenuButton
@@ -34,11 +34,20 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
     </HeaderName>
 
     <HeaderGlobalBar>
-      <HeaderGlobalAction aria-label="Account Settings" onClick={() => {}}>
+      <HeaderGlobalAction
+        aria-label="Account Settings"
+        onClick={() => {
+          history.push('/settings');
+        }}
+      >
         <UserAvatar32 />
       </HeaderGlobalAction>
     </HeaderGlobalBar>
-    <SideNav aria-label="Side navigation" isFixedNav expanded={isSideNavExpanded}>
+    <SideNav
+      aria-label="Side navigation"
+      isFixedNav
+      expanded={isSideNavExpanded}
+    >
       <SideNavItems>
         <SideNavLink renderIcon={Activity32} href="/#/events">
           Events
@@ -47,7 +56,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
           Devices
         </SideNavLink>
         <SideNavLink renderIcon={UserAvatarFilledAlt32} href="#">
-          Settings
+          Access
         </SideNavLink>
       </SideNavItems>
     </SideNav>

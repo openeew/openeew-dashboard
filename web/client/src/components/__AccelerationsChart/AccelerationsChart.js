@@ -4,6 +4,12 @@ import { line, curveBasis } from 'd3-shape';
 import { Query } from 'react-apollo';
 import { ACC_STREAM } from '../../graphql/queries';
 
+/**
+ * * THIS COMPONENT HAS BEEN REMOVED FROM THE CURRENT BUILD AND IS ONLY
+ * * IN THE REPOSITORY TO SERVE AS A REFERENCE FOR FUTURE DEV. IT MAY RELY ON
+ * * PACKAGES DELETED FROM DEPENDENCIES.
+ */
+
 // * SVG Viewbox
 const VIEWBOX_WIDTH = 100;
 const VIEWBOX_HEIGHT = 30;

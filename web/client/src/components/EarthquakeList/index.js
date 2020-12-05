@@ -45,7 +45,7 @@ const EarthquakeList = () => {
               <div className="magnitude-box magnitude-box-lg"></div>
             </StructuredListCell>
           </StructuredListRow>
-          <StructuredListRow label key={`row-${2}`}>
+          <StructuredListRow label key={`row-${3}`}>
             <StructuredListCell className="earthquake-list__item-mag">
               5.0
             </StructuredListCell>

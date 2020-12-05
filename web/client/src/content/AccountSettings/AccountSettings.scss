@@ -1,0 +1,31 @@
+.userinfo-parent {
+  width: fit-content;
+}
+
+.userinfo {
+  background: #393939;
+  padding: 1rem;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 339px;
+  position: relative;
+}
+
+.userinfo-edit {
+  display: inline-grid;
+  grid-template-rows: auto;
+  grid-gap: 20px;
+  width: 100%;
+}
+
+.userinfo_header {
+  user-select: none;
+  .userinfo_title {
+    font-weight: 600;
+  }
+  .userinfo_edit {
+    float: right;
+    margin-left: 40px;
+    cursor: pointer;
+  }
+}

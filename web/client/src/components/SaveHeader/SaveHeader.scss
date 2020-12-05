@@ -1,0 +1,26 @@
+.save-header {
+  background-color: #005CFF;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  user-select: none;
+}
+
+.save-header_buttons {
+  display: flex;
+  margin-left: auto;
+  span {
+    cursor: pointer;
+  }
+}
+
+.save-header_save-button {
+  display: flex;
+  &::after {
+    content: '';
+    background-color: white;
+    width: 1px;
+    height: 70%;
+    margin: auto 5px;
+  }
+}

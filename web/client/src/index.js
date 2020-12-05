@@ -5,7 +5,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.scss';
+import './i18n';
+
 import reportWebVitals from './reportWebVitals';
+
 import App from './App';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
