@@ -12,7 +12,24 @@ $small: 672px;
 @import './components/Tile/Tile.scss';
 @import './components/Shell/Shell.scss';
 @import './components/EventsMap/EventsMap.scss';
+@import './components/EarthquakeList/EarthquakeList.scss';
 
 body {
   background-color: #161616;
+}
+
+.marb-2 {
+  margin-bottom: $layout-02;
+}
+
+.marb-3 {
+  margin-bottom: $layout-03;
+}
+
+.no-padding-left {
+  padding-left: 0;
+}
+
+.no-padding-right {
+  padding-right: 0;
 }

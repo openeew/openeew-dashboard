@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { Dropdown, MultiSelect } from 'carbon-components-react';
 
-console.log(Dropdown);
-
 const items = [
   { id: 'timeframe-past-7', text: 'Past 7 Days' },
   { id: 'timeframe-past-30', text: 'Past 30 Days' },
@@ -20,7 +18,7 @@ export default class EventsMap extends Component {
     this.state = {
       lng: -99.3533,
       lat: 20.8857,
-      zoom: 5,
+      zoom: 4.65,
     };
   }
 
@@ -67,7 +65,7 @@ export default class EventsMap extends Component {
               ariaLabel="Timeframe"
               id="events-map-dropdown"
               items={items}
-              label={"Past 7 Days"}
+              label={'Past 7 Days'}
               initialSelectedItem={items[0]}
               itemToString={(item) => (item ? item.text : '')}
             />
