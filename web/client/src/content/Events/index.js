@@ -1,9 +1,9 @@
-import React from 'react';
-import EventsMap from '../../components/EventsMap';
-import EarthquakeList from '../../components/EarthquakeList';
-import Tile from '../../components/Tile';
+import React from 'react'
+import EventsMap from '../../components/EventsMap'
+import EarthquakeList from '../../components/EarthquakeList'
+import Tile from '../../components/Tile'
 
-const index = () => {
+const Events = () => {
   return (
     <>
       <div className="bx--row events-page-heading__container marb-3">
@@ -40,9 +40,7 @@ const index = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-index.propTypes = {};
-
-export default index;
+export default Events

@@ -17,6 +17,11 @@ function resetStream() {
   stream.length = 0;
 }
 
+/**
+ * * When called by setInterval, this will add to
+ * * the acclerations stream. Removed for now since
+ * * the chart on the client is not rendered.
+ */
 function addToStream() {
   if (pool.length === 0) {
     resetStream();
@@ -45,7 +50,8 @@ function accStream() {
   return stream;
 }
 
-setInterval(addToStream, 1000);
+// Temp disabled
+// setInterval(addToStream, 1000);
 
 const Query = {
   accStream,
