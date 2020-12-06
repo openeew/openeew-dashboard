@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Header,
   HeaderMenuButton,
@@ -9,14 +9,14 @@ import {
   SideNav,
   SideNavItems,
   SideNavLink,
-} from 'carbon-components-react/lib/components/UIShell';
+} from 'carbon-components-react/lib/components/UIShell'
 
 import {
   Checkbox32,
   UserAvatar32,
   Activity32,
   UserAvatarFilledAlt32,
-} from '@carbon/icons-react';
+} from '@carbon/icons-react'
 
 const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
   <Header aria-label="OpenEEW Dashboard">
@@ -37,7 +37,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
       <HeaderGlobalAction
         aria-label="Account Settings"
         onClick={() => {
-          history.push('/settings');
+          history.push('/settings')
         }}
       >
         <UserAvatar32 />
@@ -61,6 +61,6 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
       </SideNavItems>
     </SideNav>
   </Header>
-);
+)
 
-export default Shell;
+export default Shell

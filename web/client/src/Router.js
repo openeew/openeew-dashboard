@@ -1,8 +1,8 @@
-import React from 'react';
-import { HashRouter, Switch, Route } from 'react-router-dom';
-import Dashboard from './content/Dashboard';
+import React from 'react'
+import { HashRouter, Switch, Route } from 'react-router-dom'
+import Dashboard from './content/Dashboard'
 
-function Router() {
+const Router = () => {
   return (
     <HashRouter>
       {/* Login and side menu temp removed for refactor */}
@@ -13,7 +13,7 @@ function Router() {
         </Switch>
       </div>
     </HashRouter>
-  );
+  )
 }
 
-export default Router;
+export default Router

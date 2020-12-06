@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
-import mapboxgl from 'mapbox-gl';
-import { Dropdown, MultiSelect } from 'carbon-components-react';
+import React, { Component } from 'react'
+import mapboxgl from 'mapbox-gl'
+import { Dropdown, MultiSelect } from 'carbon-components-react'
 
 const items = [
   { id: 'timeframe-past-7', text: 'Past 7 Days' },
   { id: 'timeframe-past-30', text: 'Past 30 Days' },
   { id: 'timeframe-past-90', text: 'Past 90 Days' },
   { id: 'timeframe-past-year', text: 'Past Year' },
-];
+]
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoicmRrZWxsZXk4IiwiYSI6ImNraTNuY3BvaDF5ZHQyeG5tOXE4cGNtczkifQ.ULS1cD11rugFckpcA_QUJg';
+console.log(process.env.REACT_APP_MAPBOX_ACCESS_TOKEN)
+
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
 export default class EventsMap extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       lng: -99.3533,
       lat: 20.8857,
       zoom: 4.65,
-    };
+    }
   }
 
   componentDidMount() {
@@ -33,27 +34,27 @@ export default class EventsMap extends Component {
       new mapboxgl.AttributionControl({
         compact: true,
       })
-    );
+    )
 
     map.on('move', () => {
       console.log(
         map.getCenter().lng.toFixed(4),
         map.getCenter().lat.toFixed(4),
         map.getZoom().toFixed(2)
-      );
+      )
 
       this.setState({
         lng: map.getCenter().lng.toFixed(4),
         lat: map.getCenter().lat.toFixed(4),
         zoom: map.getZoom().toFixed(2),
-      });
-    });
+      })
+    })
 
-    map.resize();
+    map.resize()
 
     map.on('load', function () {
-      map.resize();
-    });
+      map.resize()
+    })
   }
 
   render() {
@@ -95,6 +96,6 @@ export default class EventsMap extends Component {
           </div>
         </div>
       </>
-    );
+    )
   }
 }

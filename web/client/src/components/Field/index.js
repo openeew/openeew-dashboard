@@ -1,2 +1,2 @@
-import Field from "./Field.js";
-export default Field;
+import Field from './Field.js'
+export default Field

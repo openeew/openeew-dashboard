@@ -1,24 +1,31 @@
-import React from "react";
-import { Save16 } from '@carbon/icons-react';
+import React from 'react'
+import { Save16 } from '@carbon/icons-react'
 
-import "./SaveHeader.scss";
+import './SaveHeader.scss'
 
-function SaveHeader({ onSave, onCancel, title })
-{
+function SaveHeader({ onSave, onCancel, title }) {
   return (
     <div className="save-header">
       <span>{title}</span>
       <span className="save-header_buttons">
         <span
           className="save-header_save-button"
-          onClick={() => { if (onSave) onSave() }}
+          onClick={() => {
+            if (onSave) onSave()
+          }}
         >
           Save <Save16 style={{ marginLeft: 5 }} />
         </span>
-        <span onClick={() => { if (onCancel) onCancel() }}>Cancel</span>
+        <span
+          onClick={() => {
+            if (onCancel) onCancel()
+          }}
+        >
+          Cancel
+        </span>
       </span>
     </div>
   )
 }
 
-export default SaveHeader;
+export default SaveHeader
