@@ -22,7 +22,7 @@ npm run setup
 
 **2. Add a Mapbox access token for local development**
 
-If you don't already have a [Mapbox](mapbox.com) account, create one, and then naviagte to your account's [access token page](https://account.mapbox.com/access-tokens/) to view your tokens. You can use the Default public token or create a new one.
+If you don't already have a [Mapbox](https://mapbox.com) account, create one, and then naviagte to your account's [access token page](https://account.mapbox.com/access-tokens/) to view your tokens. You can use the Default public token or create a new one.
 
 After you have copied your token, create a file called **.env.local** in
 the **web/client** directory.
@@ -40,7 +40,7 @@ REACT_APP_MAPBOX_ACCESS_TOKEN=your_token
 npm start
 ```
 
-**Start developing!**
+**4. Start developing!**
 
 The application should be running on http://localhost:3000.
 
