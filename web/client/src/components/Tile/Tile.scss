@@ -1,7 +1,16 @@
+.bx--tile {
+  background-color: #262626;
+}
+
+.tile_heading {
+  @include carbon--type-style('expressive-heading-01');
+}
+
 .tile__secondary {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: $spacing-06;
-  padding-bottom: $spacing-06;
+  padding-top: $spacing-03;
+  padding-bottom: $spacing-01;
+}
+
+.tile__secondary h3 {
+  @include carbon--type-style('expressive-heading-05');
 }
