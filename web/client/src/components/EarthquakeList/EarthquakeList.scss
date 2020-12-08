@@ -1,0 +1,26 @@
+.earthquake-list__container {
+  background-color: #262626;
+}
+
+.earthquake-list__item-loc {
+  @include carbon--type-style('expressive-heading-01');
+}
+
+.earthquake-list__item-time {
+  @include carbon--type-style('helper-text-01');
+}
+
+.magnitude-box {
+  width: 12px;
+  height: 12px;
+}
+
+.magnitude-box-lg {
+  background-color: #fe8758;
+}
+
+@media screen and (min-width: 1312px) {
+  .earthquake-list__container {
+    height: 810px;
+  }
+}

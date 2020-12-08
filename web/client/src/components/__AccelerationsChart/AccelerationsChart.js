@@ -1,18 +1,24 @@
-import React from 'react';
-import { scaleLinear } from 'd3-scale';
-import { line, curveBasis } from 'd3-shape';
-import { Query } from 'react-apollo';
-import { ACC_STREAM } from '../../graphql/queries';
+import React from 'react'
+import { scaleLinear } from 'd3-scale'
+import { line, curveBasis } from 'd3-shape'
+import { Query } from 'react-apollo'
+import { ACC_STREAM } from '../../graphql/queries'
+
+/**
+ * * THIS COMPONENT HAS BEEN REMOVED FROM THE CURRENT BUILD AND IS ONLY
+ * * IN THE REPOSITORY TO SERVE AS A REFERENCE FOR FUTURE DEV. IT MAY RELY ON
+ * * PACKAGES DELETED FROM DEPENDENCIES.
+ */
 
 // * SVG Viewbox
-const VIEWBOX_WIDTH = 100;
-const VIEWBOX_HEIGHT = 30;
+const VIEWBOX_WIDTH = 100
+const VIEWBOX_HEIGHT = 30
 
 // * Update interval (API mock data source updates every 1 sec)
-const POLL_INTERVAL = 1000;
+const POLL_INTERVAL = 1000
 
 // * Max, min accelerations
-const Y_DOMAIN = [-7.5, 7.5];
+const Y_DOMAIN = [-7.5, 7.5]
 
 /**
  * TODO: renderPath recalculates the entire path on every update from one big array.
@@ -22,8 +28,8 @@ const renderPath = (data, axis) => {
   /**
    * * Merges all axis data into one big array
    */
-  const rawAcc = data.map((d) => [...d[axis]]);
-  const mergedAcc = [].concat.apply([], rawAcc);
+  const rawAcc = data.map((d) => [...d[axis]])
+  const mergedAcc = [].concat.apply([], rawAcc)
 
   /**
    * * Each second of data has 32 readings & there's a maximum 50 seconds
@@ -32,29 +38,29 @@ const renderPath = (data, axis) => {
    */
   const x = scaleLinear()
     .domain([1, 32 * 50])
-    .range([0, VIEWBOX_WIDTH]);
-  const y = scaleLinear().domain(Y_DOMAIN).range([VIEWBOX_HEIGHT, 0]);
+    .range([0, VIEWBOX_WIDTH])
+  const y = scaleLinear().domain(Y_DOMAIN).range([VIEWBOX_HEIGHT, 0])
 
   const lineBuilder = line()
     .curve(curveBasis)
     .x((d, i) => {
-      return x(i + 1);
+      return x(i + 1)
     })
-    .y((d) => y(d));
+    .y((d) => y(d))
 
-  const renderedPath = lineBuilder(mergedAcc);
+  const renderedPath = lineBuilder(mergedAcc)
 
-  return renderedPath;
-};
+  return renderedPath
+}
 
 const AccelerationsChart = () => {
   return (
     <Query query={ACC_STREAM} pollInterval={POLL_INTERVAL}>
       {({ loading, error, data, startPolling, stopPolling }) => {
-        if (loading) return <div>Fetching</div>;
-        if (error || !data) return <div>Error</div>;
+        if (loading) return <div>Fetching</div>
+        if (error || !data) return <div>Error</div>
 
-        let dataToRender = data.accStream;
+        let dataToRender = data.accStream
 
         return (
           <svg
@@ -90,10 +96,10 @@ const AccelerationsChart = () => {
               d={renderPath(dataToRender, 'z')}
             ></path>
           </svg>
-        );
+        )
       }}
     </Query>
-  );
-};
+  )
+}
 
-export default AccelerationsChart;
+export default AccelerationsChart
