@@ -3,7 +3,11 @@ import Title from '../../components/Title'
 import {
   TableToolbarContent,
   TableToolbarSearch,
+  InlineNotification,
+  TableExpandHeader,
+  TableExpandedRow,
   OverflowMenuItem,
+  TableExpandRow,
   TableContainer,
   TableToolbar,
   OverflowMenu,
@@ -13,35 +17,39 @@ import {
   TableCell,
   DataTable,
   TableRow,
+  Dropdown,
   Button,
   Modal,
   Table,
   Tabs,
   Tab,
-  Dropdown,
-  InlineNotification,
 } from 'carbon-components-react'
 
 import { Add16 } from '@carbon/icons-react'
 import Tag from 'carbon-components-react/lib/components/Tag/Tag'
 import Field from '../../components/Field'
 
-const headers = [
+const roles = [
   {
-    header: 'Name',
-    key: 'name',
+    role: 'Device owner',
+    description:
+      'As a device owner, you can perform all actions on your devices.',
+    extraInformation:
+      '- View details for all devices\n' +
+      '- View details for all events\n' +
+      '- View user details\n' +
+      '- Disable a device\n' +
+      '- Export data for all devices\n' +
+      '- Invite users\n' +
+      '- Assign access roles to users',
   },
   {
-    header: 'Email',
-    key: 'email',
-  },
-  {
-    header: 'Role',
-    key: 'role',
+    role: 'Administrator',
+    description:
+      'As an administrator, you can perform all actions - including assigning access roles to other users.',
+    extraInformation: 'No extra information available.',
   },
 ]
-
-const roles = ['Device owner', 'Administrator']
 
 const userData = [
   {
@@ -103,7 +111,7 @@ const AssignRoleModal = ({ user, open, setOpen, onSave }) => {
           titleText="Role"
           id="dropdown-role"
           items={roles}
-          selectedItem={selectedRole ?? roles[user.role]}
+          selectedItem={selectedRole ?? roles[user.role].role}
           onChange={(target) => setSelectedRole(target.selectedItem)}
         />
       </div>
@@ -118,9 +126,24 @@ const AccessUsers = ({ onSave }) => {
       id: user.email,
       name: user.name,
       email: user.email,
-      role: roles[user.role],
+      role: roles[user.role].role,
     })
   })
+
+  const headers = [
+    {
+      header: 'Name',
+      key: 'name',
+    },
+    {
+      header: 'Email',
+      key: 'email',
+    },
+    {
+      header: 'Role',
+      key: 'role',
+    },
+  ]
 
   const [assignRoleModalOpen, setAssignRoleModalOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState(undefined)
@@ -144,11 +167,20 @@ const AccessUsers = ({ onSave }) => {
                 <Button renderIcon={Add16}>Invite user</Button>
               </TableToolbarContent>
             </TableToolbar>
-            <Table {...getTableProps()} overflowMenuOnHover={false}>
+            <Table
+              {...getTableProps()}
+              overflowMenuOnHover={false}
+              tabIndex={0}
+              aria-label={'table'}
+            >
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>
+                    <TableHeader
+                      {...getHeaderProps({ header })}
+                      tabIndex={0}
+                      aria-label={`Header ${header.header}`}
+                    >
                       {header.header}
                     </TableHeader>
                   ))}
@@ -157,12 +189,32 @@ const AccessUsers = ({ onSave }) => {
               </TableHead>
               <TableBody>
                 {rows.map((row, indexRows) => (
-                  <TableRow key={row.id} {...getRowProps({ row })}>
+                  <TableRow
+                    key={row.id}
+                    {...getRowProps({ row })}
+                    tabIndex={0}
+                    aria-label={'row ' + (indexRows + 1)}
+                  >
                     {row.cells.map((cell, indexCells) => (
                       <TableCell key={cell.id}>
-                        {cell.value}
+                        <span
+                          tabIndex={0}
+                          aria-label={`${headers[indexCells].header} is ${cell.value}`}
+                        >
+                          {cell.value}
+                        </span>
                         {userData[indexRows].account_owner === true &&
-                          indexCells === 0 && <Tag>account owner</Tag>}
+                          indexCells === 0 && (
+                            <Tag
+                              tabIndex={0}
+                              aria-label={
+                                userData[indexRows].name +
+                                ' is the account owner'
+                              }
+                            >
+                              account owner
+                            </Tag>
+                          )}
                       </TableCell>
                     ))}
                     <TableCell>
@@ -193,6 +245,107 @@ const AccessUsers = ({ onSave }) => {
   )
 }
 
+const AccessRoles = () => {
+  let headers = [
+    {
+      header: 'Role',
+      key: 'role',
+    },
+    {
+      header: 'Description',
+      key: 'description',
+    },
+  ]
+
+  const rows = roles.map((role) => {
+    role['id'] = role.role
+    return role
+  })
+
+  const numberOfUsersForRole = (roleIndex) =>
+    userData.filter((user) => user.role === roleIndex).length
+
+  const formatNumberMessage = (number) => {
+    if (number === 1) return `There is 1 user in this role`
+    else return `There are ${number} users in this role`
+  }
+
+  return (
+    <DataTable rows={rows} headers={headers}>
+      {({ rows, headers, getRowProps, getHeaderProps, getTableProps }) => (
+        <TableContainer>
+          {console.log(rows)}
+          <Table
+            {...getTableProps()}
+            overflowMenuOnHover={false}
+            tabIndex={0}
+            aria-label={'table'}
+          >
+            <TableHead>
+              <TableRow>
+                <TableExpandHeader />
+                {headers.map((header) => (
+                  <TableHeader
+                    {...getHeaderProps({ header })}
+                    tabIndex={0}
+                    aria-label={`Header ${header.header}`}
+                  >
+                    {header.header}
+                  </TableHeader>
+                ))}
+                <TableHeader />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, indexRows) => {
+                const role = roles[indexRows]
+                const numberOfRoleMembers = numberOfUsersForRole(indexRows)
+                return (
+                  <React.Fragment key={row.id}>
+                    <TableExpandRow {...getRowProps({ row })}>
+                      {row.cells.map((cell, indexCells) => (
+                        <TableCell key={cell.id}>
+                          <span
+                            tabIndex={0}
+                            aria-label={`${headers[indexCells].header} is ${cell.value}`}
+                          >
+                            {cell.value}
+                          </span>
+                          {indexCells === 0 && (
+                            <Tag
+                              className="tag-number"
+                              tabIndex={0}
+                              aria-label={formatNumberMessage(
+                                numberOfRoleMembers
+                              )}
+                            >
+                              {numberOfRoleMembers}
+                            </Tag>
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableExpandRow>
+                    <TableExpandedRow colSpan={headers.length + 1}>
+                      <div className="extra-information" tabIndex={0}>
+                        {role.extraInformation.split('\n').map((line) => (
+                          <span>
+                            {line}
+                            <br />
+                          </span>
+                        ))}
+                      </div>
+                    </TableExpandedRow>
+                  </React.Fragment>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </DataTable>
+  )
+}
+
 const Access = () => {
   const [showSaveNotification, setShowSaveNotification] = useState(false)
 
@@ -214,7 +367,9 @@ const Access = () => {
           )}
           <AccessUsers onSave={() => setShowSaveNotification(true)} />
         </Tab>
-        <Tab id="tab-roles" label="Roles"></Tab>
+        <Tab id="tab-roles" label="Roles">
+          <AccessRoles />
+        </Tab>
       </Tabs>
     </div>
   )
