@@ -5,6 +5,7 @@ import AccountSettings from './content/AccountSettings';
 import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import Login from './content/Login';
+import Access from "./content/Access";
 
 function Router() {
   return (
@@ -14,6 +15,9 @@ function Router() {
       <SideMenu />
       <div className="app-content">
         <Switch>
+          <Route path="/access">
+            <Access/>
+          </Route>
           <Route path="/settings">
             <AccountSettings />
           </Route>

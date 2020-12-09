@@ -1,0 +1,15 @@
+.bx--tab-content {
+  padding: $layout-02 0 0;
+}
+
+.bx--tag {
+  margin-left: $spacing-05;
+  background: #505050;
+}
+
+td:hover {
+  .bx--tag {
+    background: #707070;
+    color: white;
+  }
+}
