@@ -1,8 +1,13 @@
-const _mockData = require('./_mockData/2.json');
+const _mockData = require('../_mockData/2.json');
 
 let pool = [..._mockData];
 let stream = [];
 let max = 0;
+
+/**
+ * * Currently, this file handles graphql queries made to the mock API, but
+ * * in the future it will connect to live data.
+ */
 
 function resetStream() {
   console.log('Stream reset');
@@ -12,6 +17,11 @@ function resetStream() {
   stream.length = 0;
 }
 
+/**
+ * * When called by setInterval, this will add to
+ * * the acclerations stream. Removed for now since
+ * * the chart on the client is not rendered.
+ */
 function addToStream() {
   if (pool.length === 0) {
     resetStream();
@@ -40,15 +50,8 @@ function accStream() {
   return stream;
 }
 
-function initRESTEndpoints(server) {
-  server.express.put('/_stream', (req, res) => {
-    resetStream();
-
-    res.send(true);
-  });
-}
-
-setInterval(addToStream, 1000);
+// Temp disabled
+// setInterval(addToStream, 1000);
 
 const Query = {
   accStream,
@@ -57,5 +60,4 @@ const Query = {
 
 module.exports = {
   Query,
-  initRESTEndpoints,
 };

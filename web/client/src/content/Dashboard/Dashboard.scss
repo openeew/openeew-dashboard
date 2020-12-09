@@ -1,9 +1,14 @@
-.bx--row {
-  margin-top: $layout-03;
+.dashboard__container {
+  margin-top: $layout-05;
+  margin-left: $layout-05;
+  transition: margin-left 0.12s cubic-bezier(0.2, 0, 1, 0.9);
 }
 
-.sensors-page__tile {
-  @media screen and (max-width: $small) {
-    margin-bottom: $layout-02;
-  }
+.dashboard-page__heading {
+  @include carbon--type-style('expressive-heading-05');
+  font-weight: 300;
+}
+
+.dashboard__container--sideNavExpanded {
+  margin-left: $layout-06 * 3;
 }

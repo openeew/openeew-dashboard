@@ -1,5 +1,5 @@
-import React from 'react';
-import { DataTable } from 'carbon-components-react';
+import React from 'react'
+import { DataTable } from 'carbon-components-react'
 const {
   TableContainer,
   Table,
@@ -11,7 +11,7 @@ const {
   TableExpandHeader,
   TableExpandRow,
   TableExpandedRow,
-} = DataTable;
+} = DataTable
 
 const rowData = [
   {
@@ -26,7 +26,7 @@ const rowData = [
     id: 'c',
     field1: 'Field 1c',
   },
-];
+]
 
 const headerData = [
   {
@@ -43,7 +43,7 @@ const headerData = [
     key: 'baz',
     header: 'Baz',
   },
-];
+]
 
 const SensorTable = (props) => {
   return (
@@ -92,9 +92,9 @@ const SensorTable = (props) => {
         )}
       />
     </div>
-  );
-};
+  )
+}
 
-SensorTable.propTypes = {};
+SensorTable.propTypes = {}
 
-export default SensorTable;
+export default SensorTable

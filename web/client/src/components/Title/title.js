@@ -1,9 +1,6 @@
-import React from "react";
-import "./title.scss";
+import React from 'react'
+import './title.scss'
 
-function Title({children})
-{
-  return <p className="title">{children}</p>
-}
+const Title = ({ children }) => <p className="title">{children}</p>
 
-export default Title;
+export default Title

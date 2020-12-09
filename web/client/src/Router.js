@@ -1,33 +1,19 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Dashboard from './content/Dashboard';
-import AccountSettings from './content/AccountSettings';
-import Header from './components/Header';
-import SideMenu from './components/SideMenu';
-import Login from './content/Login';
-import Access from "./content/Access";
+import React from 'react'
+import { HashRouter, Switch, Route } from 'react-router-dom'
+import Dashboard from './content/Dashboard'
 
-function Router() {
+const Router = () => {
   return (
-    <BrowserRouter>
-      <Login />
-      <Header />
-      <SideMenu />
+    <HashRouter>
+      {/* Login and side menu temp removed for refactor */}
+      {/* <Login /> */}
       <div className="app-content">
         <Switch>
-          <Route path="/access">
-            <Access/>
-          </Route>
-          <Route path="/settings">
-            <AccountSettings />
-          </Route>
-          <Route path="/">
-            <Dashboard />
-          </Route>
+          <Route path="/" component={Dashboard}></Route>
         </Switch>
       </div>
-    </BrowserRouter>
-  );
+    </HashRouter>
+  )
 }
 
-export default Router;
+export default Router

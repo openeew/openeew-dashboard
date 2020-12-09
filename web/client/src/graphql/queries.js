@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client'
 
 export const ACC_STREAM = gql`
   query {
@@ -9,10 +9,10 @@ export const ACC_STREAM = gql`
       device_t
     }
   }
-`;
+`
 
 export const MAX_ACC = gql`
   query {
     maxAcc
   }
-`;
+`
