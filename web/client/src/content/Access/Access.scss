@@ -7,6 +7,42 @@
   background: #505050;
 }
 
+.assign-role__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.bx--modal-content {
+  // in order to make sure the overflow menu works and doesn't make the modal turn into a scroller
+  overflow: visible;
+}
+
+.bx--tab-content {
+  position: relative;
+}
+
+.save-success-notification-parent {
+  position: absolute;
+  right: 0;
+  // a bit hacky, something less hacky would be nice
+  top: -64px;
+}
+
+.bx--inline-notification {
+  background: #262626;
+  border: 1px groove #4cbd6c;
+  border-left: 3px solid #4cbd6c;
+  color: #c3c3c3;
+  path {
+    fill: #c3c3c3;
+  }
+  .bx--inline-notification__icon {
+    path {
+      fill: #4cbd6c;
+    }
+  }
+}
+
 td:hover {
   .bx--tag {
     background: #707070;

@@ -55,7 +55,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
         <SideNavLink renderIcon={Checkbox32} href="#">
           Devices
         </SideNavLink>
-        <SideNavLink renderIcon={UserAvatarFilledAlt32} href="#">
+        <SideNavLink renderIcon={UserAvatarFilledAlt32} href="/#/access">
           Access
         </SideNavLink>
       </SideNavItems>
