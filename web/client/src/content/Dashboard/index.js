@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import Shell from '../../components/Shell'
 import AccountSettings from '../AccountSettings'
 import Events from '../Events'
+import Access from '../Access'
 
 const Dashboard = ({ location, history }) => {
   const [isSideNavExpanded, sideNavToggle] = useState(false)
@@ -33,7 +34,8 @@ const Dashboard = ({ location, history }) => {
       >
         <Switch>
           <Route exact path="/events" component={Events} />
-          <Route path="/settings" component={AccountSettings}></Route>
+          <Route path="/settings" component={AccountSettings} />
+          <Route path="/access" component={Access} />
         </Switch>
       </main>
     </>

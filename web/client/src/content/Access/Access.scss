@@ -1,0 +1,67 @@
+.bx--tab-content {
+  padding: $layout-02 0 0;
+}
+
+.assign-role__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.bx--modal-content {
+  // in order to make sure the overflow menu works and doesn't make the modal turn into a scroller
+  overflow: visible;
+}
+
+.bx--tab-content {
+  position: relative;
+}
+
+.save-success-notification-parent {
+  position: absolute;
+  right: 0;
+  // a bit hacky, something less hacky would be nice
+  top: -64px;
+}
+
+tr.bx--parent-row.bx--expandable-row td.bx--table-expand + td::after {
+  display: none;
+}
+
+.bx--inline-notification {
+  background: #262626;
+  border: 1px groove #4cbd6c;
+  border-left: 3px solid #4cbd6c;
+  color: #c3c3c3;
+  path {
+    fill: #c3c3c3;
+  }
+  .bx--inline-notification__icon {
+    path {
+      fill: #4cbd6c;
+    }
+  }
+}
+
+.bx--tag {
+  margin-left: $spacing-05;
+  background: #3a3a3a;
+  &:not(:first-child) {
+    // override removal of margin if not first child
+    margin-left: $spacing-05;
+  }
+}
+
+.tag-number {
+  min-width: 0;
+}
+
+td:hover {
+  .bx--tag {
+    background: #505050;
+    color: white;
+  }
+}
+
+.extra-information {
+  margin: $spacing-05 0;
+}
