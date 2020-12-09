@@ -1,7 +1,9 @@
 const { GraphQLServer } = require('graphql-yoga');
-const { Query, initRESTEndpoints } = require('./resolvers');
+const { Query } = require('./graphql/resolvers');
 const path = require('path');
 const express = require('express');
+
+const routes = require('./rest/routes');
 
 const PORT = process.env.PORT || 4000;
 
@@ -34,6 +36,6 @@ server.express.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-initRESTEndpoints(server);
+routes(server);
 
 server.start(PORT, () => console.log(`Server is running on ${PORT}`));

@@ -1,0 +1,25 @@
+.bx--side-nav,
+.bx--header {
+  background-color: #161616;
+}
+
+.bx--side-nav__icon > svg {
+  fill: #c8c8c8;
+}
+
+.bx--side-nav__link:hover svg {
+  fill: #161616;
+}
+
+a.bx--side-nav__link > .bx--side-nav__link-text {
+  color: #c8c8c8;
+}
+
+.bx--side-nav--collapsed {
+  width: 3rem;
+  transform: translateX(0rem);
+}
+
+.bx--side-nav--expanded {
+  border-right: 1px solid #393939;
+}
