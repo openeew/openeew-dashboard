@@ -25,7 +25,7 @@ const EarthquakeList = () => {
             </StructuredListCell>
 
             <StructuredListCell>
-              <div className="magnitude-box magnitude-box-lg"></div>
+              <div className="magnitude-box magnitude-box-lg" />
             </StructuredListCell>
           </StructuredListRow>
           <StructuredListRow label key={`row-${2}`}>
@@ -42,7 +42,7 @@ const EarthquakeList = () => {
             </StructuredListCell>
 
             <StructuredListCell>
-              <div className="magnitude-box magnitude-box-lg"></div>
+              <div className="magnitude-box magnitude-box-lg" />
             </StructuredListCell>
           </StructuredListRow>
           <StructuredListRow label key={`row-${3}`}>
@@ -59,7 +59,7 @@ const EarthquakeList = () => {
             </StructuredListCell>
 
             <StructuredListCell>
-              <div className="magnitude-box magnitude-box-lg"></div>
+              <div className="magnitude-box magnitude-box-lg" />
             </StructuredListCell>
           </StructuredListRow>
         </StructuredListBody>

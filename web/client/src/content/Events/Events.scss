@@ -1,11 +1,4 @@
-.events-page-heading__container {
-  margin-bottom: $layout-03;
-}
-
-@media screen and (max-width: 1312px) {
-  .events-page-earthquake-list__container {
-    margin-top: $layout-03;
-    padding-left: 0;
-    padding-right: 0;
-  }
+.dashboard-page__heading {
+  z-index: 0;
+  position: absolute;
 }

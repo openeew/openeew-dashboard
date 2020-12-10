@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
 import { Dropdown, MultiSelect } from 'carbon-components-react'
+import EarthquakeList from '../EarthquakeList'
 
 const items = [
   { id: 'timeframe-past-7', text: 'Past 7 Days' },
@@ -60,39 +61,26 @@ export default class EventsMap extends Component {
   render() {
     return (
       <>
-        <div className="bx--row events-map-filter__container">
-          <div className="bx--col-lg-4 events-map-filter">
-            <Dropdown
-              ariaLabel="Timeframe"
-              id="events-map-dropdown"
-              items={items}
-              label={'Past 7 Days'}
-              initialSelectedItem={items[0]}
-              itemToString={(item) => (item ? item.text : '')}
-            />
+        <div ref={(el) => (this.mapWrapper = el)} className="map-wrapper" />
+        <div className="events-panel">
+          <Dropdown
+            id="timeperiod-dropdown"
+            items={items}
+            itemToString={(item) => (item ? item.text : '')}
+            label={items[0].text}
+          />
+          <div className="events-panel__information">
+            <div>
+              <h4>8</h4>
+              <span>Earthquakes detected</span>
+            </div>
+            <div>
+              <h4>2,400</h4>
+              <span>Subscribers alerted</span>
+            </div>
           </div>
-          <div className="bx--col-lg-4 events-map-filter">
-            <MultiSelect
-              id={'events-multi'}
-              useTitleInItem={false}
-              label="Magnitude"
-              invalid={false}
-              invalidText="Invalid Selection"
-              onChange={() => {}}
-              items={[
-                { id: 'mag-all', text: 'All' },
-                { id: 'mag-sm', text: '0.0 - 2.9' },
-                { id: 'mag-md', text: '3.0 - 5.9' },
-                { id: 'mag-lg', text: '6.0 +' },
-              ]}
-              itemToString={(item) => (item ? item.text : '')}
-              initialSelectedItems={[{ id: 'mag-all', text: 'All' }]}
-            />
-          </div>
-        </div>
-        <div className="bx--row events-map__row">
-          <div className="bx--col-lg-16 events-map__container">
-            <div ref={(el) => (this.mapWrapper = el)} className="map-wrapper" />
+          <div className="events-page-earthquake-list__container">
+            <EarthquakeList />
           </div>
         </div>
       </>

@@ -12,8 +12,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  left: 0;
+  left: 48px; // width of sidebar
   bottom: 0;
+  z-index: 0;
 }
 
 .events-map-filter__container {
@@ -34,4 +35,23 @@
 .events-map-filter__container .bx--list-box {
   border-bottom: none;
   background-color: #262626;
+}
+
+.events-panel {
+  position: absolute;
+  right: $layout-02;
+  top: calc(#{$layout-02} * 3);
+  width: 300px;
+  display: inline-grid;
+  grid-gap: $spacing-03;
+}
+
+.events-panel__information {
+  background: #393939;
+  padding: $layout-01;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  span {
+    font-size: 0.7rem;
+  }
 }
