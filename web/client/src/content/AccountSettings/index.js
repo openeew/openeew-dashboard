@@ -2,9 +2,8 @@ import React, { useContext, useState } from 'react'
 import Field from '../../components/Field'
 import SaveHeader from '../../components/SaveHeader'
 import Title from '../../components/Title'
-import { TextInput, Dropdown } from 'carbon-components-react'
+import { TextInput } from 'carbon-components-react'
 import Context from '../../context/app'
-import './AccountSettings.scss'
 
 const AccountSettingsContent = ({ isEditing, setEditing }) => {
   return (
@@ -26,24 +25,22 @@ const AccountSettingsContent = ({ isEditing, setEditing }) => {
 const AccountSettingsContentEdit = () => {
   return (
     <div className="userinfo-edit">
-      <TextInput id="input_name" placeholder="Test Name" labelText="Name" />
-      <Dropdown
-        id="dropdown_language"
-        titleText="Language"
-        label="English"
-        items={['English']}
+      <TextInput
+        id="input_firstname"
+        placeholder="Your first name here"
+        labelText="First name"
       />
       <TextInput
-        id="input_name"
+        id="input_lastname"
+        placeholder="Your last name here"
+        labelText="Last name"
+      />
+      <TextInput
+        id="input_email"
         placeholder="test@example.com"
         labelText="Contact"
       />
-      <TextInput
-        id="input_name"
-        value="123456789"
-        labelText="User ID"
-        readOnly={true}
-      />
+      <Field title="User ID" value="123456789" />
     </div>
   )
 }
