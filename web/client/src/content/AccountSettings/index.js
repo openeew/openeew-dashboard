@@ -4,16 +4,22 @@ import SaveHeader from '../../components/SaveHeader'
 import Title from '../../components/Title'
 import { TextInput, Dropdown } from 'carbon-components-react'
 import Context from '../../context/app'
-import './AccountSettings.scss'
+import Button from 'carbon-components-react/lib/components/Button/Button'
 
 const AccountSettingsContent = ({ isEditing, setEditing }) => {
   return (
     <>
       <div className="userinfo_header">
-        <span className="userinfo_title">User Information</span>
-        <span className="userinfo_edit" onClick={() => setEditing(!isEditing)}>
-          Edit
+        <span className="userinfo_title" tabIndex={0}>
+          User Information
         </span>
+        <Button
+          kind="ghost"
+          className="userinfo_edit"
+          onClick={() => setEditing(!isEditing)}
+        >
+          Edit
+        </Button>
       </div>
       <Field title="Name" value="Test Name" />
       <Field title="Language" value="English" />
@@ -26,22 +32,28 @@ const AccountSettingsContent = ({ isEditing, setEditing }) => {
 const AccountSettingsContentEdit = () => {
   return (
     <div className="userinfo-edit">
-      <TextInput id="input_name" placeholder="Test Name" labelText="Name" />
+      <TextInput
+        id="input_name"
+        placeholder="Enter your name here"
+        labelText="Name"
+      />
       <Dropdown
         id="dropdown_language"
         titleText="Language"
-        label="English"
-        items={['English']}
+        selectedItem="English"
+        label="Select a language"
+        items={['English', 'Gibberish']}
       />
       <TextInput
-        id="input_name"
-        placeholder="test@example.com"
+        id="input_contact"
+        placeholder="Enter your email-address here"
         labelText="Contact"
       />
       <TextInput
-        id="input_name"
+        id="input_userid"
         value="123456789"
         labelText="User ID"
+        aria-label="read-only user ID"
         readOnly={true}
       />
     </div>

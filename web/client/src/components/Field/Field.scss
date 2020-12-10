@@ -1,11 +1,6 @@
 .field {
-  &:not(:first-child)
-  {
-    margin-top: 20px;
-  }
-  &:not(:last-child)
-  {
-    margin-bottom: 20px;
+  &:not(:first-child) {
+    margin-top: $layout-02;
   }
   p {
     font-size: 0.875rem;
