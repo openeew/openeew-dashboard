@@ -4,7 +4,7 @@
 
 .userinfo {
   background: #393939;
-  padding: 1rem;
+  padding: $layout-01;
   width: fit-content;
   max-width: 100%;
   min-width: 339px;
@@ -14,7 +14,7 @@
 .userinfo-edit {
   display: inline-grid;
   grid-template-rows: auto;
-  grid-gap: 20px;
+  grid-gap: $layout-02;
   width: 100%;
 }
 
@@ -25,7 +25,7 @@
   }
   .userinfo_edit {
     float: right;
-    margin-left: 40px;
-    cursor: pointer;
+    padding: 0;
+    min-height: fit-content;
   }
 }
