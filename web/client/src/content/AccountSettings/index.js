@@ -4,15 +4,22 @@ import SaveHeader from '../../components/SaveHeader'
 import Title from '../../components/Title'
 import { TextInput } from 'carbon-components-react'
 import Context from '../../context/app'
+import Button from 'carbon-components-react/lib/components/Button/Button'
 
 const AccountSettingsContent = ({ isEditing, setEditing }) => {
   return (
     <>
       <div className="userinfo_header">
-        <span className="userinfo_title">User Information</span>
-        <span className="userinfo_edit" onClick={() => setEditing(!isEditing)}>
-          Edit
+        <span className="userinfo_title" tabIndex={0}>
+          User Information
         </span>
+        <Button
+          kind="ghost"
+          className="userinfo_edit"
+          onClick={() => setEditing(!isEditing)}
+        >
+          Edit
+        </Button>
       </div>
       <Field title="Name" value="Test Name" />
       <Field title="Language" value="English" />
