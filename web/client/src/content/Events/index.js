@@ -1,7 +1,5 @@
 import React from 'react'
 import EventsMap from '../../components/EventsMap'
-import EarthquakeList from '../../components/EarthquakeList'
-import Tile from '../../components/Tile'
 
 const Events = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
-import { Dropdown, MultiSelect } from 'carbon-components-react'
+import { Dropdown } from 'carbon-components-react'
 import EarthquakeList from '../EarthquakeList'
 
 const items = [
@@ -53,7 +53,7 @@ export default class EventsMap extends Component {
 
     map.resize()
 
-    map.on('load', function () {
+    map.on('load', () => {
       map.resize()
     })
   }
