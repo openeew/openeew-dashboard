@@ -20,7 +20,7 @@ const Events = () => {
           items={items}
           itemToString={(item) => (item ? item.text : '')}
           label={items[0].text}
-          size="small"
+          size="sm"
         />
         <div className="events-panel__information">
           <div>
