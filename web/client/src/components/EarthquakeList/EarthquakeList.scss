@@ -3,11 +3,17 @@
 }
 
 .earthquake-list__item-loc {
-  @include carbon--type-style('expressive-heading-01');
+  font-size: 0.875rem;
+
+  .earthquake-list__item-loc__city {
+    font-weight: 600;
+  }
 }
 
 .earthquake-list__item-time {
-  @include carbon--type-style('helper-text-01');
+  font-weight: 100;
+  font-size: 0.75rem;
+  color: #b3b3b3;
 }
 
 .magnitude-box {

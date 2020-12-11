@@ -41,17 +41,40 @@
   position: absolute;
   right: $layout-02;
   top: calc(#{$layout-02} * 3);
+  bottom: $layout-02;
+  display: flex;
+  flex-flow: column;
   width: 311px;
-  display: inline-grid;
-  grid-gap: $spacing-03;
+  > div:not(:first-child) {
+    margin-top: $spacing-03;
+  }
+  .bx--structured-list {
+    margin: 0;
+  }
+  .events-panel__information,
+  .bx--dropdown {
+    background: #393939;
+  }
 }
 
 .events-panel__information {
-  background: #393939;
   padding: $layout-01;
   display: grid;
   grid-template-columns: 1fr 1fr;
   span {
     font-size: 0.7rem;
+  }
+}
+
+.events-page-earthquake-list__container {
+  flex-grow: 1;
+  position: relative;
+  .earthquake-list__container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
   }
 }

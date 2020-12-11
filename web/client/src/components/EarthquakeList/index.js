@@ -17,25 +17,30 @@ const EarthquakeList = () => {
     <div className="earthquake-list__container">
       <StructuredListWrapper className="earthquake-list">
         <StructuredListBody>
-          {range(5).map((n) => (
-            <StructuredListRow label key={`row-${n}`}>
-              <StructuredListCell className="earthquake-list__item-mag">
-                5.0
-              </StructuredListCell>
-              <StructuredListCell>
-                <div className="earthquake-list__item-loc">
-                  10 mi S of Oaxaca, Mexico
-                </div>
-                <div className="earthquake-list__item-time">
-                  01:45:03 (CST) Nov 15, 2020
-                </div>
-              </StructuredListCell>
-
-              <StructuredListCell>
-                <div className="magnitude-box magnitude-box-lg" />
-              </StructuredListCell>
-            </StructuredListRow>
-          ))}
+          {range(50).map((n) => {
+            const time = new Date(1000 * (Math.random() * 86400))
+              .toISOString()
+              .substr(11, 5)
+            return (
+              <StructuredListRow label key={`row-${n}`}>
+                <StructuredListCell className="earthquake-list__item-mag">
+                  {Math.round(Math.random() * 4) + 1}.0
+                </StructuredListCell>
+                <StructuredListCell>
+                  <div className="earthquake-list__item-loc">
+                    {Math.round(Math.random() * 15)} km S of Oaxaca •{' '}
+                    <span className="earthquake-list__item-loc__city">
+                      Mexico
+                    </span>
+                  </div>
+                  <div className="earthquake-list__item-time">
+                    <span>{time}pm cst</span>
+                    <span style={{ marginLeft: 5 }}>Today</span>
+                  </div>
+                </StructuredListCell>
+              </StructuredListRow>
+            )
+          })}
         </StructuredListBody>
       </StructuredListWrapper>
     </div>
