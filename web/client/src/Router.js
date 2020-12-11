@@ -9,7 +9,7 @@ const Router = () => {
       {/* <Login /> */}
       <div className="app-content">
         <Switch>
-          <Route path="/" component={Dashboard}></Route>
+          <Route path="/" component={Dashboard} />
         </Switch>
       </div>
     </HashRouter>

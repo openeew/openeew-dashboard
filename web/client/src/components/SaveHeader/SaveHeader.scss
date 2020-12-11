@@ -1,9 +1,13 @@
 .save-header {
-  background-color: #005CFF;
+  background-color: #005cff;
   color: white;
   padding: 1rem;
   display: flex;
   user-select: none;
+}
+
+.save-header_title {
+  font-weight: 600;
 }
 
 .save-header_buttons {
@@ -20,7 +24,10 @@
     content: '';
     background-color: white;
     width: 1px;
-    height: 70%;
-    margin: auto 5px;
+    height: 100%;
+    margin: auto $spacing-04;
+  }
+  &[data-disabled='true'] {
+    opacity: 0.5;
   }
 }

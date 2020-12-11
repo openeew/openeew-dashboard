@@ -17,6 +17,7 @@
     "carbon-icons": "^7.0.7",
     "d3-scale": "^3.2.3",
     "d3-shape": "^2.0.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "graphql": "^14.3.1",
     "i18next": "^19.8.3",
