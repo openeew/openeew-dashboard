@@ -5,7 +5,7 @@
 .earthquake-list__item-loc {
   font-size: 0.875rem;
 
-  .earthquake-list__item-loc__city {
+  .earthquake-list__item-loc__country {
     font-weight: 600;
   }
 }
@@ -27,4 +27,12 @@
 
 .earthquake-list__item-mag {
   font-weight: 600;
+}
+
+.bx--structured-list-row {
+  cursor: pointer;
+  &:hover,
+  &[data-sim-hover='true'] {
+    background: #393939;
+  }
 }

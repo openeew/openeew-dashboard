@@ -2,3 +2,30 @@
   z-index: 0;
   position: absolute;
 }
+
+.event-details__alert-issued-timing {
+  display: flex;
+  svg {
+    color: #239a46;
+    margin-right: $spacing-03;
+    path[data-icon-path='inner-path'] {
+      color: white;
+      opacity: 100;
+    }
+  }
+}
+
+.event-details__field-grid {
+  display: inline-grid;
+  margin-top: $layout-03;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: $layout-02;
+  > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.event-details__map {
+  margin-top: $layout-02;
+}

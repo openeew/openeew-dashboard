@@ -78,3 +78,69 @@
     overflow-y: auto;
   }
 }
+
+.earthquake-tooltip {
+  z-index: 10;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+  .earthquake-tooltip__header {
+    font-weight: 600;
+  }
+
+  > div {
+    width: max-content;
+    position: absolute;
+    background: #3d3d3d;
+    padding: $spacing-05;
+
+    > h3 {
+      margin: $spacing-03 0;
+    }
+    > .field {
+      margin-top: 0;
+    }
+  }
+  .earthquake-tooltip__inline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: $spacing-05;
+    margin-top: $spacing-05;
+    &:not(:last-child) {
+      margin-bottom: $spacing-06;
+    }
+    .field {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .earthquake-tooltip__arrow {
+    $width: 20px;
+    width: $width;
+    position: absolute;
+    left: calc(50% - #{$width} / 2);
+    &[data-position='bottom'] {
+      top: -10px;
+    }
+    &[data-position='top'] {
+      bottom: -10px;
+      transform: rotateZ(180deg);
+    }
+  }
+
+  .earthquake-tooltip__inline-flex {
+    > button {
+      padding: $spacing-03 calc(#{$spacing-03} * 2);
+      width: max-content;
+    }
+    > .bx--btn--ghost {
+      color: #b3b3b3;
+    }
+    > :not(:first-child) {
+      margin-left: $spacing-05;
+    }
+    display: flex;
+  }
+}
