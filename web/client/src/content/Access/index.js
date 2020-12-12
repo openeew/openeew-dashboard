@@ -110,7 +110,7 @@ const AssignRoleModal = ({ user, open, setOpen, onSave }) => {
           label="Role"
           titleText="Role"
           id="dropdown-role"
-          items={roles}
+          items={roles.map((role) => role.role)}
           selectedItem={selectedRole ?? roles[user.role].role}
           onChange={(target) => setSelectedRole(target.selectedItem)}
         />
