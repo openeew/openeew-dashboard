@@ -6,33 +6,35 @@ import {
   StructuredListBody,
 } from 'carbon-components-react'
 import { earthquakes } from '../../context/app'
+import {
+  filterTime,
+  formatDate,
+  formatTime,
+  keyboardOnlySubmit,
+} from '../../utils'
 
-const EarthquakeList = ({ onEventView, onRowHover, highlightedRow }) => (
+const EarthquakeList = ({
+  onEventView,
+  onRowHover,
+  highlightedRow,
+  selectedTimeFilter,
+}) => (
   <div className="earthquake-list__container">
     <StructuredListWrapper className="earthquake-list">
       <StructuredListBody>
         {earthquakes.map((n, index) => {
+          if (!filterTime(n.date, selectedTimeFilter))
+            return <React.Fragment key={`row-${index}`} />
           const date = new Date(n.date)
-          const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(
-            date
-          )
-          const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(
-            date
-          )
-          const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(
-            date
-          )
-          const time = new Intl.DateTimeFormat('en', {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true,
-          }).format(date)
+          const formattedDate = formatDate(date)
+          const formattedTime = formatTime(date)
+          const onSubmit = () => onEventView(earthquakes[index])
           return (
             <StructuredListRow
               label
               key={`row-${index}`}
-              onClick={() => onEventView(earthquakes[index])}
+              onClick={onSubmit}
+              onKeyDown={(e) => keyboardOnlySubmit(e, onSubmit)}
               onFocus={() => onRowHover(index)}
               onMouseOver={() => onRowHover(index)}
               onMouseLeave={() => onRowHover(undefined)}
@@ -46,8 +48,8 @@ const EarthquakeList = ({ onEventView, onRowHover, highlightedRow }) => (
                   {n.locationText}
                 </div>
                 <div className="earthquake-list__item-time">
-                  <span>{`${time}`}</span>
-                  <span style={{ marginLeft: 5 }}>{`${da} ${mo}, ${ye}`}</span>
+                  <span>{formattedTime}</span>
+                  <span style={{ marginLeft: 5 }}>{formattedDate}</span>
                 </div>
               </StructuredListCell>
             </StructuredListRow>

@@ -5,20 +5,39 @@ import EarthquakeList from '../../components/EarthquakeList'
 import RightInformationPanel from '../../components/RightInformationPanel'
 import { CheckmarkFilled16 } from '@carbon/icons-react'
 import Field from '../../components/Field'
-import { takeEventsMapSnapshot } from '../../context/app'
+import { earthquakes, takeEventsMapSnapshot } from '../../context/app'
+import { formatDate, formatTime } from '../../utils'
+
+const dayInSeconds = 86400
 
 const items = [
-  { id: 'timeframe-past-7', text: 'Past 7 Days' },
-  { id: 'timeframe-past-30', text: 'Past 30 Days' },
-  { id: 'timeframe-past-90', text: 'Past 90 Days' },
-  { id: 'timeframe-past-year', text: 'Past Year' },
+  { id: 'timeframe-past-7', text: 'Past 7 Days', timePeriod: dayInSeconds * 7 },
+  {
+    id: 'timeframe-past-30',
+    text: 'Past 30 Days',
+    timePeriod: dayInSeconds * 30,
+  },
+  {
+    id: 'timeframe-past-90',
+    text: 'Past 90 Days',
+    timePeriod: dayInSeconds * 90,
+  },
+  {
+    id: 'timeframe-past-year',
+    text: 'Past Year',
+    timePeriod: dayInSeconds * 365,
+  },
 ]
+const defaultTimeFilterIndex = 0
 
 const Events = () => {
   const [isViewingEvent, setViewingEvent] = useState(false)
   const [event, setEvent] = useState(undefined)
   const [mapDataURL, setMapDataURL] = useState(undefined)
   const [highlightedEventIndex, setHighlightedEventIndex] = useState(undefined)
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState(
+    items[defaultTimeFilterIndex]
+  )
 
   return (
     <div>
@@ -30,6 +49,7 @@ const Events = () => {
           setMapDataURL(mapSnapshot)
           setEvent(event)
         }}
+        selectedTimeFilter={selectedTimeFilter}
       />
       <div className="events-panel">
         <Dropdown
@@ -37,11 +57,13 @@ const Events = () => {
           items={items}
           itemToString={(item) => (item ? item.text : '')}
           label={items[0].text}
+          value={selectedTimeFilter}
+          onChange={(e) => setSelectedTimeFilter(e.selectedItem)}
           size="sm"
         />
         <div className="events-panel__information">
           <div>
-            <h4>8</h4>
+            <h4>{earthquakes.length}</h4>
             <span>Earthquakes detected</span>
           </div>
           <div>
@@ -58,6 +80,7 @@ const Events = () => {
             }}
             onRowHover={(row) => setHighlightedEventIndex(row)}
             highlightedRow={highlightedEventIndex}
+            selectedTimeFilter={selectedTimeFilter}
           />
         </div>
       </div>
@@ -69,29 +92,16 @@ const Events = () => {
       {isViewingEvent &&
         (() => {
           const date = new Date(event.date)
-          const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(
-            date
-          )
-          const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(
-            date
-          )
-          const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(
-            date
-          )
-          const time = new Intl.DateTimeFormat('en', {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true,
-          }).format(date)
+          const formattedDate = formatDate(date)
+          const formattedTime = formatTime(date)
           return (
             <RightInformationPanel
               title="Event details"
               onRequestClose={() => setViewingEvent(false)}
             >
-              <span className="event-details__alert-issued-timing">
+              <span className="event-details__alert-issued-timing" tabIndex={0}>
                 <CheckmarkFilled16 />
-                Alert issued 6s after detection
+                Alert issued {event.alertDelay}s after detection
               </span>
               <div className="event-details__field-grid">
                 <Field
@@ -104,12 +114,8 @@ const Events = () => {
                   value={event.country}
                   hasMargin={false}
                 />
-                <Field
-                  title="Date"
-                  value={`${da} ${mo}, ${ye}`}
-                  hasMargin={false}
-                />
-                <Field title="Time" value={time} hasMargin={false} />
+                <Field title="Date" value={formattedDate} hasMargin={false} />
+                <Field title="Time" value={formattedTime} hasMargin={false} />
                 <Field
                   title="Location"
                   value={event.locationText}

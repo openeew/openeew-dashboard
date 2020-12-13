@@ -116,6 +116,13 @@
     }
   }
 
+  .earthquake-tooltip__btn-cancel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
   .earthquake-tooltip__arrow {
     $width: 20px;
     width: $width;
@@ -131,7 +138,9 @@
   }
 
   .earthquake-tooltip__inline-flex {
-    > button {
+    display: flex;
+    > button,
+    .earthquake-tooltip__btn-cancel {
       padding: $spacing-03 calc(#{$spacing-03} * 2);
       width: max-content;
     }
@@ -141,6 +150,5 @@
     > :not(:first-child) {
       margin-left: $spacing-05;
     }
-    display: flex;
   }
 }
