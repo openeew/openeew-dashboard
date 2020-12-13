@@ -1,10 +1,10 @@
 .field {
   &:not([data-no-margin='true']) {
     &:not(:first-child) {
-      margin-top: 20px;
+      margin-top: $layout-02;
     }
     &:not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: $layout-02;
     }
   }
   p {
