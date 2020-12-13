@@ -222,7 +222,7 @@ export default class EventsMap extends Component {
         this.map.getCanvas().style.cursor = 'pointer'
       })
       this.map.on('mouseleave', 'earthquakes', (e) => {
-        this.props.onEarthquakeHighlight(undefined)
+        if (!this.state.showTooltip) this.props.onEarthquakeHighlight(undefined)
         this.map.getCanvas().style.cursor = ''
       })
 
@@ -294,7 +294,10 @@ export default class EventsMap extends Component {
           <EventsTooltip
             map={this.map}
             currentEarthquake={this.state.currentEarthquake}
-            onHide={() => this.setState({ showTooltip: false })}
+            onHide={() => {
+              this.props.onEarthquakeHighlight(undefined)
+              this.setState({ showTooltip: false })
+            }}
             tooltipTop={this.state.tooltipTop}
             tooltipLeft={this.state.tooltipLeft}
             onRequestViewEvent={this.props.onRequestViewEvent}
