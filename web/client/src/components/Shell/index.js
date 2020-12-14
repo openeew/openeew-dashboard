@@ -12,7 +12,7 @@ import {
 } from 'carbon-components-react/lib/components/UIShell'
 
 import {
-  Checkbox32,
+  ConnectionSignal32,
   UserAvatar32,
   Activity32,
   UserAvatarFilledAlt32,
@@ -52,7 +52,7 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
         <SideNavLink renderIcon={Activity32} href="/#/events">
           Events
         </SideNavLink>
-        <SideNavLink renderIcon={Checkbox32} href="#">
+        <SideNavLink renderIcon={ConnectionSignal32} href="#">
           Devices
         </SideNavLink>
         <SideNavLink renderIcon={UserAvatarFilledAlt32} href="/#/access">

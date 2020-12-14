@@ -1,0 +1,29 @@
+.right-information-panel {
+  padding: $layout-03 $layout-04;
+  background: #161616;
+  border-left: 1px solid #393939;
+  position: absolute;
+  width: max-content;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9000; // header is at 8000, keep above 8000
+
+  .right-information-panel__close {
+    background: 0;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+    > svg {
+      color: #f4f4f4;
+    }
+  }
+}
+.right-information-panel__content {
+  display: flex;
+  flex-flow: column;
+}
+
+.right-information-panel__header {
+  display: flex;
+}

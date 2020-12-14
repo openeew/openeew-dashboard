@@ -1,11 +1,31 @@
-.events-page-heading__container {
-  margin-bottom: $layout-03;
+.dashboard-page__heading {
+  z-index: 0;
+  position: absolute;
 }
 
-@media screen and (max-width: 1312px) {
-  .events-page-earthquake-list__container {
-    margin-top: $layout-03;
-    padding-left: 0;
-    padding-right: 0;
+.event-details__alert-issued-timing {
+  display: flex;
+  svg {
+    color: #239a46;
+    margin-right: $spacing-03;
+    path[data-icon-path='inner-path'] {
+      color: white;
+      opacity: 100;
+    }
   }
+}
+
+.event-details__field-grid {
+  display: inline-grid;
+  margin-top: $layout-03;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: $layout-02;
+  > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.event-details__map {
+  margin-top: $layout-02;
 }
