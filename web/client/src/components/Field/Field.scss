@@ -1,6 +1,11 @@
 .field {
-  &:not(:first-child) {
-    margin-top: $layout-02;
+  &:not([data-no-margin='true']) {
+    &:not(:first-child) {
+      margin-top: $layout-02;
+    }
+    &:not(:last-child) {
+      margin-bottom: $layout-02;
+    }
   }
   p {
     font-size: 0.875rem;
