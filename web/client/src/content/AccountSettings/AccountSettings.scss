@@ -3,19 +3,25 @@
 }
 
 .userinfo {
-  background: #393939;
+  background: #262626;
   padding: $layout-01;
   width: fit-content;
   max-width: 100%;
   min-width: 339px;
   position: relative;
+  .bx--text-input {
+    background: #393939;
+  }
 }
 
 .userinfo-edit {
-  display: inline-grid;
-  grid-template-rows: auto;
-  grid-gap: $layout-02;
-  width: 100%;
+  .field:not(:first-child),
+  .bx--form-item:not(:first-child) {
+    margin-top: $layout-02;
+  }
+  .bx--text-input {
+    border-bottom: 1px solid #8d8d8d;
+  }
 }
 
 .userinfo_header {

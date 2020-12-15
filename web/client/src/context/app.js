@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default createContext({})
@@ -53,10 +53,12 @@ export let setTakeEventsMapSnapshot = (newFunction) =>
 export const useAppContext = () => {
   const { t } = useTranslation()
   const [currentUser, setCurrentUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: 'Aaron',
+    lastName: 'Williams',
+    email: 'aaron.williams@gmail.com',
+    userID: 'aaron32319',
+    password: 'wouldntyouliketoknowweatherboy',
+    confirmPassword: 'wouldntyouliketoknowweatherboy',
   })
 
   return {
