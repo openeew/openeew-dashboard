@@ -30,11 +30,14 @@ server.express.use(function (req, res, next) {
   next();
 });
 
-server.express.use(express.static(path.join(__dirname, '../client/build')));
+// Env var available in docker env
+if (process.env.USE_STATIC) {
+  server.express.use(express.static(path.join(__dirname, '../client/build')));
 
-server.express.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+  server.express.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
 
 routes(server);
 

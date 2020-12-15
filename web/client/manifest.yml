@@ -2,4 +2,4 @@
 applications:
   - name: openeew-dashboard-dev
     memory: 64M
-    buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+    buildpacks: https://github.com/cloudfoundry/staticfile-buildpack.git

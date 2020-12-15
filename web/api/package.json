@@ -7,7 +7,9 @@
     "graphql-yoga": "^1.18.3"
   },
   "scripts": {
-    "start": "./node_modules/.bin/nodemon server.js"
+    "start": "node server.js",
+    "dev": "./node_modules/.bin/nodemon server.js",
+    "deploy": "cf push openeew-dashboard-api -m 128M -b https://github.com/cloudfoundry/nodejs-buildpack"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
