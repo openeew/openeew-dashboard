@@ -12,22 +12,23 @@ module.exports = (server) => {
   server.express.post('/api/login', (req, res, next) => {
     passportClient.authenticate((err, user, info) => {
       if (err || info) {
-        return res.status(500).json({
-          message: info.message,
+        return res.status(info.statusCode).json({
+          errorCode: info.code,
         });
       }
 
       req.logIn(user, (e) => {
         if (e) {
           return res.status(500).json({
-            message: 'Error logging in.',
+            errorCode: 'login_error',
           });
         }
 
         return res.json({
-          email: user.email,
-          firstName: user.fname,
-          lastName: user.lname,
+          success: true,
+          email: req.user.email,
+          firstName: req.user.given_name,
+          lastName: req.user.family_name,
         });
       });
     })(req, res, next);
@@ -43,6 +44,6 @@ module.exports = (server) => {
       user.lastName = req.user.family_name;
     }
 
-    res.json(user);
+    res.json({ ...user, success: true });
   });
 };
