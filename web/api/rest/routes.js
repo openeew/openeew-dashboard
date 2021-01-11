@@ -34,6 +34,23 @@ module.exports = (server) => {
     })(req, res, next);
   });
 
+  server.express.post('/api/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({
+          errorCode: 'logout_error',
+        });
+      }
+
+      res.clearCookie('connect.sid');
+      res.send(true);
+    });
+  });
+
+  server.express.post('/api/user', (req, res) => {
+    res.send('Success');
+  });
+
   server.express.get('/api/user', isAuth, (req, res) => {
     const user = {};
 
