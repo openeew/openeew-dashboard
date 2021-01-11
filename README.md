@@ -48,7 +48,7 @@ The mock API should be running on http://localhost:4000
 
 ## Screenshot
 
-![dashboard.jpg](/images/dashboard.jpg)
+![dashboard-events.png](/images/dashboard-events.png)
 
 ## Docker
 
