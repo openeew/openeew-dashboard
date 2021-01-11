@@ -9,7 +9,7 @@ import Header from '../../components/Header'
 
 import AuthClient from '../../rest/auth'
 
-const Login = () => {
+const Login = ({ history }) => {
   const { t, setCurrentUser } = useContext(AppContext)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1)
@@ -38,19 +38,20 @@ const Login = () => {
           lastName: user.lastName,
         })
 
-        console.log('Logged In', user)
+        console.log('Login successful ', user.email)
+        return history.push('/events')
       } catch (err) {
         setSubmitting(false)
 
         return setError(t(err))
       }
     },
-    [loginId, setCurrentUser, t]
+    [loginId, setCurrentUser, t, history]
   )
 
   return (
     <>
-      <Header></Header>
+      <Header removeLogin></Header>
       <div className="login__container">
         <div className="login__spacer"></div>
         <div>

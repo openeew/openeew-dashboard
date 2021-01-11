@@ -45,7 +45,11 @@ class Auth {
       })
         .then((response) => response.json())
         .then(this.handleError)
-        .then((data) => resolve(data))
+        .then((data) => {
+          localStorage.setItem('attemptSilentLogin', true)
+
+          return resolve(data)
+        })
         .catch((e) => {
           if (errorToString(e) === 'invalid_grant')
             return reject('content.login.errors.incorrectCreds')
@@ -59,16 +63,39 @@ class Auth {
    * Retrieves the current logged in user
    */
   getCurrentUser() {
-    fetch(`${env.base_url}/api/user`, {
-      credentials: 'include',
+    return new Promise((resolve, reject) => {
+      fetch(`${env.base_url}/api/user`, {
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then((user) => {
+          return resolve(user)
+        })
+        .catch(() => {
+          return reject()
+        })
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data)
+  }
+
+  /**
+   * Retrieves the current logged in user
+   */
+  logout() {
+    return new Promise((resolve, reject) => {
+      fetch(`${env.base_url}/api/logout`, {
+        method: 'POST',
+        credentials: 'include',
       })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
+        .then((response) => response.json())
+        .then(() => {
+          localStorage.setItem('attemptSilentLogin', false)
+
+          return resolve()
+        })
+        .catch((e) => {
+          return reject()
+        })
+    })
   }
 }
 

@@ -35,3 +35,9 @@
     min-height: fit-content;
   }
 }
+
+.accountSettings__logout span {
+  @include carbon--type-style('body-short-01');
+  color: #78a9ff;
+  cursor: pointer;
+}
