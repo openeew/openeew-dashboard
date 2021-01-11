@@ -274,7 +274,6 @@ const AccessRoles = () => {
     <DataTable rows={rows} headers={headers}>
       {({ rows, headers, getRowProps, getHeaderProps, getTableProps }) => (
         <TableContainer>
-          {console.log(rows)}
           <Table
             {...getTableProps()}
             overflowMenuOnHover={false}

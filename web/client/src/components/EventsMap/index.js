@@ -250,11 +250,6 @@ export default class EventsMap extends Component {
       this.setState({
         showTooltip: false,
       })
-      console.log(
-        this.map.getCenter().lng.toFixed(4),
-        this.map.getCenter().lat.toFixed(4),
-        this.map.getZoom().toFixed(2)
-      )
 
       this.setState({
         lng: this.map.getCenter().lng.toFixed(4),

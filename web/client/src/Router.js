@@ -6,8 +6,6 @@ import Login from './content/Login'
 const Router = () => {
   return (
     <HashRouter>
-      {/* Login and side menu temp removed for refactor */}
-      {/* <Login /> */}
       <div className="app-content">
         <Switch>
           <Route path="/login" component={Login} />
