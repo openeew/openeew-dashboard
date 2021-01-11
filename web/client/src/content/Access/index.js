@@ -274,7 +274,6 @@ const AccessRoles = () => {
     <DataTable rows={rows} headers={headers}>
       {({ rows, headers, getRowProps, getHeaderProps, getTableProps }) => (
         <TableContainer>
-          {console.log(rows)}
           <Table
             {...getTableProps()}
             overflowMenuOnHover={false}
@@ -357,6 +356,7 @@ const Access = () => {
           {showSaveNotification && (
             <div className="save-success-notification-parent">
               <InlineNotification
+                className="access__inlineNotification"
                 subtitle="Your changes have been saved."
                 kind="success"
                 title=""

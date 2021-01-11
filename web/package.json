@@ -7,9 +7,10 @@
     "setup:all": "concurrently \"npm run client:setup\" \"npm run api:setup\"",
     "client": "cd client && npm start",
     "client:setup": "cd client && npm install",
-    "api": "cd api && npm start",
+    "api": "cd api && npm run dev",
     "api:setup": "cd api && npm install",
-    "start": "concurrently \"npm run api\" \"npm run client\""
+    "start": "concurrently \"npm run api\" \"npm run client\"",
+    "deploy": "cd client && rm -rf ./build && npm run build && cd .. && cf push -f manifest.yml"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"

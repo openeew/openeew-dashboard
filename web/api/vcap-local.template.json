@@ -1,0 +1,20 @@
+{
+  "user_vars": {
+    "session_secret": ""
+  },
+  "services": {
+    "AppID": {
+      "credentials": {
+        "clientId": "",
+        "tenantId": "",
+        "secret": "",
+        "name": "",
+        "oAuthServerUrl": "",
+        "profilesUrl": "",
+        "discoveryEndpoint": "",
+        "type": "",
+        "scopes": []
+      }
+    }
+  }
+}

@@ -7,8 +7,15 @@ import Context from '../../context/app'
 import Button from 'carbon-components-react/lib/components/Button/Button'
 import { Edit16 } from '@carbon/icons-react'
 import EmailValidator from 'email-validator'
+import AuthClient from '../../rest/auth'
 
-const AccountSettingsContent = ({ currentUser, isEditing, setEditing }) => {
+const AccountSettingsContent = ({
+  currentUser,
+  setCurrentUser,
+  isEditing,
+  setEditing,
+  history,
+}) => {
   return (
     <>
       <div className="userinfo_header">
@@ -28,8 +35,28 @@ const AccountSettingsContent = ({ currentUser, isEditing, setEditing }) => {
         title="Name"
         value={`${currentUser.firstName} ${currentUser.lastName}`}
       />
-      <Field title="Contact" value={currentUser.email} />
-      <Field title="User ID" value={currentUser.userID} />
+      <Field title="User ID" value={currentUser.email} />
+      <p
+        className={'accountSettings__logout'}
+        onClick={async () => {
+          try {
+            await AuthClient.logout()
+
+            setCurrentUser({
+              isAuth: false,
+              firstName: '',
+              lastName: '',
+              email: '',
+            })
+
+            history.push('/events')
+          } catch (error) {
+            console.log(error)
+          }
+        }}
+      >
+        <span>Logout</span>
+      </p>
     </>
   )
 }
@@ -51,8 +78,6 @@ const AccountSettingsContentEdit = ({ currentUser, setCanSave }) => {
         currentUser.email !== user.email
     )
   }
-
-  console.log(editedUser.email, !isEmailValid(editedUser.email))
 
   return (
     <div className="userinfo-edit">
@@ -88,12 +113,10 @@ const AccountSettingsContentEdit = ({ currentUser, setCanSave }) => {
   )
 }
 
-const AccountSettings = () => {
+const AccountSettings = ({ history }) => {
   const { currentUser, setCurrentUser } = useContext(Context)
   const [isEditing, setEditing] = useState(false)
   const [canSave, setCanSave] = useState(false)
-
-  console.log('canSave', canSave)
 
   return (
     <>
@@ -118,6 +141,8 @@ const AccountSettings = () => {
               currentUser={currentUser}
               isEditing={isEditing}
               setEditing={setEditing}
+              setCurrentUser={setCurrentUser}
+              history={history}
             />
           )}
         </div>
