@@ -81,6 +81,18 @@
   -webkit-text-fill-color: #f4f4f4 !important;
 }
 
+@media only screen and (min-width: $small) {
+  .login__background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-size: cover;
+    z-index: -1;
+  }
+}
+
 @media only screen and (max-width: $small) {
   .login__container {
     padding: 0 40px;
