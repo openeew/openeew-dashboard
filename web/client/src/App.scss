@@ -19,8 +19,28 @@ $small: 672px;
 @import './components/SaveHeader/SaveHeader.scss';
 @import './components/Field/Field.scss';
 
-body {
-  background-color: #161616;
+.display-none {
+  display: none !important;
+}
+
+.space-t-2 {
+  margin-top: $spacing-02;
+}
+
+.space-b-2 {
+  margin-bottom: $spacing-02;
+}
+
+.space-b-3 {
+  margin-bottom: $spacing-03;
+}
+
+.marb-0 {
+  margin-bottom: 0 !important;
+}
+
+.marb-1 {
+  margin-bottom: $layout-01;
 }
 
 .marb-2 {
@@ -29,6 +49,18 @@ body {
 
 .marb-3 {
   margin-bottom: $layout-03;
+}
+
+.marb-4 {
+  margin-bottom: $layout-04;
+}
+
+.marb-5 {
+  margin-bottom: $layout-05;
+}
+
+.mart-1 {
+  margin-top: $layout-01;
 }
 
 .no-padding-left {

@@ -5,8 +5,6 @@ import { setTakeEventsMapSnapshot, earthquakes } from '../../context/app'
 import { Button } from 'carbon-components-react'
 import { filterTime, formatTime, keyboardOnlySubmit } from '../../utils'
 
-console.log(process.env.REACT_APP_MAPBOX_ACCESS_TOKEN)
-
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
 const magnitudeSizeFactor = 8
@@ -252,11 +250,6 @@ export default class EventsMap extends Component {
       this.setState({
         showTooltip: false,
       })
-      console.log(
-        this.map.getCenter().lng.toFixed(4),
-        this.map.getCenter().lat.toFixed(4),
-        this.map.getZoom().toFixed(2)
-      )
 
       this.setState({
         lng: this.map.getCenter().lng.toFixed(4),

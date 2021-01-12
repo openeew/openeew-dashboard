@@ -6,8 +6,8 @@
   },
   "env": { "node": true },
   "rules": {
-    "linebreak-style": ["error", "windows"],
     "object-curly-spacing": ["error", "always"],
-    "space-before-function-paren": "off"
+    "space-before-function-paren": ["error", "always"],
+    "linebreak-style": "off"
   }
 }

@@ -1,5 +1,93 @@
-.login {
-  button.bx--modal-close {
-    display: none;
+.login__container {
+  padding-left: 80px;
+  max-width: 440px;
+}
+
+.login__spacer {
+  padding-bottom: $layout-06 * 2;
+}
+
+.login__title {
+  @include carbon--type-style('productive-heading-05');
+}
+
+.login__forgotPassword span {
+  @include carbon--type-style('body-short-01');
+  color: #78a9ff;
+  cursor: pointer;
+}
+
+.login__instructions span {
+  @include carbon--type-style('body-short-01');
+  color: #8d8d8d;
+}
+
+.login__goBack span {
+  @include carbon--type-style('body-short-01');
+  color: #c6c6c6;
+  cursor: pointer;
+}
+
+.login__openeew {
+  font-weight: 600;
+}
+
+.login__continue-button {
+  max-width: none;
+  width: 100%;
+  min-height: 1.5rem;
+}
+
+.login__back-arrow {
+  position: relative;
+  top: 3px;
+  color: #78a9ff;
+  margin-right: $spacing-03;
+}
+
+.login__supportingContainer {
+  min-height: $layout-05;
+}
+
+.login__checkbox,
+.login__checkbox::before {
+  color: #c6c6c6;
+  border-color: #c6c6c6;
+}
+
+.login_textInput {
+  height: 3.5rem;
+}
+
+#openeewId-error-msg,
+#password-error-msg {
+  display: none;
+}
+
+// Removes the fill color on Chrome auto-complete
+#openeewId:-internal-autofill-selected,
+#openeewId:-internal-autofill-previewed,
+#password:-internal-autofill-previewed,
+#password:-internal-autofill-selected {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 40px #262626 inset;
+  caret-color: #f4f4f4;
+}
+
+#openeewId:-internal-autofill-selected,
+#openeewId:-internal-autofill-previewed,
+#password:-internal-autofill-selected,
+#password:-internal-autofill-previewed {
+  -webkit-text-fill-color: #f4f4f4 !important;
+}
+
+@media only screen and (max-width: $small) {
+  .login__container {
+    padding: 0 40px;
+    max-width: none;
+  }
+
+  .login__spacer {
+    padding-bottom: 6rem;
   }
 }

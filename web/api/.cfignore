@@ -1,0 +1,3 @@
+/node_modules
+vcap-local.json
+vcap-local.template.json

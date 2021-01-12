@@ -53,12 +53,10 @@ export let setTakeEventsMapSnapshot = (newFunction) =>
 export const useAppContext = () => {
   const { t } = useTranslation()
   const [currentUser, setCurrentUser] = useState({
-    firstName: 'Aaron',
-    lastName: 'Williams',
-    email: 'aaron.williams@gmail.com',
-    userID: 'aaron32319',
-    password: 'wouldntyouliketoknowweatherboy',
-    confirmPassword: 'wouldntyouliketoknowweatherboy',
+    isAuth: false,
+    firstName: '',
+    lastName: '',
+    email: '',
   })
 
   return {

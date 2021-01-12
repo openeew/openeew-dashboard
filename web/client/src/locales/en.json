@@ -15,29 +15,26 @@
       "welcome": "Welcome {{name}}!"
     },
     "login": {
-      "title": "Welcome to OpenEEW Network Monitoring!",
-      "signupTitle": "Create an account",
-      "signupPrimary": "Sign up",
-      "signupSecondary": "Use existing account",
-      "loginTitle": "Please sign in to continue",
-      "loginPrimary": "Log in",
-      "loginSecondary": "Create an account",
+      "title": "Log in to",
+      "forgotPassword": "Forgot Password?",
+      "continue": "Continue",
+      "rememberMe": "Remember Me",
+      "loggingIn": "Logging in",
+      "enterId": "Enter your OpenEEW ID",
+      "errors": {
+        "errorHeading": "Error logging in",
+        "generic": "There was a problem processing that request",
+        "incorrectCreds": "The email or password that you entered is incorrect."
+      },
       "form": {
-        "name": {
-          "label": "Name",
-          "error": "Name must be present"
+        "labels": {
+          "openeewId": "OpenEEW ID",
+          "password": "Password"
         },
-        "email": {
-          "label": "Email",
-          "error": "Email must be present"
-        },
-        "password": {
-          "label": "Password",
-          "error": "Password must be present"
-        },
-        "confirmPassword": {
-          "label": "Confirm password",
-          "error": "Passwords must match"
+        "errors": {
+          "idRequired": "Please enter your OpenEEW ID",
+          "idInvalid": "OpenEEW ID must be a valid email",
+          "passwordRequired": "Please enter your password"
         }
       }
     }
