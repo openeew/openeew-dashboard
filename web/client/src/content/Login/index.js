@@ -56,7 +56,6 @@ const Login = ({ history }) => {
       <div className="login__container">
         <div className="login__spacer"/>
         <div>
-          {/*<img src={logo} width="50px" className="marb-2" alt="OpenEEW" />*/}
           <Logo width={50} className="marb-2"/>
           <h1 className="login__title">
             {t('content.login.title')}
