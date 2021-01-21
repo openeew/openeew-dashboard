@@ -250,6 +250,7 @@ export default class EventsMap extends Component {
       this.setState({
         showTooltip: false,
       })
+      if (!this.state.showTooltip) this.props.onEarthquakeHighlight(undefined)
 
       this.setState({
         lng: this.map.getCenter().lng.toFixed(4),
