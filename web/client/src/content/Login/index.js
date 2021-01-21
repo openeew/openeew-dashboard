@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { InlineNotification } from 'carbon-components-react'
 
 import AppContext from '../../context/app'
-import logo from '../../assets/openeew_logo.svg'
 import LoginInput from '../../components/LoginInput'
 import Header from '../../components/Header'
 
