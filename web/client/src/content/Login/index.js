@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { InlineNotification } from 'carbon-components-react'
 
 import AppContext from '../../context/app'
-import logo from '../../components/openeew_logo.svg'
 import LoginInput from '../../components/LoginInput'
 import Header from '../../components/Header'
+
+import { ReactComponent as Logo } from "../../assets/openeew_logo.svg";
 
 import AuthClient from '../../rest/auth'
 
@@ -51,11 +52,11 @@ const Login = ({ history }) => {
 
   return (
     <>
-      <Header removeLogin></Header>
+      <Header removeLogin/>
       <div className="login__container">
-        <div className="login__spacer"></div>
+        <div className="login__spacer"/>
         <div>
-          <img src={logo} width="50px" className="marb-2" alt="OpenEEW" />
+          <Logo width={50} className="marb-2"/>
           <h1 className="login__title">
             {t('content.login.title')}
             <span className="login__openeew">{` OpenEEW`}</span>

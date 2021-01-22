@@ -205,7 +205,7 @@ export default class EventsMap extends Component {
         }
         const earthquakeScreenPos = this.map.project(earthquake.pos)
         this.setState({
-          tooltipLeft: earthquakeScreenPos.x + 48, // we have to offset by the width of the sidebar
+          tooltipLeft: earthquakeScreenPos.x,
           showTooltip: true,
           currentEarthquake: earthquake,
         })
@@ -250,6 +250,7 @@ export default class EventsMap extends Component {
       this.setState({
         showTooltip: false,
       })
+      if (!this.state.showTooltip) this.props.onEarthquakeHighlight(undefined)
 
       this.setState({
         lng: this.map.getCenter().lng.toFixed(4),

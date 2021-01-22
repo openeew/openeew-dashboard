@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import {
   TextInput,
@@ -20,6 +20,13 @@ const LoginInput = ({
 }) => {
   const { t } = useContext(AppContext)
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
+
+  const ref = React.createRef();
+
+  useEffect(() => {
+    if (step === 2)
+      ref.current.focus();
+  })
 
   return (
     <Formik
@@ -67,7 +74,8 @@ const LoginInput = ({
             <TextInput
               id={step === 1 ? 'openeewId' : 'password'}
               type={step === 1 ? 'text' : 'password'}
-              className={'login_textInput'}
+              className="login_textInput"
+              ref={ref}
               labelText={
                 step === 1 ? (
                   <p className="login__instructions">
@@ -82,7 +90,7 @@ const LoginInput = ({
                     }}
                   >
                     <span>
-                      <ArrowLeft16 className="login__back-arrow"></ArrowLeft16>
+                      <ArrowLeft16 className="login__back-arrow"/>
                       {loginId}
                     </span>
                   </p>
