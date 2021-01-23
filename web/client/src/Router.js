@@ -9,10 +9,7 @@ const Router = () => {
       <div className="app-content">
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/events" component={Dashboard} />
-          <Route exact path="/access" component={Dashboard} />
-          <Route exact path="/settings" component={Dashboard} />
+          <Route path="/" component={Dashboard} />
         </Switch>
       </div>
     </BrowserRouter>
