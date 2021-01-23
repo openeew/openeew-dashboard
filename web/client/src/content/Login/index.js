@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState } from 'react'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { InlineNotification } from 'carbon-components-react'
 
@@ -57,7 +57,7 @@ const Login = ({ history }) => {
         <div className="login__spacer"/>
         <div>
           <Logo width={50} className="marb-2"/>
-          <h1 className="login__title">
+          <h1 className="login__title" tabIndex={0}>
             {t('content.login.title')}
             <span className="login__openeew">{` OpenEEW`}</span>
           </h1>
@@ -78,7 +78,7 @@ const Login = ({ history }) => {
           >
             <div className="login__supportingContainer">
               {step === 2 ? (
-                <p className="login__forgotPassword">
+                <p className="login__forgotPassword" tabIndex={0} role="button">
                   <span>{t('content.login.forgotPassword')}</span>
                 </p>
               ) : null}
@@ -96,6 +96,7 @@ const Login = ({ history }) => {
               <InlineNotification
                 kind="error"
                 subtitle={<span>{error}</span>}
+                tabIndex={0}
                 title={t('content.login.errors.errorHeading')}
               />
             ) : null}
