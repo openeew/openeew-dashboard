@@ -1,16 +1,23 @@
 {
   "name": "api",
   "version": "0.0.1",
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.11"
+  },
   "license": "Apache-2.0",
   "main": "src/index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "email-validator": "^2.0.4",
     "express-session": "^1.17.1",
     "graphql-yoga": "^1.18.3",
     "helmet": "^4.2.0",
     "ibmcloud-appid": "^6.1.1",
-    "passport": "^0.4.1"
+    "node-fetch": "^2.6.1",
+    "passport": "^0.4.1",
+    "qs": "^6.9.5"
   },
   "scripts": {
     "start": "node server.js",
