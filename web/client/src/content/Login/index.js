@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState, useEffect } from 'react'
+import React, { useContext, useCallback, useState} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { InlineNotification } from 'carbon-components-react'
 
