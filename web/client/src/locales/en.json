@@ -22,7 +22,7 @@
       "loggingIn": "Logging in",
       "enterId": "Enter your OpenEEW ID",
       "errors": {
-        "errorHeading": "Error logging in",
+        "errorHeading": "Error logging in.",
         "generic": "There was a problem processing that request",
         "incorrectCreds": "The email or password that you entered is incorrect."
       },
