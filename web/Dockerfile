@@ -6,10 +6,13 @@ COPY . .
 # Install dependencies
 RUN npm run setup
 
-#Build
-RUN cd ./client && npm run build
+# Build the client
+RUN npm run client:build
 
 ENV USE_STATIC true
 
-EXPOSE 4000
-CMD ["npm","run", "api"]
+# Expose the client
+EXPOSE 3000
+
+# Run both the API and Client
+CMD ["npm","run", "production"]
