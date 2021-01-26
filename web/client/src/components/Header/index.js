@@ -5,11 +5,12 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from 'carbon-components-react/lib/components/UIShell'
+import {Link} from "react-router-dom";
 
 const _Header = ({ removeLogin, history }) => {
   return (
     <Header aria-label="OpenEEW Dashboard">
-      <HeaderName href="#" prefix="OpenEEW">
+      <HeaderName element={Link} to="/events" prefix="OpenEEW">
         Dashboard
       </HeaderName>
       {removeLogin ? null : (
