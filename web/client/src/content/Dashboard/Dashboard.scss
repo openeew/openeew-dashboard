@@ -1,7 +1,11 @@
 .dashboard__container {
-  margin-top: $layout-05;
-  margin-left: $layout-05;
   transition: margin-left 0.12s cubic-bezier(0.2, 0, 1, 0.9);
+  margin-top: $layout-05;
+  margin-left: $layout-01;
+
+  &[data-logged-in="true"] {
+    margin-left: $layout-05;
+  }
 }
 
 .dashboard-page__heading {
