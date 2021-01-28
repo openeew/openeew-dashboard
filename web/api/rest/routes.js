@@ -1,18 +1,7 @@
-const fetch = require('node-fetch');
 const validator = require('email-validator');
 
-const passportService = require('../utils/passport.js');
-const IBMCloudIAM = require('../utils/IBMCloudIam');
-
-let TENET_ID;
-let services = null;
-
-if (process.env.VCAP_APPLICATION) {
-  services = JSON.parse(process.env.VCAP_SERVICES);
-  TENET_ID = services.AppID[0].credentials.tenantId;
-} else {
-  TENET_ID = require('../vcap-local.json').services.AppID.credentials.tenantId;
-}
+const passportService = require('../services/passport.js');
+const AppIdManagement = require('../services/appId');
 
 const isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -31,54 +20,45 @@ module.exports = (server) => {
    */
   server.express.post('/api/verification', async (req, res) => {
     const { email } = req.body;
-    let token;
+    let results;
 
     if (!email || !validator.validate(email)) {
       return res.status(422).send('Email is missing or invalid');
     }
 
     try {
-      token = await IBMCloudIAM.getAccessToken();
-    } catch (e) {
-      return res
-        .status(503)
-        .send('Error authenticating API. This is an error with the server.');
-    }
+      results = await AppIdManagement.verifyUserByEmail(email);
 
-    const formattedEmail = email.replace('@', '%40');
+      // If no user, create user
+      if (results.totalResults === 0) {
+        const user = await AppIdManagement.createUser(email);
 
-    const response = await fetch(
-      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/Users?query=${formattedEmail}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+        return res.json({
+          verified: false,
+          firstName: null,
+          lastName: null,
+          email,
+          userId: user.id,
+        });
+      }
 
-    if (!response.ok) {
-      console.error(response);
-      return res
-        .status(503)
-        .send('There was an error verifying the email (Dependency failed)');
-    }
-
-    const json = await response.json();
-
-    if (json.totalResults === 0) {
       return res.json({
-        verified: false,
-        firstName: '',
-        lastName: '',
+        verified: true,
+        firstName: results.Resources[0].name
+          ? results.Resources[0].name.givenName
+          : null,
+        lastName: results.Resources[0].name
+          ? results.Resources[0].name.familyName
+          : null,
+        userId: results.Resources[0].id,
+        email,
       });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(503)
+        .send('There was an error verifying or creating a user.');
     }
-
-    return res.json({
-      verified: true,
-      firstName: json.Resources[0].name.givenName,
-      lastName: json.Resources[0].name.familyName,
-    });
   });
 
   /**

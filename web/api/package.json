@@ -12,6 +12,7 @@
     "cookie-parser": "^1.4.5",
     "email-validator": "^2.0.4",
     "express-session": "^1.17.1",
+    "generate-password": "^1.6.0",
     "graphql-yoga": "^1.18.3",
     "helmet": "^4.2.0",
     "ibmcloud-appid": "^6.1.1",
