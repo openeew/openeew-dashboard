@@ -67,9 +67,7 @@
           "select": [
             [
               {
-                "params": [
-                  "value"
-                ],
+                "params": ["value"],
                 "type": "column"
               }
             ]
@@ -107,9 +105,7 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "defaults": {
             "mappings": [
               {
@@ -152,9 +148,7 @@
           "select": [
             [
               {
-                "params": [
-                  "value"
-                ],
+                "params": ["value"],
                 "type": "column"
               }
             ]
@@ -189,9 +183,7 @@
       "options": {
         "colorMode": "value",
         "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "defaults": {
             "mappings": [
               {
@@ -234,9 +226,7 @@
           "select": [
             [
               {
-                "params": [
-                  "value"
-                ],
+                "params": ["value"],
                 "type": "column"
               }
             ]
