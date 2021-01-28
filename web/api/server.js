@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
 const routes = require('./rest/routes');
-const passportClient = require('./utils/passport');
+const passportClient = require('./services/passport');
 
 const PORT = process.env.PORT || 4000;
 
