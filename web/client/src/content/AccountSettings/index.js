@@ -8,7 +8,7 @@ import Button from 'carbon-components-react/lib/components/Button/Button'
 import { Edit16 } from '@carbon/icons-react'
 import EmailValidator from 'email-validator'
 import AuthClient from '../../rest/auth'
-import {keyboardOnlySubmit} from "../../utils";
+import { keyboardOnlySubmit } from '../../utils'
 
 const AccountSettingsContent = ({
   currentUser,

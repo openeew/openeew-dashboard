@@ -9,7 +9,7 @@ import {
 } from 'carbon-components-react'
 import AppContext from '../../context/app'
 import { ArrowRight32, ArrowLeft16 } from '@carbon/icons-react'
-import {keyboardOnlySubmit} from "../../utils";
+import { keyboardOnlySubmit } from '../../utils'
 
 const LoginInput = ({
   setLoginId,
@@ -22,7 +22,7 @@ const LoginInput = ({
   const { t } = useContext(AppContext)
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
 
-  const ref = React.createRef();
+  const ref = React.createRef()
 
   const returnToEmail = () => {
     setError('')
@@ -30,8 +30,7 @@ const LoginInput = ({
   }
 
   useEffect(() => {
-    if (step === 2)
-      ref.current.focus();
+    if (step === 2) ref.current.focus()
   })
 
   return (
@@ -83,9 +82,7 @@ const LoginInput = ({
               className="login_textInput"
               ref={ref}
               aria-label={
-                step === 1
-                  ? "enter your email"
-                  : "enter your password"
+                step === 1 ? 'enter your email' : 'enter your password'
               }
               labelText={
                 step === 1 ? (
@@ -102,7 +99,7 @@ const LoginInput = ({
                     onKeyDown={(e) => keyboardOnlySubmit(e, returnToEmail)}
                   >
                     <span>
-                      <ArrowLeft16 className="login__back-arrow"/>
+                      <ArrowLeft16 className="login__back-arrow" />
                       {loginId}
                     </span>
                   </p>

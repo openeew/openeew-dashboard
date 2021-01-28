@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { Save16 } from '@carbon/icons-react'
-import {keyboardOnlySubmit} from "../../utils";
+import { keyboardOnlySubmit } from '../../utils'
 
 const SaveHeader = ({ onSave, onCancel, title, canSave }) => {
   const focus = useRef()
