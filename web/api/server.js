@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const bearerToken = require('express-bearer-token');
 
 const helmet = require('helmet');
 
@@ -27,6 +28,8 @@ const server = new GraphQLServer({
 });
 
 server.express.use(helmet());
+
+server.express.use(bearerToken());
 
 server.express.use(
   bodyParser.urlencoded({

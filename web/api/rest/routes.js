@@ -11,6 +11,22 @@ const isAuth = (req, res, next) => {
   return res.status(401).send('Unauthorized');
 };
 
+const apiKeyAuth = (req, res, next) => {
+  let apiKey;
+
+  if (process.env.VCAP_APPLICATION) {
+    apiKey = process.env.OPENEEW_API_KEY;
+  } else {
+    apiKey = require('../vcap-local.json').user_vars.openeew_api_key;
+  }
+
+  if (!req.token || req.token !== apiKey) {
+    return res.status(401).send('API key not found or invalid');
+  }
+
+  next();
+};
+
 module.exports = (server) => {
   /**
    * POST /verification
@@ -18,7 +34,7 @@ module.exports = (server) => {
    * @param {email} The user's email
    * @returns {Object} User information and new account link (if new user)
    */
-  server.express.post('/api/verification', async (req, res) => {
+  server.express.post('/api/verification', apiKeyAuth, async (req, res) => {
     const { email } = req.body;
     let results;
 
