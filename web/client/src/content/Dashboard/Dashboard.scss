@@ -13,6 +13,12 @@
   font-weight: 300;
 }
 
+@media only screen and (max-width: $events-map-mobile-threshold) {
+  .dashboard-page__heading {
+    font-size: 1.5rem;
+  }
+}
+
 .dashboard__container--sideNavExpanded {
   margin-left: $layout-06 * 3;
 }
