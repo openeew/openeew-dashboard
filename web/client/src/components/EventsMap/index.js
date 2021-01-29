@@ -58,7 +58,7 @@ const EventsTooltip = ({
   const formattedDate = formatDate(date)
   const formattedTime = formatTime(date)
 
-  const { currentUser, setCurrentUser } = useContext(AppContext)
+  const { currentUser } = useContext(AppContext)
 
   const conditionalTooltipOffset = currentUser.isAuth ? 48 : 0
 
