@@ -131,11 +131,7 @@ const Events = () => {
                   hasMargin={false}
                 />
               </div>
-              <img
-                className="event-details__map"
-                src={mapDataURL}
-                alt=""
-              />
+              <img className="event-details__map" src={mapDataURL} alt="" />
             </RightInformationPanel>
           )
         })()}

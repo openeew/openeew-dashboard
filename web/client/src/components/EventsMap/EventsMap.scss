@@ -52,13 +52,13 @@
   z-index: 0;
 }
 
-.dashboard__container[data-logged-in="false"] .map-wrapper {
+.dashboard__container[data-logged-in='false'] .map-wrapper {
   left: 0;
   top: 0;
 }
 
 @media only screen and (max-width: $events-map-mobile-threshold) {
-  .dashboard__container[data-logged-in="true"] .events-container {
+  .dashboard__container[data-logged-in='true'] .events-container {
     left: 48px;
     top: 48px;
   }
@@ -104,7 +104,6 @@
     overflow-y: auto;
   }
 }
-
 
 .events-panel__information {
   padding: $layout-01;
