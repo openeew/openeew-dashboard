@@ -18,7 +18,7 @@ import {
   UserAvatarFilledAlt32,
 } from '@carbon/icons-react'
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
   <Header aria-label="OpenEEW Dashboard">
@@ -54,10 +54,18 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
         <SideNavLink renderIcon={Activity32} to="/events" element={Link}>
           Events
         </SideNavLink>
-        <SideNavLink renderIcon={ConnectionSignal32} to="/events" element={Link}>
+        <SideNavLink
+          renderIcon={ConnectionSignal32}
+          to="/events"
+          element={Link}
+        >
           Devices
         </SideNavLink>
-        <SideNavLink renderIcon={UserAvatarFilledAlt32} to="/access" element={Link}>
+        <SideNavLink
+          renderIcon={UserAvatarFilledAlt32}
+          to="/access"
+          element={Link}
+        >
           Access
         </SideNavLink>
       </SideNavItems>

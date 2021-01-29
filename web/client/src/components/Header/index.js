@@ -5,7 +5,7 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from 'carbon-components-react/lib/components/UIShell'
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const _Header = ({ removeLogin, history }) => {
   return (

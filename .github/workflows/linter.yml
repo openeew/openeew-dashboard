@@ -1,0 +1,21 @@
+name: linter
+
+on:
+  # Execute on every push that isn't to the default branch
+  push:
+    branches-ignore: [$default-branch]
+  # Execute on every pull request to the default branch
+  pull_request:
+    branches: [$default-branch]
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up node
+        uses: actions/setup-node@v1
+      - run: npm install -g dockerfilelint prettier
+      - run: dockerfilelint ./web/Dockerfile
+      - run: prettier --check .
