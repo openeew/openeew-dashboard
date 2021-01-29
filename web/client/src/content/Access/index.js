@@ -288,6 +288,7 @@ const AccessRoles = () => {
                     {...getHeaderProps({ header })}
                     tabIndex={0}
                     aria-label={`Header ${header.header}`}
+                    key={`header-${header.header}`}
                   >
                     {header.header}
                   </TableHeader>
@@ -327,7 +328,7 @@ const AccessRoles = () => {
                     <TableExpandedRow colSpan={headers.length + 1}>
                       <div className="extra-information" tabIndex={0}>
                         {role.extraInformation.split('\n').map((line) => (
-                          <span>
+                          <span key={`line-${line}`}>
                             {line}
                             <br />
                           </span>

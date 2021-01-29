@@ -67,6 +67,7 @@ const Dashboard = ({ location, history }) => {
           className={`dashboard__container bx--grid bx--grid--full-width ${
             isSideNavExpanded ? 'dashboard__container--sideNavExpanded' : ''
           }`}
+          data-logged-in={true}
         >
           <Switch>
             <Route exact path="/events" component={Events} />
@@ -85,6 +86,7 @@ const Dashboard = ({ location, history }) => {
         className={`dashboard__container bx--grid bx--grid--full-width ${
           isSideNavExpanded ? 'dashboard__container--sideNavExpanded' : ''
         }`}
+        data-logged-in={false}
       >
         <Switch>
           <Route exact path="/events" component={Events} />
