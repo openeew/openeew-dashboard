@@ -1,0 +1,20 @@
+applications:
+  - name: # name of client CF instance
+    memory: 128M
+    routes:
+      - route: # URL of client
+    path: ./client/
+    buildpacks:
+      - staticfile_buildpack
+  - name: # name of API CF instance
+    path: ./api/
+    memory: 128M
+    services:
+      -  # name of database service
+      -  # name of AppID service
+    routes:
+      - route: # URL of api -- should be same domain as client, with /api added
+    env:
+      SESSION_SECRET: #any random string of chars, should be rotated and kept secret
+    buildpacks:
+      - https://github.com/cloudfoundry/nodejs-buildpack
