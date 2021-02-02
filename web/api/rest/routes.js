@@ -1,7 +1,15 @@
 const validator = require('email-validator');
+const qs = require('qs');
 
 const passportService = require('../services/passport.js');
 const AppIdManagement = require('../services/appId');
+const jwt = require('../services/jwt');
+
+const dashboardURL = process.env.VCAP_APPLICATION
+  ? process.env.ALLOWED_ORIGIN_URLS.split(',')[0]
+  : 'http://localhost:3000';
+
+if (!dashboardURL) throw new Error('No allowed origin found.');
 
 const isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -49,12 +57,19 @@ module.exports = (server) => {
       if (results.totalResults === 0) {
         const user = await AppIdManagement.createUser(email);
 
+        const token = await jwt.encode({ id: user.id });
+
+        const link = `${dashboardURL}/onboard?${qs.stringify({
+          token,
+        })}`;
+
         return res.json({
           verified: false,
           firstName: null,
           lastName: null,
           email,
           userId: user.id,
+          link,
         });
       }
 
@@ -68,6 +83,7 @@ module.exports = (server) => {
           : null,
         userId: results.Resources[0].id,
         email,
+        link: null,
       });
     } catch (error) {
       console.error(error);
