@@ -1,0 +1,48 @@
+# Dashboard NodePort Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: openeew-dashboard
+  labels:
+    app: openeew-dashboard
+spec:
+  selector:
+    app: openeew-dashboard
+  type: NodePort
+  ports:
+    - port: 3000
+      nodePort: 31700
+      name: openeew-dashboard
+
+---
+# Deploy Dashboard container
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openeew-dashboard
+  namespace: openeew-dev
+  labels:
+    app: openeew-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openeew-dashboard
+  template:
+    metadata:
+      labels:
+        app: openeew-dashboard
+    spec:
+      containers:
+        - name: openeew-dashboard
+          image: # Your image location here. Example "us.icr.io/openeew-test/dashboard:v1"
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: REACT_APP_DEPLOY_URL
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      imagePullSecrets:
+        - name: # Your secrets here. Example all-icr-io
+

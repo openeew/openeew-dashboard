@@ -1,12 +1,22 @@
 .dashboard__container {
-  margin-top: $layout-05;
-  margin-left: $layout-05;
   transition: margin-left 0.12s cubic-bezier(0.2, 0, 1, 0.9);
+  margin-top: $layout-05;
+  margin-left: $layout-01;
+
+  &[data-logged-in='true'] {
+    margin-left: $layout-05;
+  }
 }
 
 .dashboard-page__heading {
   @include carbon--type-style('expressive-heading-05');
   font-weight: 300;
+}
+
+@media only screen and (max-width: $events-map-mobile-threshold) {
+  .dashboard-page__heading {
+    font-size: 1.5rem;
+  }
 }
 
 .dashboard__container--sideNavExpanded {

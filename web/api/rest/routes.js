@@ -1,4 +1,7 @@
-const passportClient = require('../utils/passport.js');
+const validator = require('email-validator');
+
+const passportService = require('../services/passport.js');
+const AppIdManagement = require('../services/appId');
 
 const isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -8,9 +11,81 @@ const isAuth = (req, res, next) => {
   return res.status(401).send('Unauthorized');
 };
 
+const apiKeyAuth = (req, res, next) => {
+  let apiKey;
+
+  if (process.env.VCAP_APPLICATION) {
+    apiKey = process.env.OPENEEW_API_KEY;
+  } else {
+    apiKey = require('../vcap-local.json').user_vars.openeew_api_key;
+  }
+
+  if (!req.token || req.token !== apiKey) {
+    return res.status(401).send('API key not found or invalid');
+  }
+
+  next();
+};
+
 module.exports = (server) => {
+  /**
+   * POST /verification
+   * Calls AppID management API and verifies if email belongs to existing user
+   * @param {email} The user's email
+   * @returns {Object} User information and new account link (if new user)
+   */
+  server.express.post('/api/verification', apiKeyAuth, async (req, res) => {
+    const { email } = req.body;
+    let results;
+
+    if (!email || !validator.validate(email)) {
+      return res.status(422).send('Email is missing or invalid');
+    }
+
+    try {
+      results = await AppIdManagement.verifyUserByEmail(email);
+
+      // If no user, create user
+      if (results.totalResults === 0) {
+        const user = await AppIdManagement.createUser(email);
+
+        return res.json({
+          verified: false,
+          firstName: null,
+          lastName: null,
+          email,
+          userId: user.id,
+        });
+      }
+
+      return res.json({
+        verified: true,
+        firstName: results.Resources[0].name
+          ? results.Resources[0].name.givenName
+          : null,
+        lastName: results.Resources[0].name
+          ? results.Resources[0].name.familyName
+          : null,
+        userId: results.Resources[0].id,
+        email,
+      });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(503)
+        .send('There was an error verifying or creating a user.');
+    }
+  });
+
+  /**
+   * POST /login
+   * Logins in a user, creates express session
+   * @param {string} email
+   * @param {string} password
+   * @returns {Object} User information
+   */
   server.express.post('/api/login', (req, res, next) => {
-    passportClient.authenticate((err, user, info) => {
+    passportService.authenticate((err, user, info) => {
       if (err || info) {
         return res.status(info.statusCode).json({
           errorCode: info.code,

@@ -2,7 +2,7 @@
   padding: $layout-03 $layout-04;
   background: #161616;
   border-left: 1px solid #393939;
-  position: absolute;
+  position: fixed;
   width: max-content;
   top: 0;
   bottom: 0;
@@ -19,6 +19,13 @@
     }
   }
 }
+
+@media only screen and (max-width: $events-map-mobile-threshold) {
+  .right-information-panel {
+    width: 100%;
+  }
+}
+
 .right-information-panel__content {
   display: flex;
   flex-flow: column;

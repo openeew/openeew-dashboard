@@ -65,7 +65,7 @@ Then run a development container:
 docker run \
   --interactive \
   --detach \
-  --publish 4000:4000 \
+  --publish 3000:3000 \
   --name openeew-dashboard-dev \
   openeew/dashboard:dev
 ```

@@ -41,52 +41,54 @@ const Events = () => {
 
   return (
     <div>
-      <EventsMap
-        highlightedEventIndex={highlightedEventIndex}
-        onEarthquakeHighlight={(index) => setHighlightedEventIndex(index)}
-        onRequestViewEvent={(event, mapSnapshot) => {
-          setViewingEvent(true)
-          setMapDataURL(mapSnapshot)
-          setEvent(event)
-        }}
-        selectedTimeFilter={selectedTimeFilter}
-      />
-      <div className="events-panel">
-        <Dropdown
-          id="timeperiod-dropdown"
-          items={items}
-          itemToString={(item) => (item ? item.text : '')}
-          label={items[0].text}
-          value={selectedTimeFilter}
-          onChange={(e) => setSelectedTimeFilter(e.selectedItem)}
-          size="sm"
-        />
-        <div className="events-panel__information">
-          <div>
-            <h4>{earthquakes.length}</h4>
-            <span>Earthquakes detected</span>
-          </div>
-          <div>
-            <h4>2,400</h4>
-            <span>Subscribers alerted</span>
-          </div>
-        </div>
-        <div className="events-page-earthquake-list__container">
-          <EarthquakeList
-            onEventView={(event) => {
-              setViewingEvent(true)
-              setMapDataURL(takeEventsMapSnapshot(event.pos))
-              setEvent(event)
-            }}
-            onRowHover={(row) => setHighlightedEventIndex(row)}
-            highlightedRow={highlightedEventIndex}
-            selectedTimeFilter={selectedTimeFilter}
-          />
-        </div>
-      </div>
       <div className="bx--row events-page-heading__container marb-3">
         <div className="bx--col-16">
           <h1 className="dashboard-page__heading">Events</h1>
+        </div>
+      </div>
+      <div className="events-container">
+        <EventsMap
+          highlightedEventIndex={highlightedEventIndex}
+          onEarthquakeHighlight={(index) => setHighlightedEventIndex(index)}
+          onRequestViewEvent={(event, mapSnapshot) => {
+            setViewingEvent(true)
+            setMapDataURL(mapSnapshot)
+            setEvent(event)
+          }}
+          selectedTimeFilter={selectedTimeFilter}
+        />
+        <div className="events-panel">
+          <Dropdown
+            id="timeperiod-dropdown"
+            items={items}
+            itemToString={(item) => (item ? item.text : '')}
+            label={items[0].text}
+            value={selectedTimeFilter}
+            onChange={(e) => setSelectedTimeFilter(e.selectedItem)}
+            size="sm"
+          />
+          <div className="events-panel__information">
+            <div>
+              <h4>{earthquakes.length}</h4>
+              <span>Earthquakes detected</span>
+            </div>
+            <div>
+              <h4>2,400</h4>
+              <span>Subscribers alerted</span>
+            </div>
+          </div>
+          <div className="events-page-earthquake-list__container">
+            <EarthquakeList
+              onEventView={(event) => {
+                setViewingEvent(true)
+                setMapDataURL(takeEventsMapSnapshot(event.pos))
+                setEvent(event)
+              }}
+              onRowHover={(row) => setHighlightedEventIndex(row)}
+              highlightedRow={highlightedEventIndex}
+              selectedTimeFilter={selectedTimeFilter}
+            />
+          </div>
         </div>
       </div>
       {isViewingEvent &&
@@ -129,12 +131,7 @@ const Events = () => {
                   hasMargin={false}
                 />
               </div>
-              <img
-                width={400}
-                className="event-details__map"
-                src={mapDataURL}
-                alt=""
-              />
+              <img className="event-details__map" src={mapDataURL} alt="" />
             </RightInformationPanel>
           )
         })()}

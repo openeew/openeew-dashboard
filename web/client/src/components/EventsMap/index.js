@@ -1,7 +1,16 @@
-import React, { Component, useEffect, useRef, useState } from 'react'
+import React, {
+  Component,
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+} from 'react'
 import mapboxgl from 'mapbox-gl'
 import Field from '../Field'
-import { setTakeEventsMapSnapshot, earthquakes } from '../../context/app'
+import AppContext, {
+  setTakeEventsMapSnapshot,
+  earthquakes,
+} from '../../context/app'
 import { Button } from 'carbon-components-react'
 import { filterTime, formatTime, keyboardOnlySubmit } from '../../utils'
 
@@ -58,12 +67,16 @@ const EventsTooltip = ({
   const formattedDate = formatDate(date)
   const formattedTime = formatTime(date)
 
+  const { currentUser } = useContext(AppContext)
+
+  const conditionalTooltipOffset = currentUser.isAuth ? 48 : 0
+
   return (
     <div
       className="earthquake-tooltip"
       style={{
-        top: isNaN(tooltipTop) ? 0 : tooltipTop,
-        left: tooltipLeft,
+        top: (isNaN(tooltipTop) ? 0 : tooltipTop) + conditionalTooltipOffset,
+        left: tooltipLeft + conditionalTooltipOffset,
       }}
       ref={tooltipParentRef}
     >

@@ -1,5 +1,5 @@
 .dashboard-page__heading {
-  z-index: 0;
+  z-index: 1;
   position: absolute;
 }
 
@@ -15,10 +15,15 @@
   }
 }
 
+@media only screen and (min-width: $events-map-mobile-threshold) {
+  .event-details__field-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .event-details__field-grid {
   display: inline-grid;
   margin-top: $layout-03;
-  grid-template-columns: 1fr 1fr;
   grid-gap: $layout-02;
   > * {
     margin-top: 0;

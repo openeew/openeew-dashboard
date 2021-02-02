@@ -1,9 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { Save16 } from '@carbon/icons-react'
-
-const onScreenReaderClick = (event, handler) => {
-  if (event.key === 'Enter' || event.keyCode === 32) handler()
-}
+import { keyboardOnlySubmit } from '../../utils'
 
 const SaveHeader = ({ onSave, onCancel, title, canSave }) => {
   const focus = useRef()
@@ -29,7 +26,7 @@ const SaveHeader = ({ onSave, onCancel, title, canSave }) => {
           aria-label="save"
           role="button"
           onKeyDown={(event) => {
-            if (onSave && canSave) onScreenReaderClick(event, onSave)
+            if (onSave && canSave) keyboardOnlySubmit(event, onSave)
           }}
           onClick={() => {
             if (onSave && canSave) onSave()
@@ -45,7 +42,7 @@ const SaveHeader = ({ onSave, onCancel, title, canSave }) => {
           aria-label="cancel"
           role="button"
           onKeyDown={(event) => {
-            if (onSave) onScreenReaderClick(event, onSave)
+            if (onSave) keyboardOnlySubmit(event, onSave)
           }}
         >
           Cancel

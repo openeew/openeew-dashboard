@@ -7,7 +7,13 @@
   "env": { "node": true },
   "rules": {
     "object-curly-spacing": ["error", "always"],
-    "space-before-function-paren": ["error", "always"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
     "linebreak-style": "off"
   }
 }

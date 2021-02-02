@@ -8,6 +8,7 @@ import Button from 'carbon-components-react/lib/components/Button/Button'
 import { Edit16 } from '@carbon/icons-react'
 import EmailValidator from 'email-validator'
 import AuthClient from '../../rest/auth'
+import { keyboardOnlySubmit } from '../../utils'
 
 const AccountSettingsContent = ({
   currentUser,
@@ -16,6 +17,23 @@ const AccountSettingsContent = ({
   setEditing,
   history,
 }) => {
+  let onLogoutRequested = async () => {
+    try {
+      await AuthClient.logout()
+
+      setCurrentUser({
+        isAuth: false,
+        firstName: '',
+        lastName: '',
+        email: '',
+      })
+
+      history.push('/events')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <div className="userinfo_header">
@@ -38,22 +56,9 @@ const AccountSettingsContent = ({
       <Field title="User ID" value={currentUser.email} />
       <p
         className={'accountSettings__logout'}
-        onClick={async () => {
-          try {
-            await AuthClient.logout()
-
-            setCurrentUser({
-              isAuth: false,
-              firstName: '',
-              lastName: '',
-              email: '',
-            })
-
-            history.push('/events')
-          } catch (error) {
-            console.log(error)
-          }
-        }}
+        tabIndex={0}
+        onKeyDown={(e) => keyboardOnlySubmit(e, onLogoutRequested)}
+        onClick={onLogoutRequested}
       >
         <span>Logout</span>
       </p>

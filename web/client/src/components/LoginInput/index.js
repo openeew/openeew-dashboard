@@ -9,6 +9,7 @@ import {
 } from 'carbon-components-react'
 import AppContext from '../../context/app'
 import { ArrowRight32, ArrowLeft16 } from '@carbon/icons-react'
+import { keyboardOnlySubmit } from '../../utils'
 
 const LoginInput = ({
   setLoginId,
@@ -21,11 +22,15 @@ const LoginInput = ({
   const { t } = useContext(AppContext)
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
 
-  const ref = React.createRef();
+  const ref = React.createRef()
+
+  const returnToEmail = () => {
+    setError('')
+    setStep(1)
+  }
 
   useEffect(() => {
-    if (step === 2)
-      ref.current.focus();
+    if (step === 2) ref.current.focus()
   })
 
   return (
@@ -73,9 +78,12 @@ const LoginInput = ({
           >
             <TextInput
               id={step === 1 ? 'openeewId' : 'password'}
-              type={step === 1 ? 'text' : 'password'}
+              type={step === 1 ? 'email' : 'password'}
               className="login_textInput"
               ref={ref}
+              aria-label={
+                step === 1 ? 'enter your email' : 'enter your password'
+              }
               labelText={
                 step === 1 ? (
                   <p className="login__instructions">
@@ -84,13 +92,14 @@ const LoginInput = ({
                 ) : (
                   <p
                     className="login__goBack"
-                    onClick={() => {
-                      setError('')
-                      setStep(1)
-                    }}
+                    onClick={returnToEmail}
+                    tabIndex={0}
+                    aria-label="back to email"
+                    role="button"
+                    onKeyDown={(e) => keyboardOnlySubmit(e, returnToEmail)}
                   >
                     <span>
-                      <ArrowLeft16 className="login__back-arrow"/>
+                      <ArrowLeft16 className="login__back-arrow" />
                       {loginId}
                     </span>
                   </p>

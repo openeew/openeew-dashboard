@@ -6,7 +6,7 @@ import AppContext from '../../context/app'
 import LoginInput from '../../components/LoginInput'
 import Header from '../../components/Header'
 
-import { ReactComponent as Logo } from "../../assets/openeew_logo.svg";
+import { ReactComponent as Logo } from '../../assets/openeew_logo.svg'
 
 import AuthClient from '../../rest/auth'
 
@@ -52,12 +52,12 @@ const Login = ({ history }) => {
 
   return (
     <>
-      <Header removeLogin/>
+      <Header removeLogin />
       <div className="login__container">
-        <div className="login__spacer"/>
+        <div className="login__spacer" />
         <div>
-          <Logo width={50} className="marb-2"/>
-          <h1 className="login__title">
+          <Logo width={50} className="marb-2" />
+          <h1 className="login__title" tabIndex={0}>
             {t('content.login.title')}
             <span className="login__openeew">{` OpenEEW`}</span>
           </h1>
@@ -78,7 +78,7 @@ const Login = ({ history }) => {
           >
             <div className="login__supportingContainer">
               {step === 2 ? (
-                <p className="login__forgotPassword">
+                <p className="login__forgotPassword" tabIndex={0} role="button">
                   <span>{t('content.login.forgotPassword')}</span>
                 </p>
               ) : null}
@@ -96,6 +96,7 @@ const Login = ({ history }) => {
               <InlineNotification
                 kind="error"
                 subtitle={<span>{error}</span>}
+                tabIndex={0}
                 title={t('content.login.errors.errorHeading')}
               />
             ) : null}

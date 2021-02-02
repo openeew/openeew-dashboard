@@ -1,6 +1,10 @@
 {
   "user_vars": {
-    "session_secret": ""
+    "session_secret": "",
+    "openeew_api_key": ""
+  },
+  "ibm_cloud": {
+    "api_key": ""
   },
   "services": {
     "AppID": {

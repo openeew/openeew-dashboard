@@ -8,15 +8,6 @@
   height: 600px;
 }
 
-.map-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0; // width of sidebar
-  bottom: 0;
-  z-index: 0;
-}
-
 .events-map-filter__container {
   background-color: #262626;
   border-bottom: 1px solid #c8c8c8;
@@ -38,13 +29,9 @@
 }
 
 .events-panel {
-  position: absolute;
-  right: $layout-02;
-  top: calc(#{$layout-02} * 3);
-  bottom: $layout-02;
+  position: relative;
   display: flex;
   flex-flow: column;
-  width: 311px;
   > div:not(:first-child) {
     margin-top: $spacing-03;
   }
@@ -54,6 +41,67 @@
   .events-panel__information,
   .bx--dropdown {
     background: #393939;
+  }
+}
+
+.event-details__map {
+  width: 300px;
+}
+
+.map-wrapper {
+  z-index: 0;
+}
+
+.dashboard__container[data-logged-in='false'] .map-wrapper {
+  left: 0;
+  top: 0;
+}
+
+@media only screen and (max-width: $events-map-mobile-threshold) {
+  .dashboard__container[data-logged-in='true'] .events-container {
+    left: 48px;
+    top: 48px;
+  }
+  .events-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .map-wrapper {
+    height: 40%;
+  }
+}
+
+@media only screen and (min-width: $events-map-mobile-threshold) {
+  .map-wrapper {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    left: 48px;
+    bottom: 0;
+  }
+
+  .events-panel {
+    position: absolute;
+    right: $layout-02;
+    top: calc(#{$layout-02} * 3);
+    bottom: $layout-02;
+    width: 311px;
+  }
+
+  .event-details__map {
+    width: 400px;
+  }
+
+  .earthquake-list__container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
   }
 }
 
@@ -69,14 +117,6 @@
 .events-page-earthquake-list__container {
   flex-grow: 1;
   position: relative;
-  .earthquake-list__container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-  }
 }
 
 .earthquake-tooltip {

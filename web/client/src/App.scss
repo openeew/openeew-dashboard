@@ -1,9 +1,10 @@
 $small: 672px;
+$events-map-mobile-threshold: 1100px;
 
-@import 'carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family.scss';
-@import 'carbon-components/scss/globals/scss/vendor/@carbon/layout/scss/breakpoint.scss';
-@import 'carbon-components/scss/globals/scss/typography.scss';
-@import 'carbon-components/scss/globals/scss/vars.scss';
+@import '~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family.scss';
+@import '~carbon-components/scss/globals/scss/vendor/@carbon/layout/scss/breakpoint.scss';
+@import '~carbon-components/scss/globals/scss/typography.scss';
+@import '~carbon-components/scss/globals/scss/vars.scss';
 
 @import './content/Dashboard/Dashboard.scss';
 @import './content/Login/Login.scss';
