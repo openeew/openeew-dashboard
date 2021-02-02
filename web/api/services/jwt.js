@@ -16,20 +16,18 @@ if (!secret) {
 
 const encode = (payload) =>
   new Promise((resolve, reject) => {
-    jwt.sign(payload, secret, { algorithm: 'HS256' }, function (err, token) {
-      if (err) {
-        return reject(err);
-      }
+    jwt.sign(payload, secret, { algorithm: 'HS256' }, (err, token) => {
+      if (err) return reject(err);
+
       return resolve(token);
     });
   });
 
 const decode = (token) =>
   new Promise((resolve, reject) => {
-    jwt.verify(token, secret, function (error, decoded) {
-      if (error) {
-        return reject(error);
-      }
+    jwt.verify(token, secret, (error, decoded) => {
+      if (error) return reject(error);
+
       return resolve(decoded);
     });
   });
