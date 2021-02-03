@@ -15,6 +15,10 @@ applications:
     routes:
       - route: # URL of api -- should be same domain as client, with /api added
     env:
-      SESSION_SECRET: #any random string of chars, should be rotated and kept secret
+      SESSION_SECRET: # Create a session secret. Any random string of chars, should be rotated and kept secret.
+      JWT_SECRET: # Create a secret for signing JWTs. Any random string of chars, should be rotated and kept secret.
+      ALLOWED_ORIGIN_URLS: # Allowed origins, separated by commas. First in list should be dashboard URL.
+      IAM_API_KEY: # IBM Cloud API key to make requests to AppID management API. This is obtained from IBM Cloud.
+      OPENEEW_API_KEY: # Create an API key to autheticate requests from other services.
     buildpacks:
       - https://github.com/cloudfoundry/nodejs-buildpack
