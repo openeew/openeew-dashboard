@@ -3,11 +3,11 @@ name: linter
 on:
   # Execute on every push to any branch
   push:
-    branches: 
-      - '**'
+    branches:
+      - "**"
   # Execute on every pull request to the master branch
   pull_request_target:
-    branches: 
+    branches:
       - master
 
 jobs:
