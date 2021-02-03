@@ -85,10 +85,11 @@ For every new addition to this application, there is a process in which prototyp
 
 You can view the [current prototype here](https://ibm.invisionapp.com/share/3FO0NR58WK6#/screens/319792717_EW_Login-_ID_Empty).
 
-## Initial Authors
+## Contributors
 
-- [Grillo](https://grillo.io)
-- [Ryan Kelley](https://github.com/rdkelley)
+<a href="https://github.com/openeew/openeew-dashboard/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=openeew/openeew-dashboard" />
+</a>
 
 ---
 
