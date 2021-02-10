@@ -12,9 +12,9 @@ Currently, the project consists of:
 
 Creating a development environment involves cloning this repository and setting up several API keys, secrets and other environment variables for both the React application and API.
 
-**1. Create a vcap-local file from the template provided to store API credentials**
+**1. Create a vcap-local.json file from the template provided to store API credentials**
 
-Make a copy of the `vcap-local.template.json` file located in the `/api` directory and rename it `vcap-local.json` (this file is ignored by Git) using this command:
+Make a copy of the `vcap-local.template.json` file located in the `web/api` directory and rename it `vcap-local.json` (this file is ignored by Git) using this command:
 
 ```bash
 # from the root directory
