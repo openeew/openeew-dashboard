@@ -125,9 +125,10 @@ You can view the [current prototype here](https://ibm.invisionapp.com/share/3FO0
 
 ## Contributors
 
-<a href="https://github.com/openeew/openeew-dashboard/graphs/contributors" target="_blank">
-<img src="https://contributors-img.web.app/image?repo=openeew/openeew-dashboard">
+<a href="https://github.com/openeew/openeew-dashboard/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=openeew/openeew-dashboard" />
 </a>
+
 ---
 
 Enjoy! Give us [feedback](https://github.com/openeew/openeew-dashboard/issues) if you have suggestions on how to improve this information.
