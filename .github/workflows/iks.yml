@@ -25,8 +25,8 @@ jobs:
           cloud-region: us-south
           deployment-name: openeew-dashboard
           github-sha: ${{ github.sha }}
-          icr-namespace: openeew-test
-          image-name: dashboard-gha-test
-          k8s-cluster-name: bvucbrsw0jq4m9h0kdag
+          icr-namespace: ${{ secrets.ICR_NAMESPACE }}
+          image-name: dashboard-gha
+          k8s-cluster-name: ${{ secrets.K8S_CLUSTER_NAME }}
           k8s-cluster-namespace: openeew-dev
           registry-hostname: us.icr.io
