@@ -8,60 +8,25 @@ on:
     branches:
       - master
 
-# Environment variables available to all jobs and steps in this workflow
-env:
-  GITHUB_SHA: ${{ github.sha }}
-  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
-  IBM_CLOUD_REGION: us-south
-  ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
-  REGISTRY_HOSTNAME: us.icr.io
-  IMAGE_NAME: dashboard-gha
-  IKS_CLUSTER: bvucbrsw0jq4m9h0kdag # name or id of cluster
-  DEPLOYMENT_NAME: openeew-dashboard
-  CLUSTER_NAMESPACE: openeew-dev
-  REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
-  VCAP_LOCAL: ${{ secrets.VCAP_LOCAL }}
-
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+  build-push-deploy-job:
     runs-on: ubuntu-latest
+    name: A job to download and log into ibmcloud cli
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # Download and Install IBM Cloud CLI
-      - name: Install IBM Cloud CLI
+      - uses: actions/checkout@v2
+      - name: Set environment variables
         run: |
-          curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
-          ibmcloud --version
-          ibmcloud config --check-version=false
-          ibmcloud plugin install -f kubernetes-service
-          ibmcloud plugin install -f container-registry
-
-      # Authenticate with IBM Cloud CLI
-      - name: Authenticate with IBM Cloud CLI
-        run: |
-          ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g default
-          ibmcloud cr region-set "${IBM_CLOUD_REGION}"
-          ibmcloud cr login
-
-      # Build the Docker image
-      - name: Build with Docker
-        run: |
-          echo $VCAP_LOCAL >> ./web/api/vcap-local.json
-          echo REACT_APP_MAPBOX_ACCESS_TOKEN=$REACT_APP_MAPBOX_ACCESS_TOKEN >> ./web/client/.env.local
-          docker build --tag "$REGISTRY_HOSTNAME"/"$ICR_NAMESPACE"/"$IMAGE_NAME":"$GITHUB_SHA" ./web/
-
-      # Push the image to IBM Container Registry
-      - name: Push the image to ICR
-        run: |
-          docker push $REGISTRY_HOSTNAME/$ICR_NAMESPACE/$IMAGE_NAME:$GITHUB_SHA
-
-      # Deploy the Docker image to the IKS cluster
-      - name: Deploy to IKS
-        run: |
-          ibmcloud ks cluster config --cluster $IKS_CLUSTER
-          kubectl config current-context
-          kubectl set image --namespace=$CLUSTER_NAMESPACE deployments/$DEPLOYMENT_NAME \
-          $DEPLOYMENT_NAME=$REGISTRY_HOSTNAME/$ICR_NAMESPACE/$IMAGE_NAME:$GITHUB_SHA
+          echo ${{ secrets.VCAP_LOCAL }} >> ./web/api/vcap-local.json
+          echo REACT_APP_MAPBOX_ACCESS_TOKEN=${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }} >> ./web/client/.env.local
+      - id: iks-deploy
+        uses: call-for-code/build-push-deploy@v1
+        with:
+          cloud-api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
+          cloud-region: us-south
+          deployment-name: openeew-dashboard
+          github-sha: ${{ github.sha }}
+          icr-namespace: ${{ secrets.ICR_NAMESPACE }}
+          image-name: dashboard-gha
+          k8s-cluster-name: ${{ secrets.K8S_CLUSTER_NAME }}
+          k8s-cluster-namespace: openeew-dev
+          registry-hostname: us.icr.io
