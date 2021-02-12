@@ -4,25 +4,53 @@ The OpenEEW Dashboard is a web application currently being developed by the Open
 
 Currently, the project consists of:
 
-- A React application that displays a dashboard built with [IBM's Carbon Design System](https://www.carbondesignsystem.com)
-- A simple GraphQL server that mocks the delivery of sample acceleration data
+- A React application built with [IBM's Carbon Design System](https://www.carbondesignsystem.com)
+- An API that handles requests from the React dashboard and other OpenEEW applications
 - Grafana dashboards that provide sensor visualizations, used in lieu of the web application until this project is further along in development [(see more)](https://github.com/openeew/openeew-dashboard/tree/master/grafana)
 
-## Quick start for Developers
+## For developers: Setup a development environment
 
-**1. Install dependencies for both the mock API and application**
+Creating a development environment involves cloning this repository and setting up several API keys, secrets and other environment variables for both the React application and API.
+
+**1. Create a vcap-local.json file from the template provided to store API credentials**
+
+Make a copy of the `vcap-local.template.json` file located in the `web/api` directory and rename it `vcap-local.json` (this file is ignored by Git) using this command:
 
 ```bash
-# setup scripts are located in /web
-cd web
-
-# this might take a few minutes
-npm run setup
+# from the root directory
+cp ./web/api/vcap-local.template.json ./web/api/vcap-local.json
 ```
 
-**2. Add a Mapbox access token for local development**
+**2. Add IBM Cloud service credentials and required environment variables to `vcap-local.json`**
 
-If you don't already have a [Mapbox](https://mapbox.com) account, create one, and then naviagte to your account's [access token page](https://account.mapbox.com/access-tokens/) to view your tokens. You can use the Default public token or create a new one.
+This step will require a [IBM Cloud account](https://www.ibm.com/cloud).
+
+**AppID**
+
+1. Provision an AppID instance in IBM Cloud
+   https://cloud.ibm.com/catalog/services/app-id
+2. Add at least one user to Cloud Directory to authenticate in development. From the AppID instance, go to Cloud Directory -> Users -> Create User
+3. Create AppID service credentials: In the newly created AppID instance, go to Service Credentials -> New credential. Set the role to `Writer`.
+4. Expand the created credentials and fill in the required properties in your `vcap-local.json` file located in `web/api` under `AppID` and `credentials`. You can leave the `scopes` field as an empty array.
+5. Copy the `apiKey` from your service credentials and add it to `vcap-local.json` in the `api_key` field under `ibm_cloud`
+
+**Other required environment variables**
+
+Also add the following environment variables to your `vcap-local.json` file:
+
+1. `session_secret`
+   For development, this can be any random string of characters
+
+2. `openeew_api_key`
+   For development, this can be any random string of characters. This is used to send authenticated requests to the API
+
+3. `jwt_secret` For development, this can be any random string of characters
+
+All of these should be changed and kept secret in production.
+
+**3. Add a Mapbox access token to the React client**
+
+If you don't already have a [Mapbox](https://mapbox.com) account, create one, and then navigate to your account's [access token page](https://account.mapbox.com/access-tokens/) to view your tokens. You can use the Default public token or create a new one.
 
 After you have copied your token, create a file called **.env.local** in
 the **web/client** directory.
@@ -33,14 +61,24 @@ In **.env.local** add the following, replacing your_token with your Mapbox acces
 REACT_APP_MAPBOX_ACCESS_TOKEN=your_token
 ```
 
-**3. Start the mock API and application concurrently**
+**3. Install dependencies for both the mock API and application**
+
+```bash
+# setup scripts are located in /web
+cd web
+
+# this might take a few minutes
+npm run setup
+```
+
+**4. Start the mock API and application concurrently**
 
 ```bash
 # From the /web directory
 npm start
 ```
 
-**4. Start developing!**
+**5. Start developing!**
 
 The application should be running on http://localhost:3000.
 
