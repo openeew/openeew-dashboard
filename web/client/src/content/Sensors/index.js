@@ -94,14 +94,13 @@ const formatRows = (rows) => rows.map(row => {
 const SensorsTable = () => {
   let [pageSize, setPageSize] = useState(5)
   let [page, setPage] = useState(1)
-  let [search, setSearch] = useState("")
 
   const onPaginationChange = (paginationInfo) => {
     setPage(paginationInfo.page)
     setPageSize(paginationInfo.pageSize)
   }
 
-  let currentlyVisibleSensors = sensors.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+  let currentlyVisibleSensors = sensors.slice((page - 1) * pageSize, page * pageSize)
 
   const getRowClasses = (indexCells) => {
     if (indexCells === 1)
@@ -122,7 +121,7 @@ const SensorsTable = () => {
       <TableContainer {...getTableContainerProps()}>
         <TableToolbar {...getToolbarProps()} aria-label="data table toolbar" size="small">
           <TableToolbarContent>
-            <TableToolbarSearch expanded={true} onChange={(e) => {setSearch(e.target.value); onInputChange(e)}} placeHolderText="Search by Sensor ID"/>
+            <TableToolbarSearch expanded={true} onChange={onInputChange} placeHolderText="Search by Sensor ID"/>
           </TableToolbarContent>
         </TableToolbar>
         <Table
@@ -149,7 +148,10 @@ const SensorsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, rowIndex) => (
+            {rows
+              // make sure we don't try to display more than possible
+              .filter((_, rowIndex) => (page - 1) * pageSize + rowIndex < sensors.length) 
+              .map((row, rowIndex) => (
                 <Fragment key={row.id}>
                   <TableExpandRow {...getRowProps({row})}>
                     {row.cells.map((cell, indexCells) => (
@@ -238,9 +240,9 @@ let sensorSources = {
 
 const Sensors = () => {
   let mapWrapper = useRef()
-  let [lng, setLng] = useState(-99.3533)
-  let [lat, setLat] = useState(20.8857)
-  let [zoom, setZoom] = useState(4.65)
+  let [lng] = useState(-99.3533)
+  let [lat] = useState(20.8857)
+  let [zoom] = useState(4.65)
   let map = useRef()
   
   if (
