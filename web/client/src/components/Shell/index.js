@@ -56,10 +56,10 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
         </SideNavLink>
         <SideNavLink
           renderIcon={ConnectionSignal32}
-          to="/events"
+          to="/sensors"
           element={Link}
         >
-          Devices
+          Sensors
         </SideNavLink>
         <SideNavLink
           renderIcon={UserAvatarFilledAlt32}
