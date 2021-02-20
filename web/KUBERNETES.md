@@ -54,6 +54,4 @@ You can now deploy the `openeew/dashboard` app to your cluster.
   - Copy the [openeew-dashboard YAML](openeew-dashboard.yaml)
   - In the **Create from input** box, paste the openeew-dashboard YAML that you copied in the previous step.
   - Click **Upload**. The node port service and deployment is created.
-- From the menu, click **Service > Services**, and note the TCP endpoint port of your container in the node port range `30000 - 32767`, by default it will be `openeew-dashboard:31700 TCP`.
-- From the menu, click **Workloads > Pods**, and note the **Node** that your pod runs on, such as `10.xxx.xxx.xxx`.
-- Return to the [IBM Cloud clusters console](https://cloud.ibm.com/kubernetes/clusters), select your cluster, and click the **Worker Nodes** tab. Find the **Public IP** of the worker node that matches the private IP of the node that the pod runs on. In your browser, navigate to **http://YourPublicIP:37000**. It may take a minute for the openeew-dashboard client to start. The url will automatically refresh when it is complete, allowing you to use the openeew-dashboard.
+- From the menu, click **Service > Services**. If using the defaults in the sample, the MQTT service will be named **openeew-dashboard**. Under the **External Endpoints** column, take note of the IP and and Port values in the form IP:Port. For example, `169.xx.xx.xxx:yy ` indicates your IP is `169.xx.xx.xxx` and your port is `yy`.

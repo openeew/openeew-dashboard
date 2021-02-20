@@ -1,18 +1,23 @@
-# Dashboard NodePort Service
+# Dashboard LoadBalancer Service
 apiVersion: v1
 kind: Service
 metadata:
   name: openeew-dashboard
-  labels:
-    app: openeew-dashboard
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "nlb"
 spec:
+  type: LoadBalancer
   selector:
-    app: openeew-dashboard
-  type: NodePort
+    app: openeew-dasboard
   ports:
-    - port: 3000
-      nodePort: 31700
-      name: openeew-dashboard
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+    - name: https
+      protocol: TCP
+      port: 443
+  externalTrafficPolicy: Cluster
 
 ---
 # Deploy Dashboard container
