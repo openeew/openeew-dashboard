@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "scripts": {
+    "test": "cd api && npm test",
     "setup": "npm install && npm run setup:all",
     "setup:all": "concurrently \"npm run client:setup\" \"npm run api:setup\"",
     "client": "cd client && npm start",
