@@ -21,6 +21,8 @@ $events-map-mobile-threshold: 1100px;
 @import './components/SaveHeader/SaveHeader.scss';
 @import './components/Field/Field.scss';
 
+@import './scrollbar.scss';
+
 .display-none {
   display: none !important;
 }

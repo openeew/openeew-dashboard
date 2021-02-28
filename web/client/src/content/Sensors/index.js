@@ -150,7 +150,7 @@ const SensorsTable = () => {
           <TableBody>
             {rows
               // make sure we don't try to display more than possible
-              .filter((_, rowIndex) => (page - 1) * pageSize + rowIndex < sensors.length) 
+              .filter((_, rowIndex) => (page - 1) * pageSize + rowIndex < sensors.length)
               .map((row, rowIndex) => (
                 <Fragment key={row.id}>
                   <TableExpandRow {...getRowProps({row})}>

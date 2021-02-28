@@ -54,6 +54,9 @@
     left: 0;
   }
   .sensors-expandable-row {
+    > td {
+      padding: 1rem;
+    }
     height: 250px;
   }
   .bx--data-table-content {
