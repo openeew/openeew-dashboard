@@ -8,6 +8,7 @@ import Events from '../Events'
 import Access from '../Access'
 import AuthClient from '../../rest/auth'
 import Header from '../../components/Header'
+import Sensors from "../Sensors";
 
 const Dashboard = ({ location, history }) => {
   const { currentUser, setCurrentUser } = useContext(AppContext)
@@ -73,6 +74,7 @@ const Dashboard = ({ location, history }) => {
             <Route exact path="/events" component={Events} />
             <Route path="/settings" component={AccountSettings} />
             <Route path="/access" component={Access} />
+            <Route path="/sensors" component={Sensors} />
           </Switch>
         </main>
       </>

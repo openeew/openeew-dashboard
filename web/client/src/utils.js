@@ -20,6 +20,9 @@ export const filterTime = (date, timeFilter) => {
   return new Date().getTime() - date <= (timeFilter.timePeriod + 86400) * 1000
 }
 
+export const formatCoordinates = (coordinates) =>
+  `${coordinates[1].toFixed(2)}°N, ${coordinates[0].toFixed(2)}°E`
+
 export const keyboardOnlySubmit = (e, callback) => {
   switch (e.keyCode) {
     case 32: // space

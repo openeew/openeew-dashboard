@@ -1,0 +1,130 @@
+.sensor-group-dropdown {
+  width: fit-content;
+  float: right;
+}
+
+.sensors-page .bx--dropdown__wrapper {
+  height: 40px
+}
+
+.sensors-map__container {
+  background: #262626;
+  margin-top: $layout-02;
+  margin-bottom: $layout-03;
+  padding: $spacing-05;
+  height: 500px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  .map-wrapper {
+    height: 100%;
+  }
+}
+
+.with-circle::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+  margin-right: $spacing-03;
+}
+
+.status-green::before {
+  background: #3DC04E;
+}
+
+.sticky-column {
+  position: sticky;
+  
+  &.left {
+    left: 2rem;
+  }
+  &.right {
+    right: 0;
+  }
+}
+
+.sensors-page {
+  td {
+    white-space: nowrap;
+  }
+  .bx--table-expand {
+    position: sticky;
+    left: 0;
+  }
+  .sensors-expandable-row {
+    > td {
+      padding: 1rem;
+    }
+    height: 250px;
+  }
+  .bx--data-table-content {
+    position: relative;
+  }
+}
+
+@keyframes animation-dance {
+  0% {
+    content: '♪┏(・o･)┛♪';
+    color: red;
+  }
+  25% {
+    content: '(~^.^)~';
+    color: cyan;
+  }
+  50% {
+    content: '（〜^∇^)〜';
+    color: lime;
+  }
+  75% {
+    content: '~(o.o)~';
+    color: orange;
+  }
+}
+
+.dance::after {
+  content: '♪┏(・o･)┛♪';
+  color: red;
+  animation: animation-dance 4s infinite;
+  animation-delay: 0s;
+}
+
+.tag-owner {
+  background: #E5DFDF;
+  color: black;
+  width: max-content;
+}
+
+.sensors-map__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: $spacing-05;
+}
+
+.bx--data-table-container {
+  margin-bottom: $layout-03;
+}
+
+.sensor-chart {
+  background: #161616;
+  //margin: $layout-02 0;
+  place-content: center;
+  display: inline-flex;
+  width: 100%;
+  height: 250px;
+  align-items: center;
+}
+
+.sensors-map__header {
+  display: inline-flex;
+  width: 100%;
+}
+
+.sensors-map__controls {
+  margin: auto 0 auto auto;
+  > span {
+    margin-left: $spacing-04;
+    cursor: pointer;
+  }
+}

@@ -10,6 +10,7 @@ $events-map-mobile-threshold: 1100px;
 @import './content/Login/Login.scss';
 @import './content/Events/Events.scss';
 @import './content/Access/Access.scss';
+@import './content/Sensors/Sensors.scss';
 @import './content/AccountSettings/AccountSettings.scss';
 
 @import './components/RightInformationPanel/RightInformationPanel.scss';
@@ -19,6 +20,8 @@ $events-map-mobile-threshold: 1100px;
 @import './components/EarthquakeList/EarthquakeList.scss';
 @import './components/SaveHeader/SaveHeader.scss';
 @import './components/Field/Field.scss';
+
+@import './scrollbar.scss';
 
 .display-none {
   display: none !important;
