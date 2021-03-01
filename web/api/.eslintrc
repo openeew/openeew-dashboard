@@ -4,7 +4,8 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "env": { "node": true, "es6": true },
+  "env": { "node": true, "es6": true, "jest/globals": true },
+  "plugins": ["jest"],
   "rules": {
     "object-curly-spacing": ["error", "always"],
     "space-before-function-paren": [

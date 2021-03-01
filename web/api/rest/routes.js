@@ -29,7 +29,7 @@ const apiKeyAuth = (req, res, next) => {
   }
 
   if (!req.token || req.token !== apiKey) {
-    return res.status(401).send('API key not found or invalid');
+    return res.status(401).send('Unauthorized');
   }
 
   next();
@@ -47,7 +47,7 @@ module.exports = (server) => {
     let results;
 
     if (!email || !validator.validate(email)) {
-      return res.status(422).send('Email is missing or invalid');
+      return res.status(400).json({ message: 'Email missing' });
     }
 
     try {
@@ -85,11 +85,110 @@ module.exports = (server) => {
         email,
         link: null,
       });
-    } catch (error) {
-      console.error(error);
-      return res
-        .status(503)
-        .send('There was an error verifying or creating a user.');
+    } catch (e) {
+      return res.status(500).json({ message: 'Error verifying user' });
+    }
+  });
+
+  /**
+   * GET /user/token
+   * Gets user id by using a JWT Bearer token as auth
+   * @returns {Object} User information
+   */
+  server.express.get('/api/user/token', async (req, res) => {
+    const token = req.token;
+    let decoded;
+
+    if (!token) {
+      return res.status(400).json({
+        message: 'Token is missing',
+        clientCode: 'onboardTokenMissing',
+      });
+    }
+
+    try {
+      decoded = await jwt.decode(token);
+    } catch (e) {
+      return res.status(401).json({
+        message: 'Unauthorized',
+        clientCode: 'unauthorized',
+      });
+    }
+
+    res.send({ id: decoded.id });
+  });
+
+  /**
+   * POST /user/onboard
+   * Finalizes acccount creation. Uses token as authentication
+   * to update password
+   * @param {string} token
+   * @returns {Object} User information
+   */
+  server.express.post('/api/user/onboard', async (req, res) => {
+    const { password } = req.body;
+    const token = req.token;
+    const reqIp =
+      req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    let decoded;
+
+    if (!password) {
+      return res.status(400).json({
+        message: 'New user password not found',
+        clientCode: 'onboardPasswordNotFound',
+      });
+    }
+
+    if (!token) {
+      return res.status(400).json({
+        message: 'Token not found',
+        clientCode: 'onboardTokenNotFound',
+      });
+    }
+
+    try {
+      decoded = await jwt.decode(token);
+    } catch (e) {
+      return res.status(401).json({
+        message: 'Unauthorized',
+        clientCode: 'unauthorized',
+      });
+    }
+
+    try {
+      const user = await AppIdManagement.getUserById(decoded.id);
+
+      // If user.active is set to true, account has already
+      // been finalized. You cannot use this process to set a password
+      // twice
+      if (user.active) {
+        return res.status(409).json({
+          message: 'User has already finalized account',
+          clientCode: 'onboardAlreadyFinal',
+        });
+      }
+
+      await AppIdManagement.changeUserPassword(user.id, password, reqIp);
+
+      const updatedUser = await AppIdManagement.updateUser(user.id, {
+        ...user,
+        active: true,
+      });
+
+      res.send({
+        id: updatedUser.id,
+        emailVerified: updatedUser.status !== 'PENDING',
+        active: updatedUser.active,
+      });
+    } catch (e) {
+      if (e.message === 'user_not_found') {
+        return res.status(404).json({
+          message: 'User not found',
+          clientCode: 'onboardUserNotFound',
+        });
+      }
+
+      return res.status(500).json({ message: 'Error updating user' });
     }
   });
 
@@ -136,10 +235,6 @@ module.exports = (server) => {
       res.clearCookie('connect.sid');
       res.send(true);
     });
-  });
-
-  server.express.post('/api/user', (req, res) => {
-    res.send('Success');
   });
 
   server.express.get('/api/user', isAuth, (req, res) => {

@@ -76,6 +76,100 @@ class AppIdManagement {
     })();
   }
 
+  async getUserById(id) {
+    const iam = await this.iamAuth;
+
+    const response = await fetch(
+      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/Users/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${iam.token}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+
+      if (error.status === '404') {
+        throw new Error('user_not_found');
+      }
+
+      throw new Error('get_userById_fail');
+    }
+
+    const json = await response.json();
+
+    return json;
+  }
+
+  async changeUserPassword(id, newPassword, changedIpAddress) {
+    const iam = await this.iamAuth;
+
+    const data = JSON.stringify({
+      uuid: id,
+      newPassword,
+      changedIpAddress,
+    });
+
+    const response = await fetch(
+      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/change_password`,
+      {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          Accept: 'application/json',
+          // eslint-disable-next-line quote-props
+          Authorization: `Bearer ${iam.token}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      console.error(await response.json());
+
+      throw new Error('change_pw_fail');
+    }
+
+    const json = await response.json();
+
+    return json;
+  }
+
+  async updateUser(id, updatedUser) {
+    const iam = await this.iamAuth;
+
+    const data = JSON.stringify(updatedUser);
+
+    const response = await fetch(
+      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/Users/${id}`,
+      {
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          // eslint-disable-next-line quote-props
+          Accept: 'application/json',
+          // eslint-disable-next-line quote-props
+          Authorization: `Bearer ${iam.token}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      console.error(await response.json());
+
+      throw new Error('updated_user_fail');
+    }
+
+    const json = await response.json();
+
+    return json;
+  }
+
   async verifyUserByEmail(email) {
     const iam = await this.iamAuth;
 
@@ -105,7 +199,7 @@ class AppIdManagement {
     const iam = await this.iamAuth;
 
     const data = JSON.stringify({
-      active: true,
+      active: false,
       emails: [
         {
           value: email,
@@ -142,6 +236,27 @@ class AppIdManagement {
     const json = await response.json();
 
     return json;
+  }
+
+  async removeUser(id) {
+    const iam = await this.iamAuth;
+
+    const response = await fetch(
+      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/remove/${id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${iam.token}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      console.error(await response.json());
+      throw new Error('remove_user_fail');
+    }
+
+    return response.ok;
   }
 }
 
