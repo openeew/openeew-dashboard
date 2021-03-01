@@ -6,7 +6,7 @@ import RightInformationPanel from '../../components/RightInformationPanel'
 import { CheckmarkFilled16 } from '@carbon/icons-react'
 import Field from '../../components/Field'
 import { earthquakes, takeEventsMapSnapshot } from '../../context/app'
-import { formatDate, formatTime } from '../../utils'
+import {formatCoordinates, formatDate, formatTime} from '../../utils'
 
 const dayInSeconds = 86400
 
@@ -40,7 +40,7 @@ const Events = () => {
   )
 
   return (
-    <div>
+    <div className="events-page">
       <div className="bx--row events-page-heading__container marb-3">
         <div className="bx--col-16">
           <h1 className="dashboard-page__heading">Events</h1>
@@ -125,9 +125,7 @@ const Events = () => {
                 />
                 <Field
                   title="Coordinates"
-                  value={`${event.pos[1].toFixed(2)}°N, ${event.pos[0].toFixed(
-                    2
-                  )}°E`}
+                  value={formatCoordinates(event.pos)}
                   hasMargin={false}
                 />
               </div>
