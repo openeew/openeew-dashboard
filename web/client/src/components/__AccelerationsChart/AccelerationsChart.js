@@ -80,21 +80,21 @@ const AccelerationsChart = () => {
               strokeLinecap="round"
               strokeWidth="0.15"
               d={renderPath(dataToRender, 'x')}
-            ></path>
+            />
             <path
               stroke="#08bdba"
               fill="none"
               strokeLinecap="round"
               strokeWidth="0.15"
               d={renderPath(dataToRender, 'y')}
-            ></path>
+            />
             <path
               stroke="#d4bbff"
               fill="none"
               strokeLinecap="round"
               strokeWidth="0.15"
               d={renderPath(dataToRender, 'z')}
-            ></path>
+            />
           </svg>
         )
       }}
