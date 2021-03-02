@@ -15,9 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set environment variables
+        env:
+          VCAP_LOCAL: ${{ secrets.VCAP_LOCAL }}
+          REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
         run: |
-          echo ${{ secrets.VCAP_LOCAL }} >> ./web/api/vcap-local.json
-          echo REACT_APP_MAPBOX_ACCESS_TOKEN=${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }} >> ./web/client/.env.local
+          echo "$VCAP_LOCAL" >> ./web/api/vcap-local.json
+          echo REACT_APP_MAPBOX_ACCESS_TOKEN=$REACT_APP_MAPBOX_ACCESS_TOKEN >> ./web/client/.env.local
 
       # Turnstyle ensures that this job only runs one at a time in this repository
       - name: Turnstyle
