@@ -19,6 +19,12 @@ jobs:
           echo ${{ secrets.VCAP_LOCAL }} >> ./web/api/vcap-local.json
           echo REACT_APP_MAPBOX_ACCESS_TOKEN=${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }} >> ./web/client/.env.local
 
+      # Turnstyle ensures that this job only runs one at a time in this repository
+      - name: Turnstyle
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: call-for-code/build-push-deploy@v1
         with:
           cloud-api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
