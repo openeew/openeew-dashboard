@@ -8,7 +8,7 @@ import Events from '../Events'
 import Access from '../Access'
 import AuthClient from '../../rest/auth'
 import Header from '../../components/Header'
-import Sensors from "../Sensors";
+import Sensors from '../Sensors'
 
 const Dashboard = ({ location, history }) => {
   const { currentUser, setCurrentUser } = useContext(AppContext)
