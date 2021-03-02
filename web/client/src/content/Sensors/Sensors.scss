@@ -4,7 +4,7 @@
 }
 
 .sensors-page .bx--dropdown__wrapper {
-  height: 40px
+  height: 40px;
 }
 
 .sensors-map__container {
@@ -31,12 +31,12 @@
 }
 
 .status-green::before {
-  background: #3DC04E;
+  background: #3dc04e;
 }
 
 .sticky-column {
   position: sticky;
-  
+
   &.left {
     left: 2rem;
   }
@@ -91,7 +91,7 @@
 }
 
 .tag-owner {
-  background: #E5DFDF;
+  background: #e5dfdf;
   color: black;
   width: max-content;
 }
