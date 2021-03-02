@@ -6,7 +6,7 @@ import RightInformationPanel from '../../components/RightInformationPanel'
 import { CheckmarkFilled16 } from '@carbon/icons-react'
 import Field from '../../components/Field'
 import { earthquakes, takeEventsMapSnapshot } from '../../context/app'
-import {formatCoordinates, formatDate, formatTime} from '../../utils'
+import { formatCoordinates, formatDate, formatTime } from '../../utils'
 
 const dayInSeconds = 86400
 
