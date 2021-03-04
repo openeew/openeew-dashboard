@@ -104,13 +104,12 @@ class AppIdManagement {
     return json;
   }
 
-  async changeUserPassword(id, newPassword, changedIpAddress) {
+  async changeUserPassword(id, newPassword) {
     const iam = await this.iamAuth;
 
     const data = JSON.stringify({
       uuid: id,
       newPassword,
-      changedIpAddress,
     });
 
     const response = await fetch(
@@ -195,7 +194,7 @@ class AppIdManagement {
     return json;
   }
 
-  async createUser(email) {
+  async createUser(email, givenName, familyName) {
     const iam = await this.iamAuth;
 
     const data = JSON.stringify({
@@ -206,6 +205,11 @@ class AppIdManagement {
           primary: true,
         },
       ],
+      displayName: `${givenName} ${familyName}`,
+      name: {
+        givenName,
+        familyName,
+      },
       userName: email,
       password: generator.generate({
         length: 16,
