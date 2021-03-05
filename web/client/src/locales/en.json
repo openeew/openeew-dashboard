@@ -14,6 +14,16 @@
     "accountSettings": {
       "welcome": "Welcome {{name}}!"
     },
+    "onboard": {
+      "welcome": "Welcome",
+      "finalize": "Finalize your dashboard account",
+      "errors": {
+        "errorHeading": "Account Finalization Error",
+        "generic": "There was a problem processing this request",
+        "onboardTokenNotFound": "Token not found",
+        "unauthorized": "Token provided is invalid or expired"
+      }
+    },
     "login": {
       "title": "Log in to",
       "forgotPassword": "Forgot Password?",
@@ -24,7 +34,7 @@
       "errors": {
         "errorHeading": "Error logging in.",
         "generic": "There was a problem processing that request",
-        "incorrectCreds": "The email or password that you entered is incorrect."
+        "unauthorized": "The email or password that you entered is incorrect."
       },
       "form": {
         "labels": {

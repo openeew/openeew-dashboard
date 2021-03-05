@@ -41,13 +41,13 @@ const Login = ({ history }) => {
 
         console.log('Login successful ', user.email)
         return history.push('/events')
-      } catch (err) {
+      } catch (e) {
         setSubmitting(false)
 
-        return setError(t(err))
+        return setError(e)
       }
     },
-    [loginId, setCurrentUser, t, history]
+    [loginId, setCurrentUser, history]
   )
 
   return (
@@ -95,9 +95,10 @@ const Login = ({ history }) => {
             {error ? (
               <InlineNotification
                 kind="error"
-                subtitle={<span>{error}</span>}
+                subtitle={<span>{t(`content.login.errors.${error}`)}</span>}
                 tabIndex={0}
                 title={t('content.login.errors.errorHeading')}
+                hideCloseButton={true}
               />
             ) : null}
           </motion.div>

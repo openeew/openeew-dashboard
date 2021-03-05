@@ -224,6 +224,13 @@ module.exports = (server) => {
   server.express.post('/api/login', (req, res, next) => {
     passportService.authenticate((err, user, info) => {
       if (err || info) {
+        if (info.code === 'invalid_grant') {
+          return res.status(401).json({
+            message: 'Unauthorized',
+            clientCode: 'unauthorized',
+          });
+        }
+
         return res.status(info.statusCode).json({
           errorCode: info.code,
         });

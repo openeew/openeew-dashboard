@@ -16,10 +16,12 @@ class Auth {
    * Handles error if success is not present on response object.
    * @param {Object} response
    */
-  handleError(response) {
-    if (!response.success && response.errorCode) throw Error(response.errorCode)
+  async handleError(response) {
+    if (!response.ok) {
+      const json = await response.json()
 
-    if (!response.success) throw Error('content.login.errors.generic')
+      throw new Error(json.clientCode ? json.clientCode : 'generic')
+    }
 
     return response
   }
@@ -43,18 +45,15 @@ class Auth {
         }),
         credentials: 'include',
       })
-        .then((response) => response.json())
         .then(this.handleError)
+        .then((response) => response.json())
         .then((data) => {
           localStorage.setItem('attemptSilentLogin', true)
 
           return resolve(data)
         })
         .catch((e) => {
-          if (errorToString(e) === 'invalid_grant')
-            return reject('content.login.errors.incorrectCreds')
-
-          return reject(e)
+          return reject(e.message)
         })
     })
   }
@@ -73,6 +72,27 @@ class Auth {
         })
         .catch(() => {
           return reject()
+        })
+    })
+  }
+
+  /**
+   * Retrieves the current logged in user
+   */
+  getCurrentUserByToken(token) {
+    return new Promise((resolve, reject) => {
+      fetch(`${env.base_url}/api/user/token`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(this.handleError)
+        .then((response) => response.json())
+        .then((user) => {
+          return resolve(user)
+        })
+        .catch((e) => {
+          return reject(e.message)
         })
     })
   }
