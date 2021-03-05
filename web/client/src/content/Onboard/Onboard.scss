@@ -1,0 +1,25 @@
+.onboard__error {
+  margin: 1rem;
+}
+
+.onboard__error .bx--inline-notification--error {
+  background: #393939;
+  color: white;
+  max-width: none;
+}
+
+.onboard__spacer {
+  padding-bottom: $layout-05;
+}
+
+.onboard__container {
+  margin: 1rem;
+}
+
+.onboard__welcome {
+  @include carbon--type-style('productive-heading-04');
+}
+
+.onboard__instruction {
+  @include carbon--type-style('productive-heading-03');
+}
