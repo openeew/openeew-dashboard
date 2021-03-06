@@ -76,6 +76,7 @@ const LoginInput = ({
               handleSubmit()
             }}
           >
+            {step === 2 && <input type="email" style={{ display: 'none' }} />}
             <TextInput
               id={step === 1 ? 'openeewId' : 'password'}
               type={step === 1 ? 'email' : 'password'}
@@ -120,6 +121,9 @@ const LoginInput = ({
               value={step === 1 ? values.openeewId : values.password}
               autoComplete={step === 1 ? 'email' : 'current-password'}
             />
+            {step === 1 && (
+              <input type="password" style={{ display: 'none' }} />
+            )}
             <Button
               renderIcon={step === 1 ? ArrowRight32 : null}
               className={`login__continue-button marb-1 ${
