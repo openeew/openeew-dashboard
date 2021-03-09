@@ -47,7 +47,11 @@ let mockUser;
 let validToken;
 
 beforeAll(async () => {
-  mockUser = await AppIdManagement.createUser(faker.internet.email());
+  mockUser = await AppIdManagement.createUser(
+    faker.internet.email(),
+    faker.name.firstName(),
+    faker.name.lastName(),
+  );
 
   validToken = await jwt.encode({
     id: mockUser.id,
@@ -69,13 +73,16 @@ describe('Created user', () => {
 });
 
 describe('GET /user/token', () => {
-  it('responds with user id and 200 if sent valid token as auth method', async (done) => {
+  it('responds with uuid, givenName and 200 if sent valid token as auth method', async (done) => {
     const response = await request
       .get(`/api/user/token`)
       .set('Authorization', 'Bearer ' + validToken);
 
     expect(response.status).toBe(200);
-    expect(response.body).toStrictEqual({ id: mockUser.id });
+    expect(response.body).toStrictEqual({
+      uuid: mockUser.id,
+      givenName: mockUser.name.givenName,
+    });
 
     done();
   });
@@ -118,9 +125,8 @@ describe('GET /user/onboard', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({
-      id: mockUser.id,
+      uuid: mockUser.id,
       emailVerified: false,
-      active: true,
     });
 
     done();
