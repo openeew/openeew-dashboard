@@ -43,7 +43,7 @@ module.exports = (server) => {
    * @returns {Object} User information and new account link (if new user)
    */
   server.express.post('/api/verification', apiKeyAuth, async (req, res) => {
-    const { email } = req.body;
+    const { email, givenName, familyName } = req.body;
     let results;
 
     if (!email || !validator.validate(email)) {
@@ -55,7 +55,11 @@ module.exports = (server) => {
 
       // If no user, create user
       if (results.totalResults === 0) {
-        const user = await AppIdManagement.createUser(email);
+        const user = await AppIdManagement.createUser(
+          email,
+          givenName,
+          familyName,
+        );
 
         const token = await jwt.encode({ id: user.id });
 
@@ -65,23 +69,23 @@ module.exports = (server) => {
 
         return res.json({
           verified: false,
-          firstName: null,
-          lastName: null,
+          givenName,
+          familyName,
           email,
-          userId: user.id,
+          uuid: user.id,
           link,
         });
       }
 
       return res.json({
         verified: true,
-        firstName: results.Resources[0].name
+        givenName: results.Resources[0].name
           ? results.Resources[0].name.givenName
           : null,
-        lastName: results.Resources[0].name
+        familyName: results.Resources[0].name
           ? results.Resources[0].name.familyName
           : null,
-        userId: results.Resources[0].id,
+        uuid: results.Resources[0].id,
         email,
         link: null,
       });
@@ -98,6 +102,7 @@ module.exports = (server) => {
   server.express.get('/api/user/token', async (req, res) => {
     const token = req.token;
     let decoded;
+    let user;
 
     if (!token) {
       return res.status(400).json({
@@ -115,7 +120,20 @@ module.exports = (server) => {
       });
     }
 
-    res.send({ id: decoded.id });
+    try {
+      user = await AppIdManagement.getUserById(decoded.id);
+    } catch (e) {
+      if (e.message === 'user_not_found') {
+        return res.status(404).json({
+          message: 'User not found',
+          clientCode: 'userNotFound',
+        });
+      }
+
+      return res.status(500).json({ message: 'Error locating user' });
+    }
+
+    res.send({ uuid: decoded.id, givenName: user.name.givenName });
   });
 
   /**
@@ -128,9 +146,14 @@ module.exports = (server) => {
   server.express.post('/api/user/onboard', async (req, res) => {
     const { password } = req.body;
     const token = req.token;
-    const reqIp =
-      req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let decoded;
+
+    if (!token) {
+      return res.status(400).json({
+        message: 'Token not found',
+        clientCode: 'onboardTokenNotFound',
+      });
+    }
 
     if (!password) {
       return res.status(400).json({
@@ -139,10 +162,10 @@ module.exports = (server) => {
       });
     }
 
-    if (!token) {
+    if (password.length < 8) {
       return res.status(400).json({
-        message: 'Token not found',
-        clientCode: 'onboardTokenNotFound',
+        message: 'Password must be greater than 8 characters',
+        clientCode: 'passwordInvalid',
       });
     }
 
@@ -168,7 +191,7 @@ module.exports = (server) => {
         });
       }
 
-      await AppIdManagement.changeUserPassword(user.id, password, reqIp);
+      await AppIdManagement.changeUserPassword(user.id, password);
 
       const updatedUser = await AppIdManagement.updateUser(user.id, {
         ...user,
@@ -176,9 +199,8 @@ module.exports = (server) => {
       });
 
       res.send({
-        id: updatedUser.id,
+        uuid: updatedUser.id,
         emailVerified: updatedUser.status !== 'PENDING',
-        active: updatedUser.active,
       });
     } catch (e) {
       if (e.message === 'user_not_found') {
@@ -202,6 +224,13 @@ module.exports = (server) => {
   server.express.post('/api/login', (req, res, next) => {
     passportService.authenticate((err, user, info) => {
       if (err || info) {
+        if (info.code === 'invalid_grant') {
+          return res.status(401).json({
+            message: 'Unauthorized',
+            clientCode: 'unauthorized',
+          });
+        }
+
         return res.status(info.statusCode).json({
           errorCode: info.code,
         });
@@ -217,8 +246,8 @@ module.exports = (server) => {
         return res.json({
           success: true,
           email: req.user.email,
-          firstName: req.user.given_name,
-          lastName: req.user.family_name,
+          givenName: req.user.given_name,
+          familyName: req.user.family_name,
         });
       });
     })(req, res, next);
@@ -243,8 +272,8 @@ module.exports = (server) => {
     if (req.user) {
       user.username = req.user.username;
       user.email = req.user.email;
-      user.firstName = req.user.given_name;
-      user.lastName = req.user.family_name;
+      user.givenName = req.user.given_name;
+      user.familyName = req.user.family_name;
     }
 
     res.json({ ...user, success: true });

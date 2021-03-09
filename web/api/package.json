@@ -2,8 +2,8 @@
   "name": "api",
   "version": "0.0.1",
   "engines": {
-    "node": "14.15.4",
-    "npm": "6.14.11"
+    "node": "14.x",
+    "npm": "7.x"
   },
   "license": "Apache-2.0",
   "main": "src/index.js",
@@ -25,7 +25,7 @@
   "scripts": {
     "test": "jest",
     "start": "node server.js",
-    "dev": "./node_modules/.bin/nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
