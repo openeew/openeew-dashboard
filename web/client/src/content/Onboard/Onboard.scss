@@ -1,11 +1,12 @@
-.onboard__error {
-  margin: 1rem;
-}
-
-.onboard__error .bx--inline-notification--error {
+.onboard__notification .bx--inline-notification--error,
+.onboard__notification .bx--inline-notification--success {
   background: #393939;
   color: white;
   max-width: none;
+}
+
+.onboard__error {
+  margin: 1rem;
 }
 
 .onboard__spacer {
@@ -22,4 +23,36 @@
 
 .onboard__instruction {
   @include carbon--type-style('productive-heading-03');
+}
+
+.onboard_textInput {
+  height: 50px;
+}
+
+.onboard__createButton {
+  max-width: none;
+  width: 100%;
+  min-height: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.onboard__errors p {
+  color: #fa4d56;
+  margin-top: $spacing-03;
+  @include carbon--type-style('productive-heading-01');
+}
+
+@media screen and (min-width: $small) {
+  .onboard__container {
+    max-width: 400px;
+    margin-left: 3rem;
+  }
+
+  .onboard__spacer {
+    padding-bottom: $layout-05 * 2;
+  }
+
+  .onboard__welcome {
+    @include carbon--type-style('productive-heading-05');
+  }
 }

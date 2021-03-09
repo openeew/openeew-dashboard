@@ -16,12 +16,23 @@
     },
     "onboard": {
       "welcome": "Welcome",
-      "finalize": "Finalize your dashboard account",
+      "finalize": "Finalize your account creation",
+      "success": "Account created",
+      "pleaseVerify": "Please verify your email with the link sent to your registered address.",
+      "createPassword": "Create a password",
+      "confirm": "Confirm",
+      "createAccount": "Create Account",
       "errors": {
         "errorHeading": "Account Finalization Error",
+        "passwordRequired": "Password Required",
+        "passwordTooShort": "Password must be more than 8 characters",
+        "confirmRequired": "Password confirmation required",
+        "passwordNoMatch": "Passwords do not match",
         "generic": "There was a problem processing this request",
         "onboardTokenNotFound": "Token not found",
-        "unauthorized": "Token provided is invalid or expired"
+        "unauthorized": "Token provided is invalid or expired",
+        "passwordInvalid": "Provided password fails validation",
+        "onboardAlreadyFinal": "This account has already been finalized. If you need to reset your password, use the forgot password link."
       }
     },
     "login": {
@@ -32,7 +43,7 @@
       "loggingIn": "Logging in",
       "enterId": "Enter your OpenEEW ID",
       "errors": {
-        "errorHeading": "Error logging in.",
+        "errorHeading": "Error logging in",
         "generic": "There was a problem processing that request",
         "unauthorized": "The email or password that you entered is incorrect."
       },

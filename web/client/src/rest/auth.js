@@ -77,7 +77,8 @@ class Auth {
   }
 
   /**
-   * Retrieves the current logged in user
+   * Retrieves a user using a JWT as authentication. Used
+   * for onboarding a new account.
    */
   getCurrentUserByToken(token) {
     return new Promise((resolve, reject) => {
@@ -89,6 +90,35 @@ class Auth {
         .then(this.handleError)
         .then((response) => response.json())
         .then((user) => {
+          return resolve(user)
+        })
+        .catch((e) => {
+          return reject(e.message)
+        })
+    })
+  }
+
+  /**
+   * Retrieves a user using a JWT as authentication. Used
+   * for onboarding a new account.
+   */
+  onboardUser(token, password) {
+    return new Promise((resolve, reject) => {
+      fetch(`${env.base_url}/api/user/onboard`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password,
+        }),
+      })
+        .then(this.handleError)
+        .then((response) => response.json())
+        .then((user) => {
+          console.log(user)
           return resolve(user)
         })
         .catch((e) => {
