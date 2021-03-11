@@ -1,16 +1,5 @@
 import env from '../constants'
 
-/**
- * Converts error to a string, adds
- * name property to avoid toString error
- * @param {Object} e
- * @returns {string} errorCode
- */
-const errorToString = (e) => {
-  e.name = ''
-  return e.toString()
-}
-
 class Auth {
   /**
    * Handles error if success is not present on response object.

@@ -5,11 +5,13 @@ const passportService = require('../services/passport.js');
 const AppIdManagement = require('../services/appId');
 const jwt = require('../services/jwt');
 
-const dashboardURL = process.env.VCAP_APPLICATION
-  ? process.env.ALLOWED_ORIGIN_URLS.split(',')[0]
-  : 'http://localhost:3000';
+let dashboardURL;
 
-if (!dashboardURL) throw new Error('No allowed origin found.');
+if (process.env.DASHBOARD_URL) {
+  dashboardURL = process.env.DASHBOARD_URL;
+} else {
+  dashboardURL = 'http://localhost:3000';
+}
 
 const isAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
