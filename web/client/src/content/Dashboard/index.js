@@ -30,8 +30,8 @@ const Dashboard = ({ location, history }) => {
         setCurrentUser({
           isAuth: true,
           email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          firstName: user.givenName,
+          lastName: user.familyName,
         })
       } catch (e) {
         if (location.pathname !== '/events') {

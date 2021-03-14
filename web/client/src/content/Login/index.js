@@ -35,8 +35,8 @@ const Login = ({ history }) => {
         setCurrentUser({
           isAuth: true,
           email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          firstName: user.givenName,
+          lastName: user.familyName,
         })
 
         console.log('Login successful ', user.email)

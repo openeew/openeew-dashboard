@@ -53,7 +53,7 @@ const AccountSettingsContent = ({
         title="Name"
         value={`${currentUser.firstName} ${currentUser.lastName}`}
       />
-      <Field title="User ID" value={currentUser.email} />
+      <Field title="Contact" value={currentUser.email} />
       <p
         className={'accountSettings__logout'}
         tabIndex={0}
@@ -113,7 +113,6 @@ const AccountSettingsContentEdit = ({ currentUser, setCanSave }) => {
         invalid={!isEmailValid(editedUser.email)}
         invalidText="Invalid email"
       />
-      <Field title="User ID" value={currentUser.userID} />
     </div>
   )
 }
