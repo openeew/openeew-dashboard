@@ -19,6 +19,13 @@
         "discoveryEndpoint": "",
         "scopes": []
       }
+    },
+    "Cloudant_sensors": {
+      "url": "",
+      "credentials": {
+        "username": "",
+        "password": ""
+      }
     }
   }
 }
