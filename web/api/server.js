@@ -1,10 +1,21 @@
-const { GraphQLServer } = require('graphql-yoga');
-const { Query } = require('./graphql/resolvers');
-const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser');
+const path = require('path');
 const bearerToken = require('express-bearer-token');
+const fs = require('fs');
+const cors = require('cors');
+const {
+  ApolloServer,
+  gql,
+  AuthenticationError,
+} = require('apollo-server-express');
+
+const resolvers = require('./resolvers/resolvers');
+const SensorAPI = require('./datasources/sensor');
+
+const typeDefs = gql`
+  ${fs.readFileSync(path.join(__dirname, './schema.graphql'), 'utf8')}
+`;
 
 const helmet = require('helmet');
 
@@ -13,30 +24,30 @@ const passportClient = require('./services/passport');
 
 const PORT = process.env.PORT || 4000;
 
-const resolvers = {
-  Query,
+const app = express();
+
+app.use(
+  helmet({
+    contentSecurityPolicy:
+      process.env.NODE_ENV === 'production' ? undefined : false,
+  }),
+);
+
+const corsOptions = {
+  origin: ['http://localhost:3000'],
+  credentials: true,
 };
 
-const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
-  resolvers,
-  context: (request) => {
-    return {
-      ...request,
-    };
-  },
-});
+app.use(cors(corsOptions));
 
-server.express.use(helmet());
+app.use(bearerToken());
 
-server.express.use(bearerToken());
-
-server.express.use(
-  bodyParser.urlencoded({
+app.use(
+  express.urlencoded({
     extended: true,
   }),
 );
-server.express.use(bodyParser.json());
+app.use(express.json());
 
 let secret = null;
 // If running on Cloud Foundry, set secret to env var
@@ -47,7 +58,7 @@ if (process.env.VCAP_APPLICATION) {
   secret = require('./vcap-local.json').user_vars.session_secret;
 }
 
-server.express.use(
+app.use(
   session({
     secret,
     resave: false,
@@ -55,37 +66,37 @@ server.express.use(
   }),
 );
 
-server.express.use(passportClient.initPassport());
-server.express.use(passportClient.initSession());
+app.use(passportClient.initPassport());
+app.use(passportClient.initSession());
 passportClient.connectStrategy();
-
-let allowedOrigin = null;
-if (process.env.VCAP_APPLICATION) {
-  allowedOrigin = 'https://openeew-dashboard.mybluemix.net';
-} else {
-  allowedOrigin = 'http://localhost:3000';
-}
-
-server.express.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', allowedOrigin);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-});
 
 // USE_STATIC env var added by docker
 if (process.env.USE_STATIC) {
-  server.express.use(express.static(path.join(__dirname, './build')));
+  app.use(express.static(path.join(__dirname, './build')));
 
-  server.express.get('/', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './build/index.html'));
   });
 }
 
-routes(server);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => ({
+    sensorAPI: new SensorAPI(),
+  }),
+  context: ({ req }) => {
+    if (!req.user) throw new AuthenticationError('Unauthorized');
 
-server.start(PORT, () => console.log(`Server is running on ${PORT}`));
+    return { user: req.user };
+  },
+  cors: corsOptions,
+});
+
+server.applyMiddleware({ app, cors: corsOptions });
+
+routes(app);
+
+app.listen(PORT, () => {
+  console.log(`📡 Server is listening on port ${PORT}`);
+});

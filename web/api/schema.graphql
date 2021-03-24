@@ -1,13 +1,19 @@
 scalar DateTime
+scalar Latitude
+scalar Longitude
+scalar UUID
 
-type Query {
-  accStream: [AccelerationPacket]
-  maxAcc: Float
+type Sensor {
+  id: ID!
+  activated: DateTime
+  lastCheckin: DateTime
+  firmwareVer: String
+  latitude: Latitude
+  longitude: Longitude
+  uuid: UUID
+  status: String
 }
 
-type AccelerationPacket {
-  x: [Float]
-  y: [Float]
-  z: [Float]
-  device_t: DateTime
+type Query {
+  sensors: [Sensor]
 }
