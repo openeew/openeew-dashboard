@@ -1,18 +1,17 @@
 import { gql } from '@apollo/client'
 
-export const ACC_STREAM = gql`
-  query {
-    accStream {
-      x
-      y
-      z
-      device_t
+export const GET_SENSORS = gql`
+  query GetSensors {
+    sensors {
+      id
+      activated
+      lastCheckin
+      firmwareVer
+      latitude
+      longitude
+      uuid
+      status
+      isUserOwner
     }
-  }
-`
-
-export const MAX_ACC = gql`
-  query {
-    maxAcc
   }
 `
