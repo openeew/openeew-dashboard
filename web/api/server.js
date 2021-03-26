@@ -3,7 +3,6 @@ const session = require('express-session');
 const path = require('path');
 const bearerToken = require('express-bearer-token');
 const fs = require('fs');
-const cors = require('cors');
 const {
   ApolloServer,
   gql,
@@ -32,13 +31,6 @@ app.use(
       process.env.NODE_ENV === 'production' ? undefined : false,
   }),
 );
-
-const corsOptions = {
-  origin: ['http://localhost:3000'],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
 
 app.use(bearerToken());
 
@@ -90,10 +82,9 @@ const server = new ApolloServer({
 
     return { user: req.user };
   },
-  cors: corsOptions,
 });
 
-server.applyMiddleware({ app, cors: corsOptions });
+server.applyMiddleware({ app, path: '/api/graphql' });
 
 routes(app);
 
