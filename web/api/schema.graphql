@@ -12,6 +12,7 @@ type Sensor {
   longitude: Longitude
   uuid: UUID
   status: String
+  isUserOwner: Boolean
 }
 
 type Query {

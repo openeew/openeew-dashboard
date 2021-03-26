@@ -1,6 +1,14 @@
 const Cloudant = require('@cloudant/cloudant');
 const { RESTDataSource } = require('apollo-datasource-rest');
 
+const formatLatLong = (latlong) => {
+  if (!latlong) {
+    return null;
+  }
+
+  return Number.parseFloat(latlong).toFixed(2);
+};
+
 class SensorAPI extends RESTDataSource {
   constructor() {
     super();
@@ -28,7 +36,7 @@ class SensorAPI extends RESTDataSource {
     });
   }
 
-  getAllSensors() {
+  getAllSensors(uuid) {
     return new Promise((resolve) => {
       const db = this.cloudant.db.use('openeew-devices');
 
@@ -42,10 +50,17 @@ class SensorAPI extends RESTDataSource {
           activated: new Date(sensor.Activated),
           lastCheckin: new Date(sensor.LastCheckin),
           firmwareVer: sensor.firmware_ver,
-          latitude: sensor.latitude,
-          longitude: sensor.longitude,
+          latitude:
+            sensor.uuid === uuid
+              ? sensor.latitude
+              : formatLatLong(sensor.latitude),
+          longitude:
+            sensor.uuid === uuid
+              ? sensor.longitude
+              : formatLatLong(sensor.longitude),
           uuid: sensor.uuid,
           status: sensor.status,
+          isUserOwner: sensor.uuid === uuid,
         }));
 
         return resolve(sensors);

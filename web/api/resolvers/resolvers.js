@@ -12,10 +12,13 @@ module.exports = {
   Longitude: LongitudeResolver,
 
   Query: {
-    sensors: (_, __, { dataSources }) => {
-      // Admin check here
+    sensors: (_, __, { dataSources, user }) => {
+      // TODO: Admin check here
+      const uuid = user.identities.filter(
+        (iden) => iden.provider === 'cloud_directory',
+      )[0].id;
 
-      return dataSources.sensorAPI.getAllSensors();
+      return dataSources.sensorAPI.getAllSensors(uuid);
     },
   },
 };
