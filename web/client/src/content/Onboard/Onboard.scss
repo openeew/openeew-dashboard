@@ -42,7 +42,7 @@
   @include carbon--type-style('productive-heading-01');
 }
 
-@media screen and (min-width: $small) {
+@media screen and (min-width: $medium) {
   .onboard__container {
     max-width: 400px;
     margin-left: 3rem;
