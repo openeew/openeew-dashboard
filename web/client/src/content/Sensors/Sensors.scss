@@ -1,6 +1,7 @@
 .sensor-group-dropdown {
   width: fit-content;
   float: right;
+  width: 200px;
 }
 
 .sensors-page .bx--dropdown__wrapper {
@@ -21,6 +22,10 @@
   }
 }
 
+.sensors-table__container {
+  min-height: 400px;
+}
+
 .with-circle::before {
   content: '';
   width: 10px;
@@ -32,6 +37,10 @@
 
 .status-green::before {
   background: #3dc04e;
+}
+
+.status-yellow::before {
+  background: #c9bc0d;
 }
 
 .sticky-column {
