@@ -1,5 +1,6 @@
 # This workflow will build a docker container, publish it to IBM Container Registry, and deploy it to an existing IKS cluster
-
+# If a Pull Request is merged into the master branch this will deploy to staging.openeew.com
+# If a release is created on the master branch, this action will deploy to dashboard.openeew.com
 name: Build and Deploy to IKS
 
 on:
