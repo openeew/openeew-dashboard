@@ -2,11 +2,13 @@
 
 name: Build and Deploy to IKS
 
-# Execute on every push to the default branch. Merging a pull request counts as a push.
 on:
-  push:
+  push: # Execute on every push to the master branch. Merging a pull request counts as a push.
     branches:
       - master
+  release: # Execute when a release is created on the master branch
+    types:
+      - created
 
 jobs:
   build-push-deploy-job:
@@ -14,13 +16,22 @@ jobs:
     name: A job to download and log into ibmcloud cli
     steps:
       - uses: actions/checkout@v2
-      - name: Set environment variables
+
+      - name: Set general enviroment variables
         env:
           VCAP_LOCAL: ${{ secrets.VCAP_LOCAL }}
           REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
+          DEPLOYMENT_NAME: openeew-dashboard
         run: |
           echo "$VCAP_LOCAL" >> ./web/api/vcap-local.json
           echo REACT_APP_MAPBOX_ACCESS_TOKEN=$REACT_APP_MAPBOX_ACCESS_TOKEN >> ./web/client/.env.local
+
+      # If this action is triggered by a release, we will deploy to the production site
+      - name: Set environment variables for a release
+        if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
+        env:
+          DEPLOYMENT_NAME: openeew-dashboard
+        run: echo "Set production deployment name"
 
       # Turnstyle ensures that this job only runs one at a time in this repository
       - name: Turnstyle
@@ -33,7 +44,7 @@ jobs:
           cloud-api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
           cloud-resource-group: OpenEEW-Infra
           cloud-region: us-south
-          deployment-name: openeew-dashboard
+          deployment-name: ${ DEPLOYMENT_NAME }
           github-sha: ${{ github.sha }}
           icr-namespace: ${{ secrets.ICR_NAMESPACE }}
           image-name: dashboard-gha
