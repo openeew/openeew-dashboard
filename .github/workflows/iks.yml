@@ -31,7 +31,7 @@ jobs:
       - name: Set environment variables for a release
         if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
         env:
-          DEPLOYMENT_NAME: openeew-dashboard
+          DEPLOYMENT_NAME: openeew-dashboard-production
         run: echo "Set production deployment name"
 
       # Turnstyle ensures that this job only runs one at a time in this repository
