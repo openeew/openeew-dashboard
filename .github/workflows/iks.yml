@@ -44,7 +44,7 @@ jobs:
           cloud-api-key: ${{ secrets.IBM_CLOUD_API_KEY }}
           cloud-resource-group: OpenEEW-Infra
           cloud-region: us-south
-          deployment-name: ${ env.DEPLOYMENT_NAME }
+          deployment-name: ${{ env.DEPLOYMENT_NAME }}
           github-sha: ${{ github.sha }}
           icr-namespace: ${{ secrets.ICR_NAMESPACE }}
           image-name: dashboard-gha
