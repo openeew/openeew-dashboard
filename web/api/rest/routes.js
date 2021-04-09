@@ -37,14 +37,14 @@ const apiKeyAuth = (req, res, next) => {
   next();
 };
 
-module.exports = (server) => {
+module.exports = (app) => {
   /**
    * POST /verification
    * Calls AppID management API and verifies if email belongs to existing user
    * @param {email} The user's email
    * @returns {Object} User information and new account link (if new user)
    */
-  server.express.post('/api/verification', apiKeyAuth, async (req, res) => {
+  app.post('/api/verification', apiKeyAuth, async (req, res) => {
     const { email, givenName, familyName } = req.body;
     let results;
 
@@ -101,7 +101,7 @@ module.exports = (server) => {
    * Gets user id by using a JWT Bearer token as auth
    * @returns {Object} User information
    */
-  server.express.get('/api/user/token', async (req, res) => {
+  app.get('/api/user/token', async (req, res) => {
     const token = req.token;
     let decoded;
     let user;
@@ -145,7 +145,7 @@ module.exports = (server) => {
    * @param {string} token
    * @returns {Object} User information
    */
-  server.express.post('/api/user/onboard', async (req, res) => {
+  app.post('/api/user/onboard', async (req, res) => {
     const { password } = req.body;
     const token = req.token;
     let decoded;
@@ -223,7 +223,7 @@ module.exports = (server) => {
    * @param {string} password
    * @returns {Object} User information
    */
-  server.express.post('/api/login', (req, res, next) => {
+  app.post('/api/login', (req, res, next) => {
     passportService.authenticate((err, user, info) => {
       if (err || info) {
         if (info.code === 'invalid_grant') {
@@ -255,7 +255,7 @@ module.exports = (server) => {
     })(req, res, next);
   });
 
-  server.express.post('/api/logout', (req, res) => {
+  app.post('/api/logout', (req, res) => {
     req.session.destroy((err) => {
       if (err) {
         res.status(500).json({
@@ -268,7 +268,7 @@ module.exports = (server) => {
     });
   });
 
-  server.express.get('/api/user', isAuth, (req, res) => {
+  app.get('/api/user', isAuth, (req, res) => {
     const user = {};
 
     if (req.user) {

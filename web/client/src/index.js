@@ -11,12 +11,12 @@ import reportWebVitals from './reportWebVitals'
 
 import App from './App'
 
-import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000',
+  uri: 'api/graphql',
   cache: new InMemoryCache(),
+  credentials: 'include',
 })
 
 ReactDOM.render(
