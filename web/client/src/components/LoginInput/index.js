@@ -76,7 +76,13 @@ const LoginInput = ({
               handleSubmit()
             }}
           >
-            {step === 2 && <input type="email" style={{ display: 'none' }} />}
+            {step === 2 && (
+              <input
+                type="email"
+                autoComplete="username"
+                style={{ display: 'none' }}
+              />
+            )}
             <TextInput
               id={step === 1 ? 'openeewId' : 'password'}
               type={step === 1 ? 'email' : 'password'}
@@ -122,32 +128,42 @@ const LoginInput = ({
               autoComplete={step === 1 ? 'email' : 'current-password'}
             />
             {step === 1 && (
-              <input type="password" style={{ display: 'none' }} />
+              <input
+                type="password"
+                autoComplete="current-password"
+                style={{ display: 'none' }}
+              />
             )}
-            <Button
-              renderIcon={step === 1 ? ArrowRight32 : null}
-              className={`login__continue-button marb-1 ${
-                isSubmitting ? 'display-none' : ''
-              }`}
-              type="submit"
-              iconDescription={t('content.login.continue')}
-            >
-              {step === 1 ? 'Continue' : 'Log in'}
-            </Button>
+
+            <div style={{ height: '55px' }}>
+              <Button
+                renderIcon={step === 1 ? ArrowRight32 : null}
+                className={`login__continue-button marb-1 ${
+                  isSubmitting ? 'display-none' : ''
+                }`}
+                type="submit"
+                iconDescription={t('content.login.continue')}
+              >
+                {step === 1 ? 'Continue' : 'Log in'}
+              </Button>
+
+              {isSubmitting && step === 2 ? (
+                <InlineLoading
+                  className="space-t-2"
+                  description={t('content.login.loggingIn')}
+                  status={'active'}
+                  aria-live={'polite'}
+                />
+              ) : null}
+            </div>
+
             {step === 1 ? (
               <Checkbox
                 labelText={t('content.login.rememberMe')}
-                className="login__checkbox"
+                className={`login__checkbox marb-1 ${
+                  isSubmitting ? 'display-none' : ''
+                }`}
                 id="login_rememberMe"
-              />
-            ) : null}
-
-            {isSubmitting ? (
-              <InlineLoading
-                className="space-t-2"
-                description={t('content.login.loggingIn')}
-                status={'active'}
-                aria-live={'polite'}
               />
             ) : null}
           </Form>

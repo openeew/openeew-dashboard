@@ -86,13 +86,23 @@
   -webkit-text-fill-color: #f4f4f4 !important;
 }
 
-@media only screen and (max-width: $small) {
+@media only screen and (min-width: $medium) and (max-width: $large) {
   .login__container {
-    padding: 0 40px;
+    padding-left: 45px;
+  }
+}
+
+@media only screen and (max-width: $medium) {
+  .login__container {
+    padding: 0 1rem;
     max-width: none;
   }
 
   .login__spacer {
-    padding-bottom: 6rem;
+    padding-bottom: $layout-05;
+  }
+
+  .login__supportingContainer {
+    min-height: $layout-06 / 2;
   }
 }

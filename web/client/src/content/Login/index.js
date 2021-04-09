@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState } from 'react'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { InlineNotification } from 'carbon-components-react'
 
@@ -9,12 +9,16 @@ import Header from '../../components/Header'
 import { ReactComponent as Logo } from '../../assets/openeew_logo.svg'
 
 import AuthClient from '../../rest/auth'
+import animation from './animation'
 
 const Login = ({ history }) => {
   const { t, setCurrentUser } = useContext(AppContext)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1)
   const [loginId, setLoginId] = useState('')
+  const [activeAnimation, setActiveAnimation] = useState(() =>
+    window.innerWidth < 672 ? animation.mobile : animation.desktop
+  )
 
   const initLogin = useCallback(
     /**
@@ -39,7 +43,6 @@ const Login = ({ history }) => {
           lastName: user.familyName,
         })
 
-        console.log('Login successful ', user.email)
         return history.push('/events')
       } catch (e) {
         setSubmitting(false)
@@ -49,6 +52,16 @@ const Login = ({ history }) => {
     },
     [loginId, setCurrentUser, history]
   )
+
+  useEffect(() => {
+    window.addEventListener('resize', () =>
+      setActiveAnimation(
+        window.innerWidth < 672
+          ? { ...animation.mobile }
+          : { ...animation.desktop }
+      )
+    )
+  }, [])
 
   return (
     <>
@@ -67,14 +80,7 @@ const Login = ({ history }) => {
           <motion.div
             // By changing the key, React treats each step as a unique component
             key={`login-${step}`}
-            transition={{
-              type: 'spring',
-              bounce: 0.4,
-              duration: 0.35,
-            }}
-            initial={{ x: 200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -200, opacity: 0 }}
+            {...activeAnimation}
           >
             <div className="login__supportingContainer">
               {step === 2 ? (
