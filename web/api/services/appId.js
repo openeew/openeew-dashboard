@@ -242,6 +242,42 @@ class AppIdManagement {
     return json;
   }
 
+  async forgotPassword(email) {
+    const iam = await this.iamAuth;
+
+    const data = JSON.stringify({
+      user: email,
+    });
+
+    const response = await fetch(
+      `https://us-south.appid.cloud.ibm.com/management/v4/${TENET_ID}/cloud_directory/forgot_password`,
+      {
+        method: 'POST',
+        headers: {
+          // eslint-disable-next-line quote-props
+          Accept: 'application/json',
+          // eslint-disable-next-line quote-props
+          Authorization: `Bearer ${iam.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      },
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error(error);
+
+      if (error.error === 'user not found') {
+        throw new Error('user_not_found');
+      }
+
+      throw new Error('forgot_password_fail');
+    }
+
+    return response.ok;
+  }
+
   async removeUser(id) {
     const iam = await this.iamAuth;
 

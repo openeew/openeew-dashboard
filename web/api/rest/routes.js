@@ -262,6 +262,31 @@ module.exports = (app) => {
     })(req, res, next);
   });
 
+  app.post('/api/forgot-password', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Missing email.' });
+    }
+
+    try {
+      await AppIdManagement.forgotPassword(email);
+
+      return res.json({ success: true });
+    } catch (e) {
+      // To not indicate whether a user exists in db,
+      // a success message is returned if the user is not found
+      if (e.message === 'user_not_found') {
+        return res.json({ success: true });
+      }
+
+      return res.status(500).json({
+        message: 'Error processing forgot password.',
+        clientCode: 'error_forgot_password',
+      });
+    }
+  });
+
   app.post('/api/logout', (req, res) => {
     req.session.destroy((err) => {
       if (err) {

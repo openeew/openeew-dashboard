@@ -38,7 +38,8 @@
   min-height: 1.5rem;
 }
 
-.login__container .bx--inline-notification--error {
+.login__container .bx--inline-notification--error,
+.login__container .bx--inline-notification--success {
   background: #393939;
   color: white;
 }
@@ -48,6 +49,16 @@
   top: 3px;
   color: #78a9ff;
   margin-right: $spacing-03;
+}
+
+.login__forgotPasswordLoading {
+  position: relative;
+  left: -5px;
+}
+
+.login__forgotPasswordSuccess span {
+  @include carbon--type-style('body-short-01');
+  color: #5ec07a;
 }
 
 .login__supportingContainer {
@@ -104,5 +115,9 @@
 
   .login__supportingContainer {
     min-height: $layout-06 / 2;
+  }
+
+  .bx--inline-notification {
+    max-width: none;
   }
 }
