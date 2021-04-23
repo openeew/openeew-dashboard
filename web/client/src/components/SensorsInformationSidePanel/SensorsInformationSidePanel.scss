@@ -4,7 +4,7 @@
   bottom: 0;
   right: 0;
   padding: $layout-02 $layout-03;
-  background-color: #2C2C2C;
+  background-color: #2c2c2c;
   border-left: 1px solid #515151;
 
   .bx--toast-notification {
@@ -12,14 +12,14 @@
     color: #fff;
     background-color: #393939;
 
-    border-left: 3px solid #6D96DD;
+    border-left: 3px solid #6d96dd;
 
     .bx--toast-notification__icon {
-      fill: #6D96DD;
+      fill: #6d96dd;
     }
 
     a {
-      color: #6D96DD;
+      color: #6d96dd;
     }
   }
 
@@ -33,7 +33,7 @@
     }
   }
   .tag-owner {
-    margin-Left: 40px;
+    margin-left: 40px;
   }
 }
 
@@ -78,9 +78,9 @@
   text-align: left;
   cursor: pointer;
 
-  &[data-testing-sensor="true"] {
-    color: #FF5D5D;
-    border: 1px solid #FF5D5D;
+  &[data-testing-sensor='true'] {
+    color: #ff5d5d;
+    border: 1px solid #ff5d5d;
   }
 }
 
@@ -91,10 +91,10 @@
 .sensors-side-panel__restarting {
   display: flex;
   align-items: center;
-  position:absolute;
+  position: absolute;
   left: calc(24px);
   margin-top: 10px;
-  color: #9C9C9C;
+  color: #9c9c9c;
 
   p {
     margin-left: $spacing-02;
