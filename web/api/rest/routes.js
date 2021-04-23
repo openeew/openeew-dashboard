@@ -46,7 +46,9 @@ module.exports = (app) => {
    */
   app.post('/api/verification', apiKeyAuth, async (req, res) => {
     const { email, givenName, familyName } = req.body;
+    let link;
     let results;
+    let user;
 
     if (!email || !validator.validate(email)) {
       return res.status(400).json({ message: 'Email missing' });
@@ -57,20 +59,16 @@ module.exports = (app) => {
 
       // If no user, create user
       if (results.totalResults === 0) {
-        const user = await AppIdManagement.createUser(
-          email,
-          givenName,
-          familyName,
-        );
+        user = await AppIdManagement.createUser(email, givenName, familyName);
 
-        const token = await jwt.encode({ id: user.id });
-
-        const link = `${dashboardURL}/onboard?${qs.stringify({
-          token,
+        link = `${dashboardURL}/onboard?${qs.stringify({
+          token: await jwt.encode({ id: user.id }),
         })}`;
 
         return res.json({
           verified: false,
+          new: true,
+          active: false,
           givenName,
           familyName,
           email,
@@ -79,17 +77,26 @@ module.exports = (app) => {
         });
       }
 
+      user = results.Resources[0];
+
+      // If user has account, but has not finished
+      // onboarding, generate new link & token
+      if (!user.active) {
+        link = `${dashboardURL}/onboard?${qs.stringify({
+          token: await jwt.encode({ id: user.id }),
+        })}`;
+      }
+
+      await jwt.encode({ id: user.id });
       return res.json({
         verified: true,
-        givenName: results.Resources[0].name
-          ? results.Resources[0].name.givenName
-          : null,
-        familyName: results.Resources[0].name
-          ? results.Resources[0].name.familyName
-          : null,
-        uuid: results.Resources[0].id,
+        new: false,
+        active: user.active,
+        givenName: user.name ? user.name.givenName : null,
+        familyName: user.name ? user.name.familyName : null,
+        uuid: user.id,
         email,
-        link: null,
+        link: !user.active ? link : null,
       });
     } catch (e) {
       return res.status(500).json({ message: 'Error verifying user' });
@@ -253,6 +260,31 @@ module.exports = (app) => {
         });
       });
     })(req, res, next);
+  });
+
+  app.post('/api/forgot-password', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Missing email.' });
+    }
+
+    try {
+      await AppIdManagement.forgotPassword(email);
+
+      return res.json({ success: true });
+    } catch (e) {
+      // To not indicate whether a user exists in db,
+      // a success message is returned if the user is not found
+      if (e.message === 'user_not_found') {
+        return res.json({ success: true });
+      }
+
+      return res.status(500).json({
+        message: 'Error processing forgot password.',
+        clientCode: 'error_forgot_password',
+      });
+    }
   });
 
   app.post('/api/logout', (req, res) => {

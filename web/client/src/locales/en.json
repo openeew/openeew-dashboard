@@ -69,6 +69,12 @@
     "login": {
       "title": "Log in to",
       "forgotPassword": "Forgot Password?",
+      "forgotPasswordSuccessShort": "Password reset sent",
+      "forgotPasswordSuccessHeader": "Check your email",
+      "forgotPasswordSuccessContent": "If there is an account associated with this address, you will receive an email that will allow you to update your password.",
+      "forgotPasswordLoading": "Sending request",
+      "forgotPasswordErrorContent": "There was error processing the forgot password request",
+      "forgotPasswordErrorHeader": "Reset Password Error",
       "continue": "Continue",
       "rememberMe": "Remember Me",
       "loggingIn": "Logging in",

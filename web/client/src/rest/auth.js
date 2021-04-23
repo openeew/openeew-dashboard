@@ -88,6 +88,32 @@ class Auth {
   }
 
   /**
+   * Init request for password reset
+   */
+  resetPassword(email) {
+    return new Promise((resolve, reject) => {
+      fetch(`${env.base_url}/api/forgot-password`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      })
+        .then(this.handleError)
+        .then((response) => response.json())
+        .then(() => {
+          return resolve(true)
+        })
+        .catch((e) => {
+          return reject(e.message)
+        })
+    })
+  }
+
+  /**
    * Retrieves a user using a JWT as authentication. Used
    * for onboarding a new account.
    */

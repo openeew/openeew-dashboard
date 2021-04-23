@@ -18,6 +18,8 @@ const LoginInput = ({
   initLogin,
   loginId,
   setError,
+  setForgotPassword,
+  forgotPassword,
 }) => {
   const { t } = useContext(AppContext)
   const [attemptedSubmit, setAttemptedSubmit] = useState(false)
@@ -27,6 +29,12 @@ const LoginInput = ({
   const returnToEmail = () => {
     setError('')
     setStep(1)
+    setForgotPassword({
+      email: '',
+      request: false,
+      success: false,
+      error: '',
+    })
   }
 
   useEffect(() => {
@@ -52,6 +60,10 @@ const LoginInput = ({
       onSubmit={(values, { setSubmitting }) => {
         if (step === 1) {
           setLoginId(values.openeewId)
+          setForgotPassword({
+            ...forgotPassword,
+            email: values.openeewId,
+          })
 
           setStep(2)
         } else {
