@@ -8,7 +8,9 @@ import { sensorGroupDropdownItems } from './dropdownItems'
 import { GET_SENSORS } from '../../graphql/queries'
 
 const Sensors = () => {
-  const [execQuery, { data, loading }] = useLazyQuery(GET_SENSORS)
+  const [execQuery, { data, loading, error }] = useLazyQuery(GET_SENSORS, {
+    errorPolicy: 'all',
+  })
 
   const [pageSize, setPageSize] = useState(5)
   const [page, setPage] = useState(1)
@@ -31,21 +33,21 @@ const Sensors = () => {
     )
   }, [page, pageSize, sensors])
 
-  const onPaginationChange = useCallback((paginationInfo) => {
+  const onPaginationChange = (paginationInfo) => {
     setPage(paginationInfo.page)
     setPageSize(paginationInfo.pageSize)
-  }, [])
+  }
 
-  const setFilter = useCallback(
-    (e) => {
-      if (e.selectedItem.id === 'my-sensors') {
-        setSensors(sensors.filter((sensor) => sensor.isUserOwner))
-      } else {
-        setSensors(data.sensors)
-      }
-    },
-    [data, sensors]
-  )
+  const setFilter = (e) => {
+    if (e.selectedItem.id === 'my-sensors') {
+      setSensors(sensors.filter((sensor) => sensor.isUserOwner))
+    } else {
+      setSensors(data.sensors)
+    }
+  }
+
+  console.log(data)
+  console.log(error)
 
   return (
     <div className="sensors-page">
