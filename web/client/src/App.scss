@@ -25,6 +25,7 @@ $events-map-mobile-threshold: 1100px;
 @import './components/Field/Field.scss';
 @import './components/SensorsMap/SensorsMap.scss';
 @import './components/SensorsInformationSidePanel/SensorsInformationSidePanel.scss';
+@import './components/Toasts/Toasts.scss';
 
 @import './scrollbar.scss';
 
@@ -78,4 +79,11 @@ $events-map-mobile-threshold: 1100px;
 
 .no-padding-right {
   padding-right: 0;
+}
+
+.bx--inline-notification--info,
+.bx--inline-notification--error,
+.bx--inline-notification--warning {
+  background: #393939;
+  color: #fff;
 }

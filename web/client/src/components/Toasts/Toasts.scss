@@ -1,0 +1,22 @@
+.toasts__toastsContainer {
+  position: absolute;
+  right: 15px;
+  z-index: 999;
+}
+
+.toasts__toastsContainer .bx--toast-notification {
+  width: 28rem;
+  background: #393939;
+}
+
+.toasts__toastsContainer .bx--toast-notification__title,
+.toasts__toastsContainer .bx--toast-notification__subtitle,
+.toasts__toastsContainer .bx--toast-notification__caption {
+  color: #fff;
+}
+
+.toasts__toastsContainer
+  .bx--toast-notification__close-button
+  .bx--toast-notification__close-icon {
+  fill: #fff;
+}
