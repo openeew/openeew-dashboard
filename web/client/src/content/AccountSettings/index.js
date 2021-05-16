@@ -10,12 +10,13 @@ import EmailValidator from 'email-validator'
 import AuthClient from '../../rest/auth'
 import { keyboardOnlySubmit } from '../../utils'
 
+import history from '../../history'
+
 const AccountSettingsContent = ({
   currentUser,
   setCurrentUser,
   isEditing,
   setEditing,
-  history,
 }) => {
   let onLogoutRequested = async () => {
     try {

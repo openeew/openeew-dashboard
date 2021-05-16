@@ -10,7 +10,9 @@ import AuthClient from '../../rest/auth'
 import Header from '../../components/Header'
 import Sensors from '../Sensors'
 
-const Dashboard = ({ location, history }) => {
+import history from '../../history'
+
+const Dashboard = ({ location }) => {
   const { currentUser, setCurrentUser } = useContext(AppContext)
   const [isSideNavExpanded, sideNavToggle] = useState(false)
 
@@ -48,7 +50,7 @@ const Dashboard = ({ location, history }) => {
       localStorage.getItem('attemptSilentLogin') === 'true'
     )
       getUser()
-  }, [currentUser, setCurrentUser, history, location.pathname])
+  }, [currentUser, setCurrentUser, location.pathname])
 
   if (currentUser.isAuth) {
     return (

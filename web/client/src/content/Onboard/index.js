@@ -8,6 +8,8 @@ import AuthClient from '../../rest/auth'
 import { ReactComponent as Logo } from '../../assets/openeew_logo.svg'
 import OnboardInput from '../../components/OnboardInput'
 
+import history from '../../history'
+
 const Onboard = ({ location }) => {
   const { t } = useContext(AppContext)
   const [user, setUser] = useState({})
@@ -56,12 +58,12 @@ const Onboard = ({ location }) => {
           return setStep(2)
         }
 
-        return location.history.push('/login')
+        return history.push('/login')
       } catch (e) {
         return setError(e)
       }
     },
-    [token, location.history]
+    [token]
   )
 
   return (
