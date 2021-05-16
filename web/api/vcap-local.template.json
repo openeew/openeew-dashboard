@@ -26,6 +26,12 @@
         "username": "",
         "password": ""
       }
+    },
+    "Mqtt": {
+      "brokerId": "",
+      "clientId": "",
+      "username": "",
+      "password": ""
     }
   }
 }

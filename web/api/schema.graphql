@@ -15,6 +15,16 @@ type Sensor {
   isUserOwner: Boolean
 }
 
+type interactionResponse {
+  success: Boolean
+}
+
 type Query {
   sensors: [Sensor]
+}
+
+type Mutation {
+  sendEarthquakeToSensor(sensorId: String!): interactionResponse
+  stopEarthquakeTest(sensorId: String!): interactionResponse
+  sendRestartSensor(sensorId: String!): interactionResponse
 }
