@@ -1,12 +1,15 @@
 import React from 'react'
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, Router } from 'react-router-dom'
+// import { Router } from 'react-router'
 import Dashboard from './content/Dashboard'
 import Login from './content/Login'
 import Onboard from './content/Onboard'
 
-const Router = () => {
+import history from './history'
+
+const _Router = () => {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <div className="app-content">
         <Switch>
           <Route exact path="/login" component={Login} />
@@ -14,8 +17,8 @@ const Router = () => {
           <Route path="/" component={Dashboard} />
         </Switch>
       </div>
-    </BrowserRouter>
+    </Router>
   )
 }
 
-export default Router
+export default _Router
