@@ -4,8 +4,10 @@
   bottom: 0;
   right: 0;
   padding: $layout-02 $layout-03;
+  max-width: 460px;
   background-color: #2c2c2c;
   border-left: 1px solid #515151;
+  z-index: 8500; // header is at 8000, keep above 8000
 
   .bx--toast-notification {
     width: 100%;
@@ -59,15 +61,6 @@
   }
 }
 
-.sensors-side-panel__background {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 8500; // header is at 8000, keep above 8000
-}
-
 .sensors-side-panel__button {
   margin-top: $layout-01;
   border: 1px solid white;
@@ -91,8 +84,9 @@
 .sensors-side-panel__restarting {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: calc(24px);
+  position: relative;
+  left: -8px;
+  height: 50px;
   margin-top: 10px;
   color: #9c9c9c;
 
