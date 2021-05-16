@@ -4,6 +4,10 @@ const {
   LatitudeResolver,
   LongitudeResolver,
 } = require('graphql-scalars');
+const {
+  AuthenticationError,
+  UserInputError,
+} = require('apollo-server-express');
 
 module.exports = {
   DateTime: GraphQLDateTime,
@@ -12,13 +16,41 @@ module.exports = {
   Longitude: LongitudeResolver,
 
   Query: {
-    sensors: (_, __, { dataSources, user }) => {
+    sensors: (_, __, { dataSources, uuid }) => {
       // TODO: Admin check here
-      const uuid = user.identities.filter(
-        (iden) => iden.provider === 'cloud_directory',
-      )[0].id;
 
       return dataSources.sensorAPI.getAllSensors(uuid);
+    },
+  },
+  Mutation: {
+    sendEarthquakeToSensor: async (_, { sensorId }, { dataSources, uuid }) => {
+      const sensor = await dataSources.sensorAPI.getSensorById(sensorId);
+
+      if (!sensor) {
+        throw new UserInputError('Sensor not found');
+      }
+
+      if (sensor.uuid !== uuid) {
+        throw new AuthenticationError('Unauthorized');
+      }
+
+      return dataSources.mqttAPI.sendEarthquakeToSensor(sensorId);
+    },
+    stopEarthquakeTest: (_, { sensorId }, { dataSources }) => {
+      return dataSources.mqttAPI.stopEarthquakeTest(sensorId);
+    },
+    sendRestartSensor: async (_, { sensorId }, { dataSources, uuid }) => {
+      const sensor = await dataSources.sensorAPI.getSensorById(sensorId);
+
+      if (!sensor) {
+        throw new UserInputError('Sensor not found');
+      }
+
+      if (sensor.uuid !== uuid) {
+        throw new AuthenticationError('Unauthorized');
+      }
+
+      return dataSources.mqttAPI.sendRestartSensor(sensorId);
     },
   },
 };
