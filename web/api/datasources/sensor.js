@@ -81,6 +81,25 @@ class SensorAPI extends RESTDataSource {
       });
     });
   }
+
+  removeSensor(sensorId) {
+    return new Promise((resolve) => {
+      const db = this.cloudant.db.use('openeew-devices');
+
+      // eslint-disable-next-line camelcase
+      db.get(sensorId, { revs_info: true }, function (err, body) {
+        if (!err) console.log(body);
+
+        db.destroy(sensorId, body._rev, function (err) {
+          if (!err) {
+            console.log('Successfully deleted doc', sensorId);
+
+            resolve();
+          }
+        });
+      });
+    });
+  }
 }
 
 module.exports = SensorAPI;

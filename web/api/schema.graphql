@@ -19,6 +19,10 @@ type interactionResponse {
   success: Boolean
 }
 
+type sensorRemoveResponse {
+  id: ID!
+}
+
 type Query {
   sensors: [Sensor]
 }
@@ -28,4 +32,5 @@ type Mutation {
   stopEarthquakeTest(sensorId: String!): interactionResponse
   sendRestartSensor(sensorId: String!): interactionResponse
   sendSensorUpdateRequest(sensorId: String!): interactionResponse
+  sendSensorRemove(sensorId: String!): sensorRemoveResponse
 }

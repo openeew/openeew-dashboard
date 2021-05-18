@@ -14,6 +14,10 @@ export const handleGraphQLError = (e, type, setInteractionError) => {
     return history.push('/login')
   }
 
+  if (!setInteractionError) {
+    return null
+  }
+
   return setInteractionError({
     type,
     message: 'Connection to sensor failed',

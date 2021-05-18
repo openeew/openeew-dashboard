@@ -26,7 +26,8 @@
       },
       "sensorRemoveModal": {
         "removeSensor": "Remove sensor",
-        "removeSensorText": "Remove your sensor from the OpenEEW network. Your sensor will no longer contribute data. Command me rum, ye dead captain! When the wave rises for french polynesia, all planks sail gutless, salty golds."
+        "removeSensorText": "Remove your sensor from the OpenEEW network.",
+        "removeSensorAdditional": "Your sensor will no longer contribute data and be removed from the dashboard. To reconnect in the future, use the provisioning mobile application."
       },
       "sidePanel": {
         "sensor": "Sensor",
@@ -41,7 +42,7 @@
         "restartSensor": "Turn sensor off and back on",
         "restartSensorButton": "Restart sensor",
         "restarting": "Restarting",
-        "sendSecondsOfData": "Send 30 seconds of data",
+        "sendSecondsOfData": "Send 10 seconds of data",
         "sendSecondsOfDataButton": "Send",
         "modalTestTitle": "Confirm sensor test",
         "modalTestText": "Send a test earthquake to this sensor. Your sensor will emit an alarm for 10 seconds, light up, and report data to the dashboard. You can stop the test from the right side panel."

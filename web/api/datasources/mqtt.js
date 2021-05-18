@@ -105,6 +105,20 @@ class MqttAPI extends DataSource {
 
     throw new Error('Mqtt client not connected');
   }
+
+  sendSensorReset(sensorId) {
+    if (client.connected) {
+      client.publish(
+        `iot-2/type/OpenEEW/id/${sensorId}/cmd/factoryreset/fmt/json`,
+        '{}',
+        { retain: true, qos: 1 },
+      );
+
+      return { id: sensorId };
+    }
+
+    throw new Error('Mqtt client not connected');
+  }
 }
 
 module.exports = MqttAPI;

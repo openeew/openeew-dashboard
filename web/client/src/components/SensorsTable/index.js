@@ -16,13 +16,18 @@ import {
   TableToolbarSearch,
   Pagination,
   Modal,
+  Loading,
 } from 'carbon-components-react'
+import { useMutation } from '@apollo/client'
 import SensorOverflowMenu from './SensorOverflowMenu'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import Tag from 'carbon-components-react/lib/components/Tag/Tag'
+
 import { formatCoordinates, timeAgo } from '../../utils'
 import SensorsInformationSidePanel from '../SensorsInformationSidePanel'
 import AppContext from '../../context/app'
+import { SEND_SENSOR_REMOVE } from '../../graphql/mutations'
+import { handleGraphQLError } from '../../graphql/error'
 
 const formatRows = (rows) =>
   rows.map((row) => {
@@ -64,12 +69,16 @@ const SensorsTable = ({
   pageSize,
   onPaginationChange,
   currentlyVisibleSensors,
+  setSensors,
 }) => {
   const { t } = useContext(AppContext)
 
   const [shouldShowSideMenu, setShouldShowSideMenu] = useState(false)
   const [shouldShowRemoveMenu, setShouldShowRemoveMenu] = useState(false)
   const [displayedSensor, setDisplayedSensor] = useState({})
+  const [removeSensorLoading, setRemoveSensorLoading] = useState(false)
+
+  const [sendRemoveSensor] = useMutation(SEND_SENSOR_REMOVE)
 
   const onModify = (sensor) => {
     setShouldShowSideMenu(true)
@@ -82,7 +91,24 @@ const SensorsTable = ({
   }
 
   const removeSensor = () => {
-    setShouldShowRemoveMenu(false)
+    setRemoveSensorLoading(true)
+
+    sendRemoveSensor({ variables: { sensorId: displayedSensor.id } })
+      .then(() => {
+        setRemoveSensorLoading(false)
+        setShouldShowRemoveMenu(false)
+
+        setSensors(() => {
+          let newSensors = sensors.filter(
+            (sensor) => sensor.id !== displayedSensor.id
+          )
+
+          return newSensors
+        })
+      })
+      .catch((e) => {
+        return handleGraphQLError(e)
+      })
   }
 
   useEffect(() => {
@@ -109,7 +135,11 @@ const SensorsTable = ({
         onRequestClose={() => setShouldShowRemoveMenu(false)}
         onRequestSubmit={removeSensor}
       >
-        {t('content.sensors.sensorRemoveModal.removeSensorText')}
+        {removeSensorLoading ? <Loading /> : null}
+        <p>{t('content.sensors.sensorRemoveModal.removeSensorText')}</p>
+        <p className="mart-1">
+          {t('content.sensors.sensorRemoveModal.removeSensorAdditional')}
+        </p>
       </Modal>
       <DataTable
         rows={formatRows(currentlyVisibleSensors)}

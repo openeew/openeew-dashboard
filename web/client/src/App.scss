@@ -87,3 +87,9 @@ $events-map-mobile-threshold: 1100px;
   background: #393939;
   color: #fff;
 }
+
+@media (min-width: 82rem) {
+  .bx--modal-container--xs {
+    width: 30%;
+  }
+}

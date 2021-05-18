@@ -89,6 +89,7 @@ const Sensors = ({ history }) => {
           page={page}
           pageSize={pageSize}
           currentlyVisibleSensors={currentlyVisibleSensors}
+          setSensors={setSensors}
         />
       </div>
     </div>
