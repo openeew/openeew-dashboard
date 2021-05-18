@@ -18,16 +18,14 @@ import {
   Modal,
   Loading,
 } from 'carbon-components-react'
-import { useMutation } from '@apollo/client'
+
 import SensorOverflowMenu from './SensorOverflowMenu'
-import { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import Tag from 'carbon-components-react/lib/components/Tag/Tag'
 
 import { formatCoordinates, timeAgo } from '../../utils'
 import SensorsInformationSidePanel from '../SensorsInformationSidePanel'
 import AppContext from '../../context/app'
-import { SEND_SENSOR_REMOVE } from '../../graphql/mutations'
-import { handleGraphQLError } from '../../graphql/error'
 
 const formatRows = (rows) =>
   rows.map((row) => {
@@ -47,6 +45,10 @@ const formatRows = (rows) =>
   })
 
 const getSensorStatus = (timeAgo) => {
+  if (!timeAgo) {
+    return 'with-circle status-yellow'
+  }
+
   const timeSegment = timeAgo.split(' ')[1].replace('s', '')
 
   if (['week', 'month', 'year'].includes(timeSegment)) {
@@ -69,47 +71,17 @@ const SensorsTable = ({
   pageSize,
   onPaginationChange,
   currentlyVisibleSensors,
-  setSensors,
+  shouldShowSideMenu,
+  shouldShowRemoveMenu,
+  removeSensorLoading,
+  displayedSensor,
+  setShouldShowSideMenu,
+  setShouldShowRemoveMenu,
+  removeSensor,
+  onModify,
+  onRemove,
 }) => {
   const { t } = useContext(AppContext)
-
-  const [shouldShowSideMenu, setShouldShowSideMenu] = useState(false)
-  const [shouldShowRemoveMenu, setShouldShowRemoveMenu] = useState(false)
-  const [displayedSensor, setDisplayedSensor] = useState({})
-  const [removeSensorLoading, setRemoveSensorLoading] = useState(false)
-
-  const [sendRemoveSensor] = useMutation(SEND_SENSOR_REMOVE)
-
-  const onModify = (sensor) => {
-    setShouldShowSideMenu(true)
-    setDisplayedSensor(sensor)
-  }
-
-  const onRemove = (sensor) => {
-    setShouldShowRemoveMenu(true)
-    setDisplayedSensor(sensor)
-  }
-
-  const removeSensor = () => {
-    setRemoveSensorLoading(true)
-
-    sendRemoveSensor({ variables: { sensorId: displayedSensor.id } })
-      .then(() => {
-        setRemoveSensorLoading(false)
-        setShouldShowRemoveMenu(false)
-
-        setSensors(() => {
-          let newSensors = sensors.filter(
-            (sensor) => sensor.id !== displayedSensor.id
-          )
-
-          return newSensors
-        })
-      })
-      .catch((e) => {
-        return handleGraphQLError(e)
-      })
-  }
 
   useEffect(() => {
     document.body.className = shouldShowSideMenu ? 'body-no-scroll' : ''
@@ -123,7 +95,6 @@ const SensorsTable = ({
         <SensorsInformationSidePanel
           sensor={displayedSensor}
           onRequestClose={onSideMenuClose}
-          getSensorStatus={getSensorStatus}
         />
       )}
       <Modal
@@ -203,70 +174,72 @@ const SensorsTable = ({
                     (_, rowIndex) =>
                       (page - 1) * pageSize + rowIndex < sensors.length
                   )
-                  .map((row, rowIndex) => (
-                    <Fragment key={row.id}>
-                      <TableExpandRow {...getRowProps({ row })}>
-                        {loading
-                          ? null
-                          : row.cells.map((cell, indexCells) => (
-                              <TableCell
-                                key={cell.id}
-                                className={
-                                  indexCells === 0
-                                    ? 'sticky-column left'
-                                    : undefined
-                                }
-                              >
-                                <span
-                                  tabIndex={0}
-                                  className={getRowClasses(cell, indexCells)}
-                                  aria-label={`${headers[indexCells].header} is ${cell.value}`}
+                  .map((row, rowIndex) => {
+                    return (
+                      <Fragment key={row.id}>
+                        <TableExpandRow {...getRowProps({ row })}>
+                          {loading
+                            ? null
+                            : row.cells.map((cell, indexCells) => (
+                                <TableCell
+                                  key={cell.id}
+                                  className={
+                                    indexCells === 0
+                                      ? 'sticky-column left'
+                                      : undefined
+                                  }
                                 >
-                                  {indexCells === 0 ? (
-                                    <code>{cell.value}</code>
-                                  ) : Array.isArray(cell.value) ? (
-                                    formatCoordinates(cell.value)
-                                  ) : (
-                                    cell.value
-                                  )}
-                                </span>
-                                {indexCells === 0 &&
-                                  sensors[(page - 1) * pageSize + rowIndex]
-                                    .isUserOwner && (
-                                    <Tag
-                                      className="tag-owner"
-                                      tabIndex={0}
-                                      aria-label="My sensor"
-                                    >
-                                      My sensor
-                                    </Tag>
-                                  )}
-                              </TableCell>
-                            ))}
-                        {sensors[(page - 1) * pageSize + rowIndex]
-                          .isUserOwner ? (
-                          <SensorOverflowMenu
-                            id={row.id}
-                            sensor={
-                              formatRows(currentlyVisibleSensors)[rowIndex]
-                            }
-                            onModify={onModify}
-                            onRemove={onRemove}
-                          />
-                        ) : (
-                          <TableCell className="sticky-column right" />
-                        )}
-                      </TableExpandRow>
-                      <TableExpandedRow
-                        colSpan={headers.length + 2}
-                        className="sensors-expandable-row"
-                      >
-                        <div className="sensor-chart" tabIndex={0}>
-                          <p className="title dance" tabIndex={0} />
-                        </div>
-                      </TableExpandedRow>
-                    </Fragment>
-                  ))}
+                                  <span
+                                    tabIndex={0}
+                                    className={getRowClasses(cell, indexCells)}
+                                    aria-label={`${headers[indexCells].header} is ${cell.value}`}
+                                  >
+                                    {indexCells === 0 ? (
+                                      <code>{cell.value}</code>
+                                    ) : Array.isArray(cell.value) ? (
+                                      formatCoordinates(cell.value)
+                                    ) : (
+                                      cell.value
+                                    )}
+                                  </span>
+                                  {indexCells === 0 &&
+                                    sensors[(page - 1) * pageSize + rowIndex]
+                                      .isUserOwner && (
+                                      <Tag
+                                        className="tag-owner"
+                                        tabIndex={0}
+                                        aria-label="My sensor"
+                                      >
+                                        My sensor
+                                      </Tag>
+                                    )}
+                                </TableCell>
+                              ))}
+                          {sensors[(page - 1) * pageSize + rowIndex]
+                            .isUserOwner ? (
+                            <SensorOverflowMenu
+                              id={row.id}
+                              sensor={
+                                formatRows(currentlyVisibleSensors)[rowIndex]
+                              }
+                              onModify={onModify}
+                              onRemove={onRemove}
+                            />
+                          ) : (
+                            <TableCell className="sticky-column right" />
+                          )}
+                        </TableExpandRow>
+                        <TableExpandedRow
+                          colSpan={headers.length + 2}
+                          className="sensors-expandable-row"
+                        >
+                          <div className="sensor-chart" tabIndex={0}>
+                            <p className="title dance" tabIndex={0} />
+                          </div>
+                        </TableExpandedRow>
+                      </Fragment>
+                    )
+                  })}
               </TableBody>
             </Table>
             <Pagination

@@ -7,6 +7,37 @@ import { sensorGroupDropdownItems } from './dropdownItems'
 
 import { GET_SENSORS } from '../../graphql/queries'
 import AppContext from '../../context/app'
+import { useMutation } from '@apollo/client'
+
+import { SEND_SENSOR_REMOVE } from '../../graphql/mutations'
+import { handleGraphQLError } from '../../graphql/error'
+
+const processSensorData = (sensors) => {
+  // Sort by isUserOwner
+  let sortedSensors = sensors
+    .slice()
+    .sort((a, b) => b.isUserOwner - a.isUserOwner)
+    .map((s) => ({
+      ...s,
+      statusColor: (() => {
+        if (!s.lastCheckin) {
+          return 'yellow'
+        }
+
+        const secondsAgo =
+          Math.floor(Date.now() / 1000) -
+          Math.floor(new Date(s.lastCheckin) / 1000)
+
+        if (secondsAgo > 604800) {
+          return 'yellow'
+        }
+
+        return 'green'
+      })(),
+    }))
+
+  return sortedSensors
+}
 
 const Sensors = ({ history }) => {
   const { addToast } = useContext(AppContext)
@@ -28,18 +59,20 @@ const Sensors = ({ history }) => {
   const [sensors, setSensors] = useState([])
   const [currentlyVisibleSensors, setCurrentlyVisibleSensors] = useState([])
 
+  const [shouldShowSideMenu, setShouldShowSideMenu] = useState(false)
+  const [shouldShowRemoveMenu, setShouldShowRemoveMenu] = useState(false)
+  const [displayedSensor, setDisplayedSensor] = useState({})
+  const [removeSensorLoading, setRemoveSensorLoading] = useState(false)
+
+  const [sendRemoveSensor] = useMutation(SEND_SENSOR_REMOVE)
+
   useEffect(() => {
     execQuery()
   }, [execQuery])
 
   useEffect(() => {
     if (data && data.sensors) {
-      // Sort by isUserOwner
-      let sortedSensors = data.sensors
-        .slice()
-        .sort((a, b) => b.isUserOwner - a.isUserOwner)
-
-      setSensors(sortedSensors)
+      setSensors(processSensorData(data.sensors))
     }
   }, [data])
 
@@ -48,6 +81,37 @@ const Sensors = ({ history }) => {
       sensors.slice((page - 1) * pageSize, page * pageSize)
     )
   }, [page, pageSize, sensors])
+
+  const onModify = (sensor) => {
+    setShouldShowSideMenu(true)
+    setDisplayedSensor(sensor)
+  }
+
+  const onRemove = (sensor) => {
+    setShouldShowRemoveMenu(true)
+    setDisplayedSensor(sensor)
+  }
+
+  const removeSensor = () => {
+    setRemoveSensorLoading(true)
+
+    sendRemoveSensor({ variables: { sensorId: displayedSensor.id } })
+      .then(() => {
+        setRemoveSensorLoading(false)
+        setShouldShowRemoveMenu(false)
+
+        setSensors(() => {
+          let newSensors = sensors.filter(
+            (sensor) => sensor.id !== displayedSensor.id
+          )
+
+          return newSensors
+        })
+      })
+      .catch((e) => {
+        return handleGraphQLError(e)
+      })
+  }
 
   const onPaginationChange = (paginationInfo) => {
     setPage(paginationInfo.page)
@@ -58,7 +122,7 @@ const Sensors = ({ history }) => {
     if (e.selectedItem.id === 'my-sensors') {
       setSensors(sensors.filter((sensor) => sensor.isUserOwner))
     } else {
-      setSensors(data.sensors)
+      setSensors(processSensorData(data.sensors))
     }
   }
 
@@ -77,7 +141,11 @@ const Sensors = ({ history }) => {
       />
 
       <div className="sensors-map__container">
-        <SensorsMap sensors={sensors} />
+        <SensorsMap
+          sensors={sensors}
+          setDisplayedSensor={setDisplayedSensor}
+          setShouldShowSideMenu={setShouldShowSideMenu}
+        />
       </div>
 
       <div className="sensors-table__container">
@@ -90,6 +158,16 @@ const Sensors = ({ history }) => {
           pageSize={pageSize}
           currentlyVisibleSensors={currentlyVisibleSensors}
           setSensors={setSensors}
+          shouldShowSideMenu={shouldShowSideMenu}
+          shouldShowRemoveMenu={shouldShowRemoveMenu}
+          removeSensorLoading={removeSensorLoading}
+          displayedSensor={displayedSensor}
+          setDisplayedSensor={setDisplayedSensor}
+          setShouldShowSideMenu={setShouldShowSideMenu}
+          setShouldShowRemoveMenu={setShouldShowRemoveMenu}
+          removeSensor={removeSensor}
+          onModify={onModify}
+          onRemove={onRemove}
         />
       </div>
     </div>

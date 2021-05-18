@@ -22,11 +22,7 @@ import {
 } from '../../graphql/mutations'
 import { handleGraphQLError } from '../../graphql/error'
 
-const SensorsInformationSidePanel = ({
-  sensor,
-  onRequestClose,
-  getSensorStatus,
-}) => {
+const SensorsInformationSidePanel = ({ sensor, onRequestClose }) => {
   const { t, currentFirmwareInfo } = useContext(AppContext)
 
   const [testModalOpen, setTestModalOpen] = useState(false)
@@ -119,9 +115,7 @@ const SensorsInformationSidePanel = ({
       </Modal>
       <div className="sensors-side-panel__header">
         <h4
-          className={`sensors-side-panel__title ${getSensorStatus(
-            sensor.lastCheckin
-          )}`}
+          className={`sensors-side-panel__title with-circle status-${sensor.statusColor}`}
           data-after="true"
         >
           Sensor {sensor.id}
