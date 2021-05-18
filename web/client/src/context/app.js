@@ -76,7 +76,7 @@ export const useAppContext = () => {
 
   useEffect(() => {
     const callGithubAPI = async () => {
-      let verNum
+      let verNum = null
 
       try {
         verNum = await GithubAPI.getCurrentFirmwareVer()
@@ -88,7 +88,7 @@ export const useAppContext = () => {
       }
 
       setCurrentFirmwareInfo({
-        verNum: '1.5.2',
+        verNum,
         error: '',
       })
     }
