@@ -74,6 +74,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               base: 1,
               stops: [
                 [DEFAULT_ZOOM, 1],
+                [8, 1],
                 [12, 0.7],
               ],
             },
@@ -82,7 +83,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               stops: [
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
-                [12, 50],
+                [12, 60],
               ],
             },
             'circle-color': [
@@ -107,7 +108,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               stops: [
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
-                [12, 55],
+                [12, 65],
               ],
             },
             'circle-opacity': 0,
