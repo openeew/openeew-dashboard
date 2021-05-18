@@ -21,7 +21,7 @@
     "sensors": {
       "mySensor": "My sensor",
       "rowOverflow": {
-        "modify": "Modify",
+        "interact": "Interact",
         "remove": "Remove"
       },
       "sensorRemoveModal": {
@@ -31,6 +31,8 @@
       "sidePanel": {
         "sensor": "Sensor",
         "updateNow": "Update now",
+        "updatingTitle": "Firmware Update In Progress",
+        "updatingSubTitle": "In ~2 minutes, your sensor will complete installation of the new firmware.",
         "newFirmwareAvailable": "New firmware available",
         "firmwareVersion": "Firmware version",
         "sendTestEarthquake": "Send test earthquake",
