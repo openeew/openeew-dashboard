@@ -39,6 +39,9 @@ module.exports = {
     stopEarthquakeTest: (_, { sensorId }, { dataSources }) => {
       return dataSources.mqttAPI.stopEarthquakeTest(sensorId);
     },
+    sendSensorUpdateRequest: (_, { sensorId }, { dataSources }) => {
+      return dataSources.mqttAPI.sensorUpdate(sensorId);
+    },
     sendRestartSensor: async (_, { sensorId }, { dataSources, uuid }) => {
       const sensor = await dataSources.sensorAPI.getSensorById(sensorId);
 

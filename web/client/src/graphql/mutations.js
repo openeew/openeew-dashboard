@@ -23,3 +23,11 @@ export const SEND_RESTART_SENSOR = gql`
     }
   }
 `
+
+export const SEND_UPDATE_REQUEST = gql`
+  mutation sendSensorUpdateRequest($sensorId: String!) {
+    sendRestartSensor(sensorId: $sensorId) {
+      success
+    }
+  }
+`

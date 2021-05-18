@@ -18,6 +18,7 @@ import {
   SEND_EARTHQUAKE_TO_SENSOR,
   STOP_EARTHQUAKE_TEST,
   SEND_RESTART_SENSOR,
+  SEND_UPDATE_REQUEST,
 } from '../../graphql/mutations'
 import { handleGraphQLError } from '../../graphql/error'
 
@@ -31,6 +32,7 @@ const SensorsInformationSidePanel = ({
   const [testModalOpen, setTestModalOpen] = useState(false)
   const [testingSensor, setTestingSensor] = useState(false)
   const [restarting, setRestarting] = useState(false)
+  const [updating, setUpdating] = useState(false)
   const [interactionError, setInteractionError] = useState({
     type: null,
     message: '',
@@ -39,6 +41,7 @@ const SensorsInformationSidePanel = ({
   const [sendEarthquakeToSensor] = useMutation(SEND_EARTHQUAKE_TO_SENSOR)
   const [stopEarthquakeTest] = useMutation(STOP_EARTHQUAKE_TEST)
   const [sendRestartSensor] = useMutation(SEND_RESTART_SENSOR)
+  const [updateSensor] = useMutation(SEND_UPDATE_REQUEST)
 
   const testSensor = () => {
     setTestModalOpen(false)
@@ -89,6 +92,18 @@ const SensorsInformationSidePanel = ({
       })
   }
 
+  const updateFirmware = () => {
+    setUpdating(true)
+
+    updateSensor({ variables: { sensorId: sensor.id } })
+      .then(() => {
+        setTimeout(() => {
+          setUpdating(false)
+        }, 120000)
+      })
+      .catch(() => {})
+  }
+
   return (
     <div className="sensors-side-panel">
       <Modal
@@ -123,20 +138,45 @@ const SensorsInformationSidePanel = ({
       <div className="sensors-side-panel__content">
         {/* Checks if current firmware version is greater than or equal to latest release in repo */}
         {currentFirmwareInfo.verNum &&
-        semver.gt(currentFirmwareInfo.verNum, sensor.firmwareVer) ? (
+        semver.gt(currentFirmwareInfo.verNum, sensor.firmwareVer) &&
+        !updating ? (
           <ToastNotification
             kind="info"
             caption=""
             subtitle={
-              <a href="#">{t('content.sensors.sidePanel.updateNow')}</a>
+              <button
+                className={'sensors-side-panel__updateLink'}
+                onClick={updateFirmware}
+              >
+                {t('content.sensors.sidePanel.updateNow')}
+              </button>
             }
             timeout={0}
             hideCloseButton={true}
             title={
               t('content.sensors.sidePanel.newFirmwareAvailable') +
-              ` (v.${currentFirmwareInfo.verNum})`
+              ` (v${currentFirmwareInfo.verNum})`
             }
           />
+        ) : null}
+
+        {/* If sensor is updating... */}
+        {updating ? (
+          <div className="sensors-side-panel__updatingToast">
+            <ToastNotification
+              kind="info"
+              caption=""
+              subtitle={t('content.sensors.sidePanel.updatingSubTitle')}
+              timeout={0}
+              hideCloseButton={true}
+              title={t('content.sensors.sidePanel.updatingTitle')}
+            />
+            <Loading
+              description={t('content.sensors.sidePanel.restarting')}
+              withOverlay={false}
+              small
+            />
+          </div>
         ) : null}
 
         <Field
@@ -158,6 +198,7 @@ const SensorsInformationSidePanel = ({
         </div>
         <button
           className="sensors-side-panel__button"
+          disabled={updating || restarting}
           onClick={() => {
             if (testingSensor) {
               setTestingSensor(false)
@@ -199,16 +240,21 @@ const SensorsInformationSidePanel = ({
           <button
             className="sensors-side-panel__button"
             onClick={restartSensor}
+            disabled={updating || restarting}
           >
             {t('content.sensors.sidePanel.restartSensorButton')}
           </button>
         )}
+
         {/* Send 30 seconds of data */}
         <div className="button-label">
           <IoTPlatform32 />
           {t('content.sensors.sidePanel.sendSecondsOfData')}
         </div>
-        <button className="sensors-side-panel__button">
+        <button
+          className="sensors-side-panel__button"
+          disabled={updating || restarting}
+        >
           {t('content.sensors.sidePanel.sendSecondsOfDataButton')}
         </button>
       </div>
