@@ -23,3 +23,9 @@ a.bx--side-nav__link > .bx--side-nav__link-text {
 .bx--side-nav--expanded {
   border-right: 1px solid #393939;
 }
+
+@media screen and (max-width: $medium) {
+  .bx--side-nav--collapsed {
+    width: 0;
+  }
+}

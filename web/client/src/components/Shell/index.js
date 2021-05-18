@@ -50,10 +50,20 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
       expanded={isSideNavExpanded}
     >
       <SideNavItems>
-        <SideNavLink renderIcon={Activity32} to="/events" element={Link}>
+        <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
+          renderIcon={Activity32}
+          to="/events"
+          element={Link}
+        >
           Events
         </SideNavLink>
         <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
           renderIcon={ConnectionSignal32}
           to="/sensors"
           element={Link}
@@ -61,6 +71,9 @@ const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
           Sensors
         </SideNavLink>
         <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
           renderIcon={UserAvatarFilledAlt32}
           to="/access"
           element={Link}

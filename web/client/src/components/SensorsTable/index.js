@@ -224,7 +224,7 @@ const SensorsTable = ({
                             onRemove={onRemove}
                           />
                         ) : (
-                          <TableCell />
+                          <TableCell className="sticky-column right" />
                         )}
                       </TableExpandRow>
                       <TableExpandedRow

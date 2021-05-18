@@ -18,6 +18,14 @@
   }
 }
 
+@media only screen and (max-width: $medium) {
+  .dashboard__container {
+    &[data-logged-in='true'] {
+      margin: $layout-01 0 0 0;
+    }
+  }
+}
+
 .dashboard__container--sideNavExpanded {
   margin-left: $layout-06 * 3;
 }
