@@ -34,7 +34,7 @@ const SensorsInformationSidePanel = ({
   const [restarting, setRestarting] = useState(false)
   const [updating, setUpdating] = useState(false)
   const [interactionError, setInteractionError] = useState({
-    type: null,
+    type: '',
     message: '',
   })
 
@@ -59,8 +59,6 @@ const SensorsInformationSidePanel = ({
       })
       .catch((e) => {
         setTestingSensor(false)
-
-        console.log(JSON.stringify(e))
 
         return handleGraphQLError(
           e,
@@ -87,7 +85,7 @@ const SensorsInformationSidePanel = ({
       })
       .catch((e) => {
         setRestarting(false)
-        console.log(JSON.stringify(e))
+
         return handleGraphQLError(e, 'sendRestartSensor', setInteractionError)
       })
   }
@@ -101,7 +99,9 @@ const SensorsInformationSidePanel = ({
           setUpdating(false)
         }, 120000)
       })
-      .catch(() => {})
+      .catch((e) => {
+        return handleGraphQLError(e, 'updateError', setInteractionError)
+      })
   }
 
   return (
@@ -159,7 +159,6 @@ const SensorsInformationSidePanel = ({
             }
           />
         ) : null}
-
         {/* If sensor is updating... */}
         {updating ? (
           <div className="sensors-side-panel__updatingToast">
@@ -178,7 +177,6 @@ const SensorsInformationSidePanel = ({
             />
           </div>
         ) : null}
-
         <Field
           title="Firmware version"
           value={sensor.firmwareVer}
@@ -190,7 +188,6 @@ const SensorsInformationSidePanel = ({
               : null
           }
         />
-
         {/* Send test earthquake */}
         <div className="button-label">
           <ConnectionSignal32 />
@@ -211,7 +208,6 @@ const SensorsInformationSidePanel = ({
             ? t('content.sensors.sidePanel.stopTest')
             : t('content.sensors.sidePanel.sendTestEarthquakeButton')}
         </button>
-
         {interactionError.message &&
         interactionError.type === 'sendEarthquakeToSensor' ? (
           <InlineNotification
@@ -221,7 +217,6 @@ const SensorsInformationSidePanel = ({
             hideCloseButton={true}
           />
         ) : null}
-
         {/* Restart sensor */}
         <div className="button-label">
           <Restart32 />
@@ -245,7 +240,15 @@ const SensorsInformationSidePanel = ({
             {t('content.sensors.sidePanel.restartSensorButton')}
           </button>
         )}
-
+        {interactionError.message &&
+        interactionError.type === 'sendRestartSensor' ? (
+          <InlineNotification
+            kind="error"
+            tabIndex={0}
+            title={interactionError.message}
+            hideCloseButton={true}
+          />
+        ) : null}
         {/* Send 30 seconds of data */}
         <div className="button-label">
           <IoTPlatform32 />
@@ -257,6 +260,15 @@ const SensorsInformationSidePanel = ({
         >
           {t('content.sensors.sidePanel.sendSecondsOfDataButton')}
         </button>
+
+        {interactionError.message && interactionError.type === 'sendData' ? (
+          <InlineNotification
+            kind="error"
+            tabIndex={0}
+            title={interactionError.message}
+            hideCloseButton={true}
+          />
+        ) : null}
       </div>
     </div>
   )
