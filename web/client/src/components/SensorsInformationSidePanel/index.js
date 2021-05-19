@@ -19,6 +19,7 @@ import {
   STOP_EARTHQUAKE_TEST,
   SEND_RESTART_SENSOR,
   SEND_UPDATE_REQUEST,
+  SEND_10_DATA,
 } from '../../graphql/mutations'
 import { handleGraphQLError } from '../../graphql/error'
 
@@ -29,6 +30,7 @@ const SensorsInformationSidePanel = ({ sensor, onRequestClose }) => {
   const [testingSensor, setTestingSensor] = useState(false)
   const [restarting, setRestarting] = useState(false)
   const [updating, setUpdating] = useState(false)
+  const [sendingData, setSendingData] = useState(false)
   const [interactionError, setInteractionError] = useState({
     type: '',
     message: '',
@@ -38,12 +40,33 @@ const SensorsInformationSidePanel = ({ sensor, onRequestClose }) => {
   const [stopEarthquakeTest] = useMutation(STOP_EARTHQUAKE_TEST)
   const [sendRestartSensor] = useMutation(SEND_RESTART_SENSOR)
   const [updateSensor] = useMutation(SEND_UPDATE_REQUEST)
+  const [send10SecondData] = useMutation(SEND_10_DATA)
+
+  const sendData = () => {
+    setSendingData(true)
+    setInteractionError({
+      type: '',
+      message: '',
+    })
+
+    send10SecondData({ variables: { sensorId: sensor.id } })
+      .then(() => {
+        setTimeout(() => {
+          setSendingData(false)
+        }, 10000)
+      })
+      .catch((e) => {
+        setSendingData(false)
+
+        handleGraphQLError(e, 'sendDataFromSensor', setInteractionError)
+      })
+  }
 
   const testSensor = () => {
     setTestModalOpen(false)
     setTestingSensor(true)
     setInteractionError({
-      type: null,
+      type: '',
       message: '',
     })
 
@@ -74,10 +97,14 @@ const SensorsInformationSidePanel = ({ sensor, onRequestClose }) => {
 
   const restartSensor = () => {
     setRestarting(true)
+    setInteractionError({
+      type: '',
+      message: '',
+    })
 
     sendRestartSensor({ variables: { sensorId: sensor.id } })
       .then(() => {
-        setTimeout(() => setRestarting(false), 60000)
+        setTimeout(() => setRestarting(false), 45000)
       })
       .catch((e) => {
         setRestarting(false)
@@ -248,14 +275,28 @@ const SensorsInformationSidePanel = ({ sensor, onRequestClose }) => {
           <IoTPlatform32 />
           {t('content.sensors.sidePanel.sendSecondsOfData')}
         </div>
-        <button
-          className="sensors-side-panel__button"
-          disabled={updating || restarting}
-        >
-          {t('content.sensors.sidePanel.sendSecondsOfDataButton')}
-        </button>
 
-        {interactionError.message && interactionError.type === 'sendData' ? (
+        {sendingData ? (
+          <div className="sensors-side-panel__sending">
+            <Loading
+              description={t('content.sensors.sidePanel.sending')}
+              withOverlay={false}
+              small
+            />
+            <p>{t('content.sensors.sidePanel.sending')}</p>
+          </div>
+        ) : (
+          <button
+            className="sensors-side-panel__button"
+            onClick={sendData}
+            disabled={updating || restarting}
+          >
+            {t('content.sensors.sidePanel.sendSecondsOfDataButton')}
+          </button>
+        )}
+
+        {interactionError.message &&
+        interactionError.type === 'sendDataFromSensor' ? (
           <InlineNotification
             kind="error"
             tabIndex={0}

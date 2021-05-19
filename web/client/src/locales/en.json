@@ -44,6 +44,7 @@
         "restarting": "Restarting",
         "sendSecondsOfData": "Send 10 seconds of data",
         "sendSecondsOfDataButton": "Send",
+        "sending": "Sending",
         "modalTestTitle": "Confirm sensor test",
         "modalTestText": "Send a test earthquake to this sensor. Your sensor will emit an alarm for 10 seconds, light up, and report data to the dashboard. You can stop the test from the right side panel."
       }

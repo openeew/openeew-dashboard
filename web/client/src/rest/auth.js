@@ -133,7 +133,6 @@ class Auth {
         .then(this.handleError)
         .then((response) => response.json())
         .then((user) => {
-          console.log(user)
           return resolve(user)
         })
         .catch((e) => {

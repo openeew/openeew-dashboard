@@ -8,6 +8,7 @@ let mqttUsername;
 let mqttPassword;
 
 if (
+  process.env.MQTT_BROKER_ID &&
   process.env.MQTT_CLIENTID &&
   process.env.MQTT_USERNAME &&
   process.env.MQTT_PASSWORD
@@ -97,6 +98,20 @@ class MqttAPI extends DataSource {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/firmwarecheck/fmt/json`,
         '{}',
+        { retain: true, qos: 1 },
+      );
+
+      return { success: true };
+    }
+
+    throw new Error('Mqtt client not connected');
+  }
+
+  send10Data(sensorId) {
+    if (client.connected) {
+      client.publish(
+        `iot-2/type/OpenEEW/id/${sensorId}/cmd/sendacceldata/fmt/json`,
+        '{LiveDataDuration:10}',
         { retain: true, qos: 1 },
       );
 

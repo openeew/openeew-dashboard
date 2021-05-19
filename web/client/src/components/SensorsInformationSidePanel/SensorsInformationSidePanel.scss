@@ -129,7 +129,8 @@
   overflow-y: hidden;
 }
 
-.sensors-side-panel__restarting {
+.sensors-side-panel__restarting,
+.sensors-side-panel__sending {
   display: flex;
   align-items: center;
   position: relative;
@@ -146,4 +147,9 @@
 
 .bx--pagination {
   overflow-x: hidden;
+}
+
+.sensors-side-panel__sendDataButton {
+  display: flex;
+  align-items: center;
 }

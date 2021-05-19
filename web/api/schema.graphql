@@ -32,5 +32,6 @@ type Mutation {
   stopEarthquakeTest(sensorId: String!): interactionResponse
   sendRestartSensor(sensorId: String!): interactionResponse
   sendSensorUpdateRequest(sensorId: String!): interactionResponse
+  send10Data(sensorId: String!): interactionResponse
   sendSensorRemove(sensorId: String!): sensorRemoveResponse
 }

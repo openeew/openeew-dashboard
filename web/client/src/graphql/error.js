@@ -7,8 +7,6 @@ import history from '../history'
  * @callback setInteractionError Sets error state for the calling component
  */
 export const handleGraphQLError = (e, type, setInteractionError) => {
-  console.log(JSON.stringify(e))
-
   if (
     e.networkError &&
     e.networkError.result.errors[0].extensions.code === 'UNAUTHENTICATED'

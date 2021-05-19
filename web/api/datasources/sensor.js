@@ -69,13 +69,11 @@ class SensorAPI extends RESTDataSource {
   }
 
   getSensorById(sensorId) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const db = this.cloudant.db.use('openeew-devices');
 
-      db.find({ selector: { _id: sensorId } }, function (err, result) {
-        if (err) {
-          throw err;
-        }
+      db.find({ selector: { _id: sensorId } }, (err, result) => {
+        if (err) reject(err);
 
         return resolve(result.docs[0]);
       });
@@ -83,19 +81,17 @@ class SensorAPI extends RESTDataSource {
   }
 
   removeSensor(sensorId) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const db = this.cloudant.db.use('openeew-devices');
 
       // eslint-disable-next-line camelcase
-      db.get(sensorId, { revs_info: true }, function (err, body) {
-        if (!err) console.log(body);
+      db.get(sensorId, { revs_info: true }, (err, body) => {
+        if (err) reject(err);
 
-        db.destroy(sensorId, body._rev, function (err) {
-          if (!err) {
-            console.log('Successfully deleted doc', sensorId);
+        db.destroy(sensorId, body._rev, (err) => {
+          if (err) reject(err);
 
-            resolve();
-          }
+          return resolve();
         });
       });
     });

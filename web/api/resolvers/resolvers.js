@@ -72,6 +72,13 @@ module.exports = {
     },
 
     /**
+     * Restart a sensor
+     */
+    send10Data: (_, { sensorId }, { dataSources }) => {
+      return dataSources.mqttAPI.send10Data(sensorId);
+    },
+
+    /**
      * Remove a sensor
      */
     sendSensorRemove: async (_, { sensorId }, { dataSources, uuid }) => {
@@ -85,9 +92,11 @@ module.exports = {
         throw new AuthenticationError('Unauthorized');
       }
 
-      console.log('here');
-
-      await dataSources.sensorAPI.removeSensor(sensorId);
+      try {
+        await dataSources.sensorAPI.removeSensor(sensorId);
+      } catch (error) {
+        throw new Error('REMOVE_SENSOR_ERROR');
+      }
 
       return dataSources.mqttAPI.sendSensorReset(sensorId);
     },

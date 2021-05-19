@@ -39,3 +39,11 @@ export const SEND_SENSOR_REMOVE = gql`
     }
   }
 `
+
+export const SEND_10_DATA = gql`
+  mutation send10Data($sensorId: String!) {
+    send10Data(sensorId: $sensorId) {
+      success
+    }
+  }
+`

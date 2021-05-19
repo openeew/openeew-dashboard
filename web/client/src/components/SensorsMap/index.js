@@ -8,7 +8,6 @@ const DEFAULT_LONGITUDE = -90
 const DEFAULT_ZOOM = 2.3
 
 const transformToGeoJSON = (sensors) => {
-  console.log(sensors)
   const geoJSONsensors = sensors
     .filter((s) => s.latitude && s.longitude)
     .map((sensor) => {
@@ -83,7 +82,8 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               stops: [
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
-                [12, 60],
+                [12, 65],
+                [15, 1000],
               ],
             },
             'circle-color': [
@@ -109,6 +109,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
                 [12, 65],
+                [15, 1000],
               ],
             },
             'circle-opacity': 0,
