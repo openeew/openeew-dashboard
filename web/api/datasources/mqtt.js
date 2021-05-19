@@ -6,17 +6,20 @@ let brokerId;
 let mqttClientId;
 let mqttUsername;
 let mqttPassword;
+let mqttPort;
 
 if (
   process.env.MQTT_BROKER_ID &&
   process.env.MQTT_CLIENTID &&
   process.env.MQTT_USERNAME &&
-  process.env.MQTT_PASSWORD
+  process.env.MQTT_PASSWORD &&
+  process.env.MQTT_PORT
 ) {
   brokerId = process.env.MQTT_BROKER_ID;
   mqttClientId = process.env.MQTT_CLIENTID;
   mqttUsername = process.env.MQTT_USERNAME;
   mqttPassword = process.env.MQTT_PASSWORD;
+  mqttPort = process.env.MQTT_PORT;
 } else {
   const mqtt = require('../vcap-local.json').services.Mqtt;
 
@@ -24,6 +27,7 @@ if (
   mqttClientId = mqtt.clientId;
   mqttUsername = mqtt.username;
   mqttPassword = mqtt.password;
+  mqttPort = mqtt.port;
 }
 
 const client = mqtt.connect(
@@ -32,7 +36,7 @@ const client = mqtt.connect(
     clientId: mqttClientId,
     username: mqttUsername,
     password: mqttPassword,
-    port: 1883,
+    port: mqttPort,
     keepalive: 60,
   },
 );

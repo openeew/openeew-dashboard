@@ -78,7 +78,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               ],
             },
             'circle-radius': {
-              base: 10,
+              base: 5,
               stops: [
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
@@ -104,7 +104,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
           source: 'sensors',
           paint: {
             'circle-radius': {
-              base: 7,
+              base: 5,
               stops: [
                 [DEFAULT_ZOOM, 5],
                 [8, 5],
