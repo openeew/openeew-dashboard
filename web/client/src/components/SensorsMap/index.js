@@ -17,7 +17,8 @@ const transformToGeoJSON = (sensors) => {
           id: sensor.id,
           highlighted: false,
           pos: [parseFloat(sensor.longitude), parseFloat(sensor.latitude)],
-          country: 'Mexico',
+          isUserOwner: sensor.isUserOwner ? 1 : 0,
+          statusColor: sensor.statusColor,
         },
         geometry: {
           type: 'Point',
@@ -32,7 +33,7 @@ const transformToGeoJSON = (sensors) => {
   return geoJSONsensors
 }
 
-const SensorsMap = ({ sensors }) => {
+const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
   let mapWrapper = useRef()
   let map = useRef()
 
@@ -67,19 +68,68 @@ const SensorsMap = ({ sensors }) => {
           type: 'circle',
           source: 'sensors',
           paint: {
-            'circle-blur': 0.2,
-            'circle-radius': 5,
+            'circle-blur': 0,
+            'circle-opacity': {
+              base: 1,
+              stops: [
+                [DEFAULT_ZOOM, 1],
+                [8, 1],
+                [12, 0.7],
+              ],
+            },
+            'circle-radius': {
+              base: 5,
+              stops: [
+                [DEFAULT_ZOOM, 5],
+                [8, 5],
+                [12, 65],
+                [15, 1000],
+              ],
+            },
             'circle-color': [
-              'case',
-              ['boolean', ['get', 'highlighted'], false],
-              '#fff', // on hover
-              '#3DC04E', // default
+              'match',
+              ['get', 'statusColor'],
+              'green',
+              '#3DC04E',
+              'yellow',
+              '#c9bc0d',
+              '#c9bc0d',
             ],
           },
         })
 
+        map.current.addLayer({
+          id: 'ownedSensors',
+          type: 'circle',
+          source: 'sensors',
+          paint: {
+            'circle-radius': {
+              base: 5,
+              stops: [
+                [DEFAULT_ZOOM, 5],
+                [8, 5],
+                [12, 65],
+                [15, 1000],
+              ],
+            },
+            'circle-opacity': 0,
+            'circle-stroke-width': [
+              'match',
+              ['get', 'isUserOwner'],
+              1,
+              2,
+              0,
+              0,
+              0,
+            ],
+            'circle-stroke-color': '#e5dfdf',
+          },
+        })
+
         map.current.on('mouseenter', 'sensors', function (e) {
-          map.current.getCanvas().style.cursor = 'pointer'
+          if (e.features[0].properties.isUserOwner) {
+            map.current.getCanvas().style.cursor = 'pointer'
+          }
 
           map.current.setFeatureState(
             {
@@ -94,6 +144,21 @@ const SensorsMap = ({ sensors }) => {
 
         map.current.on('mouseleave', 'sensors', function () {
           map.current.getCanvas().style.cursor = ''
+        })
+
+        map.current.on('click', 'sensors', function (e) {
+          const clickedSensor = sensors.filter(
+            (sensor) => sensor.id === e.features[0].properties.id
+          )[0]
+
+          if (clickedSensor.isUserOwner) {
+            setDisplayedSensor(
+              sensors.filter(
+                (sensor) => sensor.id === e.features[0].properties.id
+              )[0]
+            )
+            setShouldShowSideMenu(true)
+          }
         })
       })
     }

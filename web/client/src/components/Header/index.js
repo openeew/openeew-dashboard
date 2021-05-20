@@ -6,8 +6,9 @@ import {
   HeaderGlobalAction,
 } from 'carbon-components-react/lib/components/UIShell'
 import { Link } from 'react-router-dom'
+import history from '../../history'
 
-const _Header = ({ removeLogin, history }) => {
+const _Header = ({ removeLogin }) => {
   return (
     <Header aria-label="OpenEEW Dashboard">
       <HeaderName element={Link} to="/events" prefix="OpenEEW">

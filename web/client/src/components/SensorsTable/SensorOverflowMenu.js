@@ -13,7 +13,7 @@ const SensorOverflowMenu = ({ id, sensor, onModify, onRemove }) => {
     <TableCell key={id + '-overflow'} className="sticky-column right">
       <OverflowMenu style={{ float: 'right' }} flipped>
         <OverflowMenuItem
-          itemText={t('content.sensors.rowOverflow.modify')}
+          itemText={t('content.sensors.rowOverflow.interact')}
           onClick={() => onModify(sensor)}
         />
         <OverflowMenuItem

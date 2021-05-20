@@ -10,17 +10,16 @@ import {
   SideNavItems,
   SideNavLink,
 } from 'carbon-components-react/lib/components/UIShell'
-
 import {
   ConnectionSignal32,
   UserAvatar32,
   Activity32,
   UserAvatarFilledAlt32,
 } from '@carbon/icons-react'
-
 import { Link } from 'react-router-dom'
+import history from '../../history'
 
-const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
+const Shell = ({ isSideNavExpanded, sideNavToggle }) => (
   <Header aria-label="OpenEEW Dashboard">
     <SkipToContent />
     <HeaderMenuButton
@@ -51,10 +50,20 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
       expanded={isSideNavExpanded}
     >
       <SideNavItems>
-        <SideNavLink renderIcon={Activity32} to="/events" element={Link}>
+        <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
+          renderIcon={Activity32}
+          to="/events"
+          element={Link}
+        >
           Events
         </SideNavLink>
         <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
           renderIcon={ConnectionSignal32}
           to="/sensors"
           element={Link}
@@ -62,6 +71,9 @@ const Shell = ({ isSideNavExpanded, sideNavToggle, history }) => (
           Sensors
         </SideNavLink>
         <SideNavLink
+          onClick={() => {
+            sideNavToggle(false)
+          }}
           renderIcon={UserAvatarFilledAlt32}
           to="/access"
           element={Link}

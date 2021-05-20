@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import GithubAPI from '../rest/github'
 
 export default createContext({})
 
@@ -58,10 +59,50 @@ export const useAppContext = () => {
     lastName: '',
     email: '',
   })
+  const [toasts, setToasts] = useState([])
+
+  const addToast = (toast) => {
+    setToasts(toasts.concat(toast))
+  }
+
+  const removeToast = (removeIndex) => {
+    setToasts(toasts.map((t, i) => i !== removeIndex))
+  }
+
+  const [currentFirmwareInfo, setCurrentFirmwareInfo] = useState({
+    ver: null,
+    error: '',
+  })
+
+  useEffect(() => {
+    const callGithubAPI = async () => {
+      let verNum = null
+
+      try {
+        verNum = await GithubAPI.getCurrentFirmwareVer()
+      } catch (error) {
+        setCurrentFirmwareInfo({
+          verNum,
+          error,
+        })
+      }
+
+      setCurrentFirmwareInfo({
+        verNum,
+        error: '',
+      })
+    }
+
+    callGithubAPI()
+  }, [])
 
   return {
     currentUser,
     setCurrentUser,
+    addToast,
+    removeToast,
+    toasts,
+    currentFirmwareInfo,
     t,
   }
 }

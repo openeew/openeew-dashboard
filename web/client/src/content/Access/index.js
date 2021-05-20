@@ -203,7 +203,7 @@ const AccessUsers = ({ onSave }) => {
                         >
                           {cell.value}
                         </span>
-                        {userData[indexRows].account_owner === true &&
+                        {/* {userData[indexRows].account_owner === true &&
                           indexCells === 0 && (
                             <Tag
                               tabIndex={0}
@@ -214,7 +214,7 @@ const AccessUsers = ({ onSave }) => {
                             >
                               account owner
                             </Tag>
-                          )}
+                          )} */}
                       </TableCell>
                     ))}
                     <TableCell>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Field = ({ title, value, hasMargin }) => {
+const Field = ({ title, value, hasMargin, secondary }) => {
   return (
     <div
       className="field"
@@ -10,6 +10,7 @@ const Field = ({ title, value, hasMargin }) => {
     >
       <p className="field_title">{title}</p>
       <span>{value}</span>
+      {secondary ? <span className="secondary">{secondary}</span> : null}
     </div>
   )
 }

@@ -11,6 +11,7 @@ const {
 
 const resolvers = require('./resolvers/resolvers');
 const SensorAPI = require('./datasources/sensor');
+const MqttAPI = require('./datasources/mqtt');
 
 const typeDefs = gql`
   ${fs.readFileSync(path.join(__dirname, './schema.graphql'), 'utf8')}
@@ -76,11 +77,16 @@ const server = new ApolloServer({
   resolvers,
   dataSources: () => ({
     sensorAPI: new SensorAPI(),
+    mqttAPI: new MqttAPI(),
   }),
   context: ({ req }) => {
     if (!req.user) throw new AuthenticationError('Unauthorized');
 
-    return { user: req.user };
+    const uuid = req.user.identities.filter(
+      (iden) => iden.provider === 'cloud_directory',
+    )[0].id;
+
+    return { user: req.user, uuid };
   },
 });
 

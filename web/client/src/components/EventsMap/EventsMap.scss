@@ -59,7 +59,7 @@
 
 @media only screen and (max-width: $events-map-mobile-threshold) {
   .dashboard__container[data-logged-in='true'] .events-container {
-    left: 48px;
+    left: 0;
     top: 48px;
   }
   .events-container {
@@ -70,7 +70,13 @@
     bottom: 0;
   }
   .map-wrapper {
-    height: 40%;
+    height: 55%;
+  }
+
+  .events-panel {
+    height: 45%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -117,6 +123,7 @@
 .events-page-earthquake-list__container {
   flex-grow: 1;
   position: relative;
+  overflow-y: auto;
 }
 
 .earthquake-tooltip {

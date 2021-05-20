@@ -4,22 +4,24 @@
   bottom: 0;
   right: 0;
   padding: $layout-02 $layout-03;
+  width: 460px;
   background-color: #2c2c2c;
   border-left: 1px solid #515151;
+  z-index: 8500; // header is at 8000, keep above 8000
 
   .bx--toast-notification {
     width: 100%;
     color: #fff;
     background-color: #393939;
 
-    border-left: 3px solid #6d96dd;
+    border-left: 3px solid #70a4ff;
 
     .bx--toast-notification__icon {
-      fill: #6d96dd;
+      fill: #70a4ff;
     }
 
     a {
-      color: #6d96dd;
+      color: #70a4ff;
     }
   }
 
@@ -32,8 +34,23 @@
       color: #f4f4f4;
     }
   }
+
   .tag-owner {
     margin-left: 40px;
+
+    @media only screen and (max-width: $medium) {
+      display: none;
+    }
+  }
+
+  .sensors-side-panel__button[disabled] {
+    border: 1px solid #616161;
+    color: #616161;
+    cursor: auto;
+  }
+
+  @media screen and (max-width: $medium) {
+    width: 100%;
   }
 }
 
@@ -59,13 +76,37 @@
   }
 }
 
-.sensors-side-panel__background {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 8500; // header is at 8000, keep above 8000
+.sensors-side-panel__updateLink {
+  border: none;
+  background: none;
+  color: #70a4ff;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sensors-side-panel__updatingToast {
+  position: relative;
+
+  .bx--toast-notification__icon {
+    visibility: hidden;
+  }
+
+  .bx--loading {
+    position: absolute;
+    top: 4px;
+    left: 7px;
+  }
+
+  .bx--loading--small {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .bx--toast-notification__subtitle {
+    margin-top: 0.5rem;
+    color: #d0d0d0;
+  }
 }
 
 .sensors-side-panel__button {
@@ -88,11 +129,13 @@
   overflow-y: hidden;
 }
 
-.sensors-side-panel__restarting {
+.sensors-side-panel__restarting,
+.sensors-side-panel__sending {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: calc(24px);
+  position: relative;
+  left: -8px;
+  height: 50px;
   margin-top: 10px;
   color: #9c9c9c;
 
@@ -100,4 +143,13 @@
     margin-left: $spacing-02;
     font-size: 0.875rem;
   }
+}
+
+.bx--pagination {
+  overflow-x: hidden;
+}
+
+.sensors-side-panel__sendDataButton {
+  display: flex;
+  align-items: center;
 }
