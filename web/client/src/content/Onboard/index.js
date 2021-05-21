@@ -20,8 +20,9 @@ const Onboard = ({ location }) => {
 
   useEffect(() => {
     const verifyToken = async () => {
-      const _token = qs.parse(location.search, { ignoreQueryPrefix: true })
-        .token
+      const _token = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      }).token
 
       if (!_token) {
         setPageLoading(false)
