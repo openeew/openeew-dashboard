@@ -162,6 +162,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
         })
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sensors])
 
   const zoomIn = () => {

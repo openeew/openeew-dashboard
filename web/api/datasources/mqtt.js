@@ -1,4 +1,5 @@
 const { DataSource } = require('apollo-datasource');
+const generator = require('generate-password');
 
 const mqtt = require('mqtt');
 
@@ -30,10 +31,19 @@ if (
   mqttPort = mqtt.port;
 }
 
+// Generates a ID to add to end of Mqtt clientId
+const clientUnique = generator.generate({
+  length: 8,
+  numbers: true,
+  symbols: false,
+});
+
+console.log('MQTT Unique ID:', clientUnique);
+
 const client = mqtt.connect(
   `mqtt://${brokerId}.messaging.internetofthings.ibmcloud.com`,
   {
-    clientId: mqttClientId,
+    clientId: `${mqttClientId}:${clientUnique}`,
     username: mqttUsername,
     password: mqttPassword,
     port: mqttPort,
