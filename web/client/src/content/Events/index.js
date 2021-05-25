@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import EventsMap from '../../components/EventsMap'
 import { Dropdown } from 'carbon-components-react'
 import EarthquakeList from '../../components/EarthquakeList'
@@ -7,6 +7,7 @@ import { CheckmarkFilled16 } from '@carbon/icons-react'
 import Field from '../../components/Field'
 import { earthquakes, takeEventsMapSnapshot } from '../../context/app'
 import { formatCoordinates, formatDate, formatTime } from '../../utils'
+import AppContext from '../../context/app'
 
 const dayInSeconds = 86400
 
@@ -38,6 +39,16 @@ const Events = () => {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState(
     items[defaultTimeFilterIndex]
   )
+  const { addToast } = useContext(AppContext)
+
+  useEffect(() => {
+    addToast({
+      kind: 'warning',
+      caption:
+        'The dashboard is a work in progress. In the near future, this page will show events detected by OpenEEW regional networks. Currently, this page uses mock data to demonstrate its features.',
+      title: 'Note: This data is not real, but will be soon!',
+    })
+  }, [])
 
   return (
     <div className="events-page">
@@ -71,10 +82,6 @@ const Events = () => {
             <div>
               <h4>{earthquakes.length}</h4>
               <span>Earthquakes detected</span>
-            </div>
-            <div>
-              <h4>2,400</h4>
-              <span>Subscribers alerted</span>
             </div>
           </div>
           <div className="events-page-earthquake-list__container">
