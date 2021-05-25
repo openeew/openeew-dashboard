@@ -8,7 +8,7 @@ export const earthquakes = [
   {
     pos: [-104.3533, 20.65],
     magnitude: 1,
-    locationText: '3km South of Blah Blah town',
+    locationText: 'Sample Event Lorem ipsum',
     country: 'Mexico',
     date: new Date().getTime(),
     alertDelay: 1,
@@ -16,7 +16,7 @@ export const earthquakes = [
   {
     pos: [-99.3533, 20.65],
     magnitude: 2,
-    locationText: '15km South of Yadayada town',
+    locationText: 'Sample Event Lorem dolor',
     country: 'Mexico',
     date: new Date().getTime() - 86400 * 7 * 1000,
     alertDelay: 5,
@@ -24,7 +24,7 @@ export const earthquakes = [
   {
     pos: [-102.3533, 25.65],
     magnitude: 3,
-    locationText: '3km South of Lorem Ipsum',
+    locationText: 'Sample Event Lorem',
     country: 'Mexico',
     date: new Date().getTime() - 86400 * 30 * 1000,
     alertDelay: 3,
@@ -32,7 +32,7 @@ export const earthquakes = [
   {
     pos: [-96.01, 16.01],
     magnitude: 4,
-    locationText: '3km East of Mexico City',
+    locationText: 'Sample Lorem ipsum dolor',
     country: 'Mexico',
     date: new Date().getTime() - 86400 * 90 * 1000,
     alertDelay: 4,
@@ -40,7 +40,7 @@ export const earthquakes = [
   {
     pos: [-108.01, 28.01],
     magnitude: 5,
-    locationText: '3km East of Some Random Town',
+    locationText: 'Lorem ipsum dolor',
     country: 'Mexico',
     date: new Date().getTime() - 86400 * 365 * 1000,
     alertDelay: 5,
