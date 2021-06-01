@@ -119,7 +119,7 @@ It is planned to expand this application so that in future, it will allow for th
 - Ability to visualize sensor accelerations for each axis
 - Ability to see sensor(s) on map
 
-For every new addition to this application, there is a process in which prototypes and designs are discussed and approved by the OpenEEW community and Technical Steering Committee before development starts. To join the conversation, and to begin contributing to this project, please join [our slack channel](https://openeew.com/) and review the **Contributing and Developer Information** section below.
+For every new addition to this application, there is a process in which prototypes and designs are discussed and approved by the OpenEEW community and Technical Steering Committee before development starts. To join the conversation, and to begin contributing to this project, please join [our slack channel](https://openeew.slack.com) and review the **Contributing and Developer Information** section below.
 
 You can view the [current prototype here](https://ibm.invisionapp.com/share/3FO0NR58WK6#/screens/319792717_EW_Login-_ID_Empty).
 
