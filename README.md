@@ -1,5 +1,8 @@
 # OpenEEW Dashboard
 
+[![Build and Deploy to IKS](https://github.com/openeew/openeew-dashboard/actions/workflows/iks.yml/badge.svg)](https://github.com/openeew/openeew-dashboard/actions/workflows/iks.yml?branch=master&event=push)
+[![linter](https://github.com/openeew/openeew-dashboard/actions/workflows/linter.yml/badge.svg)](https://github.com/openeew/openeew-dashboard/actions/workflows/linter.yml)
+
 The OpenEEW Dashboard is a web application currently being developed by the OpenEEW community for the purpose of managing network sensors and viewing sensor data.
 
 Currently, the project consists of:
