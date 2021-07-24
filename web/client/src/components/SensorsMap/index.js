@@ -8,7 +8,7 @@ const DEFAULT_LONGITUDE = -90
 const DEFAULT_ZOOM = 2.3
 
 const transformToGeoJSON = (sensors) => {
-  const geoJSONsensors = sensors
+  const geoJSONSensors = sensors
     .filter((s) => s.latitude && s.longitude)
     .map((sensor) => {
       return {
@@ -30,10 +30,16 @@ const transformToGeoJSON = (sensors) => {
       }
     })
 
-  return geoJSONsensors
+  return geoJSONSensors
 }
 
-const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
+const SensorsMap = ({
+  sensors,
+  setDisplayedSensor,
+  setShouldShowSideMenu,
+  onSensorHover,
+  currentHoveredSensor,
+}) => {
   let mapWrapper = useRef()
   let map = useRef()
 
@@ -52,15 +58,17 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
         })
       )
 
+      const sensorsData = {
+        type: 'FeatureCollection',
+        features: transformToGeoJSON(sensors),
+      }
+
       map.current.once('load', () => {
         map.current.resize()
 
         map.current.addSource('sensors', {
           type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: transformToGeoJSON(sensors),
-          },
+          data: sensorsData,
         })
 
         map.current.addLayer({
@@ -140,10 +148,17 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               hover: true,
             }
           )
+          const index = sensorsData.features
+            .map((s) => s.properties.id)
+            .indexOf(e.features[0].properties.id)
+
+          onSensorHover(index)
         })
 
         map.current.on('mouseleave', 'sensors', function () {
           map.current.getCanvas().style.cursor = ''
+
+          onSensorHover(undefined)
         })
 
         map.current.on('click', 'sensors', function (e) {

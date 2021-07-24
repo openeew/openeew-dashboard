@@ -1,20 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Dropdown } from 'carbon-components-react'
 import SensorsTable from '../../components/SensorsTable'
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import SensorsMap from '../../components/SensorsMap'
 import { sensorGroupDropdownItems } from './dropdownItems'
 
 import { GET_SENSORS } from '../../graphql/queries'
 import AppContext from '../../context/app'
-import { useMutation } from '@apollo/client'
 
 import { SEND_SENSOR_REMOVE } from '../../graphql/mutations'
 import { handleGraphQLError } from '../../graphql/error'
 
 const processSensorData = (sensors) => {
   // Sort by isUserOwner
-  let sortedSensors = sensors
+  return sensors
     .slice()
     .sort((a, b) => b.isUserOwner - a.isUserOwner)
     .map((s) => ({
@@ -35,8 +34,6 @@ const processSensorData = (sensors) => {
         return 'green'
       })(),
     }))
-
-  return sortedSensors
 }
 
 const Sensors = ({ history }) => {
@@ -63,6 +60,7 @@ const Sensors = ({ history }) => {
   const [shouldShowRemoveMenu, setShouldShowRemoveMenu] = useState(false)
   const [displayedSensor, setDisplayedSensor] = useState({})
   const [removeSensorLoading, setRemoveSensorLoading] = useState(false)
+  const [currentHoveredSensor, setCurrentHoveredSensor] = useState()
 
   const [sendRemoveSensor] = useMutation(SEND_SENSOR_REMOVE)
 
@@ -81,6 +79,10 @@ const Sensors = ({ history }) => {
       sensors.slice((page - 1) * pageSize, page * pageSize)
     )
   }, [page, pageSize, sensors])
+
+  const onSensorHover = (index) => {
+    setCurrentHoveredSensor(index)
+  }
 
   const onModify = (sensor) => {
     setShouldShowSideMenu(true)
@@ -101,11 +103,7 @@ const Sensors = ({ history }) => {
         setShouldShowRemoveMenu(false)
 
         setSensors(() => {
-          let newSensors = sensors.filter(
-            (sensor) => sensor.id !== displayedSensor.id
-          )
-
-          return newSensors
+          return sensors.filter((sensor) => sensor.id !== displayedSensor.id)
         })
       })
       .catch((e) => {
@@ -145,6 +143,8 @@ const Sensors = ({ history }) => {
           sensors={sensors}
           setDisplayedSensor={setDisplayedSensor}
           setShouldShowSideMenu={setShouldShowSideMenu}
+          onSensorHover={onSensorHover}
+          currentHoveredSensor={currentHoveredSensor}
         />
       </div>
 
@@ -153,6 +153,8 @@ const Sensors = ({ history }) => {
           loading={loading}
           history={history}
           sensors={sensors}
+          onSensorHover={onSensorHover}
+          currentHoveredSensor={currentHoveredSensor}
           onPaginationChange={onPaginationChange}
           page={page}
           pageSize={pageSize}
