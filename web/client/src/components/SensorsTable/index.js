@@ -80,6 +80,8 @@ const SensorsTable = ({
   removeSensor,
   onModify,
   onRemove,
+  onSensorHover,
+  currentHoveredSensor,
 }) => {
   const { t } = useContext(AppContext)
 
@@ -175,9 +177,16 @@ const SensorsTable = ({
                       (page - 1) * pageSize + rowIndex < sensors.length
                   )
                   .map((row, rowIndex) => {
+                    const sensorIndex = (page - 1) * pageSize + rowIndex
+
                     return (
                       <Fragment key={row.id}>
-                        <TableExpandRow {...getRowProps({ row })}>
+                        <TableExpandRow
+                          {...getRowProps({ row })}
+                          data-hovered={currentHoveredSensor === sensorIndex}
+                          onMouseEnter={() => onSensorHover(sensorIndex)}
+                          onMouseLeave={() => onSensorHover(undefined)}
+                        >
                           {loading
                             ? null
                             : row.cells.map((cell, indexCells) => (
@@ -203,8 +212,7 @@ const SensorsTable = ({
                                     )}
                                   </span>
                                   {indexCells === 0 &&
-                                    sensors[(page - 1) * pageSize + rowIndex]
-                                      .isUserOwner && (
+                                    sensors[sensorIndex].isUserOwner && (
                                       <Tag
                                         className="tag-owner"
                                         tabIndex={0}
@@ -215,8 +223,7 @@ const SensorsTable = ({
                                     )}
                                 </TableCell>
                               ))}
-                          {sensors[(page - 1) * pageSize + rowIndex]
-                            .isUserOwner ? (
+                          {sensors[sensorIndex].isUserOwner ? (
                             <SensorOverflowMenu
                               id={row.id}
                               sensor={
