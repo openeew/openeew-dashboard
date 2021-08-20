@@ -158,3 +158,7 @@
   width: 5rem;
   height: 5rem;
 }
+
+.bx--data-table tbody tr[data-hovered='true'] td {
+  background: #353535;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, memo } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import { ZoomIn16, ZoomOut16 } from '@carbon/icons-react'
 import mapboxgl from 'mapbox-gl'
 import { keyboardOnlySubmit } from '../../utils'
@@ -8,7 +8,7 @@ const DEFAULT_LONGITUDE = -90
 const DEFAULT_ZOOM = 2.3
 
 const transformToGeoJSON = (sensors) => {
-  const geoJSONsensors = sensors
+  return sensors
     .filter((s) => s.latitude && s.longitude)
     .map((sensor) => {
       return {
@@ -19,6 +19,7 @@ const transformToGeoJSON = (sensors) => {
           pos: [parseFloat(sensor.longitude), parseFloat(sensor.latitude)],
           isUserOwner: sensor.isUserOwner ? 1 : 0,
           statusColor: sensor.statusColor,
+          hover: false,
         },
         geometry: {
           type: 'Point',
@@ -29,13 +30,40 @@ const transformToGeoJSON = (sensors) => {
         },
       }
     })
-
-  return geoJSONsensors
 }
 
-const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
+const SensorsMap = ({
+  sensors,
+  setDisplayedSensor,
+  setShouldShowSideMenu,
+  onSensorHover,
+  currentHoveredSensor,
+}) => {
   let mapWrapper = useRef()
   let map = useRef()
+
+  const sensorsData = {
+    type: 'FeatureCollection',
+    features: transformToGeoJSON(sensors),
+  }
+
+  useEffect(() => {
+    if (!map.current || currentHoveredSensor === undefined) return
+
+    const updateSensorHover = (index, hover) => {
+      let newSensorsFeatures = [...sensorsData.features]
+
+      newSensorsFeatures[index].properties.hover = hover
+
+      map.current
+        .getSource('sensors')
+        .setData({ ...sensorsData, features: newSensorsFeatures })
+    }
+
+    updateSensorHover(currentHoveredSensor, true)
+
+    return () => updateSensorHover(currentHoveredSensor, false)
+  }, [currentHoveredSensor])
 
   useEffect(() => {
     if (sensors.length > 0) {
@@ -57,10 +85,7 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
 
         map.current.addSource('sensors', {
           type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: transformToGeoJSON(sensors),
-          },
+          data: sensorsData,
         })
 
         map.current.addLayer({
@@ -77,15 +102,15 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
                 [12, 0.7],
               ],
             },
-            'circle-radius': {
-              base: 5,
-              stops: [
-                [DEFAULT_ZOOM, 5],
-                [8, 5],
-                [12, 65],
-                [15, 1000],
-              ],
-            },
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              5,
+              ['case', ['boolean', ['get', 'hover'], true], 10, 5],
+              10,
+              100,
+            ],
             'circle-color': [
               'match',
               ['get', 'statusColor'],
@@ -103,15 +128,15 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
           type: 'circle',
           source: 'sensors',
           paint: {
-            'circle-radius': {
-              base: 5,
-              stops: [
-                [DEFAULT_ZOOM, 5],
-                [8, 5],
-                [12, 65],
-                [15, 1000],
-              ],
-            },
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              5,
+              ['match', ['get', 'hover'], 'true', 65, 30],
+              12,
+              ['*', 5, ['zoom']],
+            ],
             'circle-opacity': 0,
             'circle-stroke-width': [
               'match',
@@ -140,10 +165,17 @@ const SensorsMap = ({ sensors, setDisplayedSensor, setShouldShowSideMenu }) => {
               hover: true,
             }
           )
+          const index = sensorsData.features
+            .map((s) => s.properties.id)
+            .indexOf(e.features[0].properties.id)
+
+          onSensorHover(index)
         })
 
         map.current.on('mouseleave', 'sensors', function () {
           map.current.getCanvas().style.cursor = ''
+
+          onSensorHover(undefined)
         })
 
         map.current.on('click', 'sensors', function (e) {
