@@ -143,6 +143,18 @@ export default class EventsMap extends Component {
     this.takeMapSnapshot = this.takeMapSnapshot.bind(this)
     setTakeEventsMapSnapshot(this.takeMapSnapshot)
   }
+  
+  //focus on users current position if geolocation is available
+  getCurrPosition(){
+    if ('geolocation' in navigator){
+      navigator.geolocation.getCurrentPosition((position) => {
+        let prevState = {...this.state};
+        prevState.lng = position.coords.longitude;
+        prevState.lat = position.coords.latitude;
+        this.setState(prevState);
+      });
+    }
+  }
 
   // move map center to 'pos', set zoom, take snapshot, move back to original pos and zoom
   // and return snapshot image data url
@@ -158,6 +170,7 @@ export default class EventsMap extends Component {
   }
 
   componentDidMount() {
+    this.getCurrPosition();
     this.map = new mapboxgl.Map({
       container: this.mapWrapper,
       style: 'mapbox://styles/mapbox/dark-v10',
