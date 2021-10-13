@@ -37,6 +37,23 @@ This step will require a [IBM Cloud account](https://www.ibm.com/cloud).
 4. Expand the created credentials and fill in the required properties in your `vcap-local.json` file located in `web/api` under `AppID` and `credentials`. You can leave the `scopes` field as an empty array.
 5. Copy the `apiKey` from your service credentials and add it to `vcap-local.json` in the `api_key` field under `ibm_cloud`
 
+**Cloudant**
+
+1. Provision a Cloudant instance in IBM Cloud
+   https://cloud.ibm.com/catalog/services/cloudant
+   - For Authentication Method, select "IAM and Legacy Credentials"
+2. Once the service has completed provisioning, create Service Credentials
+3. Fill in the following properties in your `vcap-local.json` file, under `Cloudant_sensors`: url, username, password
+
+Optional: Add mock device data to Cloudant
+
+1. Add a database called `openeew-devices` in your Cloudant instance (Go to Dashboard -> Create Database)
+2. Some basic mock device records can be found in `web/api/mockdata.json`.
+
+**MQTT**
+
+Connecting a MQTT broker is not necessary for development. The MQTT client will only attempt to connect if there are credentials available.
+
 **Other required environment variables**
 
 Also add the following environment variables to your `vcap-local.json` file:
