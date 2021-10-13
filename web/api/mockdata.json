@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "4F191F0372A2",
+    "DeviceID": "4F191F0372A2",
+    "latitude": "18.3811370",
+    "longitude": "-103.3257484",
+    "city": "Lorem Ipsum",
+    "country": "Mexico",
+    "uuid": "0e3b8d56-8b12-4a16-b3be-bceef98b9b49",
+    "LastCheckin": 1633578821460,
+    "firmware_ver": "1.5.3",
+    "Activated": 1633578821461,
+    "status": "Disconnect",
+    "LastStatusEvent": 1633580258456
+  },
+  {
+    "_id": "3EDBF9A3A22F",
+    "DeviceID": "3EDBF9A3A22F",
+    "latitude": "17.2507087",
+    "longitude": "-96.4844642",
+    "city": "Lorem Ipsum",
+    "country": "Mexico",
+    "uuid": "79665e69-a74b-49da-9f62-ba5040b05fbd",
+    "LastCheckin": 1633578821460,
+    "firmware_ver": "1.5.1",
+    "Activated": 1633578821461,
+    "status": "Disconnect",
+    "LastStatusEvent": 1633580258456
+  },
+  {
+    "_id": "7EE67C138F77",
+    "DeviceID": "7EE67C138F77",
+    "latitude": "20.1232021",
+    "longitude": "-102.2107222",
+    "city": "Lorem Ipsum",
+    "country": "Mexico",
+    "uuid": "1859ee2b-9a5b-479e-b6cf-e459e434d33f",
+    "LastCheckin": 1633578821460,
+    "firmware_ver": "1.5.3",
+    "Activated": 1633578821461,
+    "status": "Disconnect",
+    "LastStatusEvent": 1633580258456
+  },
+  {
+    "_id": "BC58B80E2A9C",
+    "DeviceID": "BC58B80E2A9C",
+    "latitude": "18.6503191",
+    "longitude": "-101.0920572",
+    "city": "Lorem Ipsum",
+    "country": "Mexico",
+    "uuid": "cad5fa2e-c4d5-422e-94b5-67a1133387de",
+    "LastCheckin": 1633578821460,
+    "firmware_ver": "1.5.3",
+    "Activated": 1633578821461,
+    "status": "Disconnect",
+    "LastStatusEvent": 1633580258456
+  }
+]
