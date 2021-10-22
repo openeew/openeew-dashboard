@@ -38,35 +38,44 @@ const clientUnique = generator.generate({
   symbols: false,
 });
 
-console.log('MQTT Unique ID:', clientUnique);
+let client;
+let clientCredsPresent = false;
 
-const client = mqtt.connect(
-  `mqtt://${brokerId}.messaging.internetofthings.ibmcloud.com`,
-  {
-    clientId: `${mqttClientId}:${clientUnique}`,
-    username: mqttUsername,
-    password: mqttPassword,
-    port: mqttPort,
-    keepalive: 60,
-  },
-);
+if (mqttClientId && mqttUsername && mqttPassword) {
+  console.log('MQTT Unique ID:', clientUnique);
+  clientCredsPresent = true;
 
-client.on('connect', () => {
-  console.log('MQTT client connected: ' + client.connected);
-});
+  client = mqtt.connect(
+    `mqtt://${brokerId}.messaging.internetofthings.ibmcloud.com`,
+    {
+      clientId: `${mqttClientId}:${clientUnique}`,
+      username: mqttUsername,
+      password: mqttPassword,
+      port: mqttPort,
+      keepalive: 60,
+    },
+  );
 
-client.on('message', (topic, message) => {
-  console.log('message is ' + message);
-  console.log('topic is ' + topic);
-});
+  client.on('connect', () => {
+    console.log('MQTT client connected: ' + client.connected);
+  });
 
-client.on('error', (err) => {
-  console.log(err);
-});
+  client.on('message', (topic, message) => {
+    console.log('message is ' + message);
+    console.log('topic is ' + topic);
+  });
+
+  client.on('error', (err) => {
+    console.log(err);
+  });
+} else {
+  console.log('MQTT not connected: No credentials found.');
+  clientCredsPresent = false;
+}
 
 class MqttAPI extends DataSource {
   sendEarthquakeToSensor(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/earthquake/fmt/json`,
         '{Alarm:test}',
@@ -80,7 +89,7 @@ class MqttAPI extends DataSource {
   }
 
   stopEarthquakeTest(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/earthquake/fmt/json`,
         '{Alarm:false}',
@@ -94,7 +103,7 @@ class MqttAPI extends DataSource {
   }
 
   sendRestartSensor(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/forcerestart/fmt/json`,
         '{}',
@@ -108,7 +117,7 @@ class MqttAPI extends DataSource {
   }
 
   sensorUpdate(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/firmwarecheck/fmt/json`,
         '{}',
@@ -122,7 +131,7 @@ class MqttAPI extends DataSource {
   }
 
   send10Data(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/sendacceldata/fmt/json`,
         '{LiveDataDuration:10}',
@@ -136,7 +145,7 @@ class MqttAPI extends DataSource {
   }
 
   sendSensorReset(sensorId) {
-    if (client.connected) {
+    if (client.connected && clientCredsPresent) {
       client.publish(
         `iot-2/type/OpenEEW/id/${sensorId}/cmd/factoryreset/fmt/json`,
         '{}',
