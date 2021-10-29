@@ -48,7 +48,7 @@ const Events = () => {
         'The dashboard is a work in progress. In the near future, this page will show events detected by OpenEEW regional networks. Currently, this page uses mock data to demonstrate its features.',
       title: 'Note: This data is not real, but will be soon!',
     })
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="events-page">
